@@ -1,6 +1,6 @@
 # Career Discovery Prototype
 
-This is a local Python CLI for the Germany pilot. It compares title and keyword search with vacancy matching based on evidence of the work a candidate has done. Start with [the handoff](docs/handoff/README.md) for the current state, original requirements, two review rounds and next steps. [README.md](README.md) documents the CLI.
+This is a local Python CLI for the Germany pilot. It compares title and keyword search with vacancy matching based on evidence of the work a candidate has done. Start with [the handoff](docs/handoff/README.md) for the current state, original requirements, two review rounds and next steps. [README.md](README.md) documents the CLI. For work in progress, read [the progress log](docs/handoff/progress.md) and follow [the agent rules](docs/agent-rules.md). [AGENTS.md](AGENTS.md) gives Codex and other agents the same entry point.
 
 ## Baseline
 
