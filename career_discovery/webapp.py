@@ -389,7 +389,7 @@ def run_app(args, catalogue_path=None):
         print("Career Discovery is running. Your browser opens it now. If it does not, open this link in your browser.")
         print(f"The link works once. To get a new one, close this window and start Career Discovery again:\n{launch}")
         print(f"Your data is kept in {service.root}")
-        print("Press Ctrl+C in this window to stop it.")
+        print("Press Ctrl+C in this window to stop it.", flush=True)
         if not args.no_browser:
             import webbrowser
             webbrowser.open(launch)

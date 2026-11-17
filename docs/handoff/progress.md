@@ -2,18 +2,25 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
-## 2026-11-17 — local web app (in progress)
+## 2026-11-17 — local web app v1 done
 
-Owner chose option 1: a local web app opened in the browser, easy install for Windows and Mac. Spec, owner picks and
-quotes: `docs/web-app/spec.md` (look B "friendly guide", double-click starter with uv, English and German UI,
-core features plus tracker, still-open check, language filter, wording helper, pay, deadlines, adjacent roles).
-Lanes (playbook order: foundation alone first)
-1. [in progress] Backend: `career_discovery/webapp.py`, API contract `docs/web-app/api.md`, tracker table, `salary.py`,
-   tests. Report: `docs/web-app/backend-report.md`.
-2. [pending] Interface: `career_discovery/web/` (HTML, CSS, JS, `i18n/en.json`, `de.json`), against `api.md`.
-3. [pending] Starters (`Start Career Discovery.command`, `.bat`, `start.sh`), README install section, CI smoke.
-4. [pending] Independent security review of the local server; browser verification; push; CI on three OSes.
-If interrupted: `git status` shows uncommitted lane work; read the lane report before continuing.
+Owner chose a local web app (spec and owner picks: `docs/web-app/spec.md`). Done and pushed:
+- Backend `career_discovery/webapp.py` + `webapi.py` (API contract `docs/web-app/api.md`), tracker table, `salary.py`.
+- Interface `career_discovery/web/` (guided steps, matches, tracker, data page; English and German).
+- Starters `Start Career Discovery.command` / `.bat` / `start.sh` (Python 3.12+ or uv); README "Use the app" section.
+- Independent security review (`docs/web-app/security-review.md`): 1 HIGH, 1 MEDIUM, 4 LOW, all fixed with tests
+  (one-time launch link + HttpOnly SameSite=Strict session cookie, CSV formula guard, timeouts, temp cleanup,
+  delete-all scope, folder permissions, recheck lock).
+- Controller browser walkthrough with fictional data found and fixed 5 UI defects (CV review skipped after upload,
+  hard conflicts never shown as conflicts, Recheck on unsupported sources, findings without context, stray "null").
+- 188 offline tests; CI runs tests, demo, help and an app smoke start on Ubuntu, macOS and Windows.
+
+Open
+1. A real run of the starters on a Windows laptop and a fresh Mac (Gatekeeper/SmartScreen prompts, uv install path).
+2. Analyser gap seen in the walkthrough: "Ran onboarding sessions for new customers" tags `teach`, not `onboard`.
+   Fixing it changes parsing: needs `ANALYSER_VERSION` 16 and a held-out comparison.
+3. Matcher reason texts (findings) are English only; the German UI shows them in English.
+4. Items 1–3 of the catalogue-lane entry below (repeat supply on or after 23 November, owner decision on profiles, pilot).
 
 ## 2026-11-17 — Windows support and CI
 

@@ -4,10 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="cd-token" content="">
+<meta name="color-scheme" content="light dark">
 <title>Career Discovery</title>
+<link rel="stylesheet" href="app.css">
+<script type="module" src="js/main.js"></script>
 </head>
 <body>
-<h1>Career Discovery</h1>
-<p>The app is running. The full interface is installed by a separate step.</p>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5l5 5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6m0-6L10 14M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4l9 16H3L12 4zm0 6v5m0 3v.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6m0-9v.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+<a class="skip" href="#main" data-i18n="app.skip">Skip to content</a>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#/" data-i18n="app.name">Career Discovery</a>
+    <nav class="pages" data-i18n-aria-label="nav.pages" aria-label="Pages">
+      <a href="#/applications" id="nav-applications" data-i18n="nav.applications">My applications</a>
+      <a href="#/data" id="nav-data" data-i18n="nav.data">Your data</a>
+    </nav>
+    <div class="langs" role="group" data-i18n-aria-label="nav.language" aria-label="Language">
+      <button type="button" class="lang" data-lang="en" lang="en">EN</button>
+      <button type="button" class="lang" data-lang="de" lang="de">DE</button>
+    </div>
+  </div>
+  <div class="wrap"><nav id="steps" class="stepnav" data-i18n-aria-label="nav.steps" aria-label="Steps"></nav></div>
+</header>
+<main id="main" class="wrap" tabindex="-1"></main>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+<noscript><p class="wrap" data-i18n="app.noscript">This app needs JavaScript to run.</p></noscript>
 </body>
 </html>
