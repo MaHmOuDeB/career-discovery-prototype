@@ -54,10 +54,14 @@ recent_graduate, needs_sponsorship, experience_months, evidence_usable, ...}, cv
   `{imported, kept_description_fields}`. Columns as in README (`company,title,url` required).
 
 ## Matches
-`GET /api/matches?mode=task|title|both&limit=50&excluded=0&hide_language_conflicts=0` (profile must be confirmed, else 409).
+`GET /api/matches?mode=task|title|both&limit=50&excluded=0&hide_language_conflicts=0&q=` (profile must be confirmed, else 409).
+`q` (at most 100 characters) keeps jobs whose title, company or places contain every word, ignoring case; it is applied
+before `limit`, so it searches every stored job.
 `task` is the evidence-based ranking, `title` the title and keyword comparison. `limit` 1 to 200 applies per lane.
 `excluded=1` includes the `excluded` lane (hard conflicts). Response:
-`{mode, corpus_vacancies, generated_at, counts: {task: {actionable, "verify first", excluded}}, results: {task: {actionable: [card], "verify first": [card]}, title: {...}}}`.
+`{mode, corpus_vacancies, generated_at, query, counts: {task: {actionable, "verify first", excluded}}, shown: {task: {lane: n}},
+results: {task: {actionable: [card], "verify first": [card]}, title: {...}}}`. `counts` ignores the filters; `shown`
+counts each returned lane after `q` and the language filter, before `limit`.
 Each card is the `as_record` output (job_key, company, title, url, apply_url, locations, workplace, employment, date, availability,
 checked_at, verification_reason, lane, fit, families, findings, requirements, evidence_links with the CV line, growth) plus:
 - `salary`: text such as `"€55,000 - €65,000 per year"`, or null (show "Pay not stated"). Only amounts next to a pay word.

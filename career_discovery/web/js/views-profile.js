@@ -101,7 +101,7 @@ function addForm(act) {
     h('div', { class: 'row tight' }, button(t('cv.add'), () => { if (box.value.trim()) act('add', null, box.value.trim()); })));
 }
 
-const EMPLOYMENT = [
+export const EMPLOYMENT = [
   ['full_time', () => t('emp.full_time')], ['part_time', () => t('emp.part_time')], ['internship', () => t('emp.internship')],
   ['working_student', () => t('emp.working_student')], ['freelance', () => t('emp.freelance')], ['contract', () => t('emp.contract')],
   ['temporary', () => t('emp.temporary')], ['trainee', () => t('emp.trainee')],
@@ -163,7 +163,8 @@ export async function detailsView(root, ctx) {
     try {
       await busy(e.currentTarget, async () => { await api('PUT', '/api/profile', payload); await api('POST', '/api/profile/confirm', {}); });
       say(t('details.saved'));
-      ctx.go('jobs');
+      // With jobs already stored the matches are redone straight away, so go there; otherwise fetch jobs first.
+      ctx.go((await ctx.refresh()).jobs?.stored ? 'matches' : 'jobs');
     } catch (err) {
       for (const [name, message] of Object.entries(err.fields || {})) errs[name]?.append(h('p', { class: 'field-error', role: 'alert', text: message }));
       result.append(errorBox({ message: err.message }));
@@ -188,9 +189,13 @@ export async function jobsView(root, ctx) {
     summary.replaceChildren(jobs.stored
       ? h('p', {}, t('jobs.stored', { n: jobs.stored }), ' ', jobs.last_fetched ? t('jobs.lastFetched', { date: fmtDate(jobs.last_fetched) }) : '')
       : h('p', { text: t('jobs.none') }));
+    // The next step is the main action once jobs are stored; before that, reading the boards is.
+    next.hidden = !jobs.stored;
+    go.className = jobs.stored ? 'btn' : 'btn primary';
   };
-  await stats();
   const go = button(t('jobs.refresh'), (e) => start(e.currentTarget), 'primary');
+  const next = button(t('jobs.next'), () => ctx.go('matches'), 'primary', { hidden: true });
+  await stats();
   const poll = async () => {
     while (ctx.alive()) {
       const st = await api('GET', '/api/jobs/refresh');
@@ -211,10 +216,10 @@ export async function jobsView(root, ctx) {
     form.append('file', csv.files[0]);
     try { const r = await api('POST', '/api/jobs/import', form); importBox.replaceChildren(notice('info', t('jobs.imported', { n: r.imported }))); await stats(); } catch (err) { importBox.replaceChildren(errorBox(err)); }
   });
-  root.append(summary, h('div', { class: 'row' }, go,
-    ctx.state.jobs.stored ? button(t('jobs.toMatches'), () => ctx.go('matches')) : null), live,
-  h('details', {}, h('summary', { text: t('jobs.csvTitle') }), h('p', { class: 'hint', text: t('jobs.csvHint') }),
-    button(t('jobs.csvChoose'), () => csv.click()), csv, importBox));
+  root.append(summary, h('div', { class: 'row' }, go), live,
+    h('details', {}, h('summary', { text: t('jobs.csvTitle') }), h('p', { class: 'hint', text: t('jobs.csvHint') }),
+      button(t('jobs.csvChoose'), () => csv.click()), csv, importBox),
+    h('div', { class: 'row' }, next));
   if (ctx.state.refresh?.status === 'running') { go.disabled = true; poll().catch(() => { go.disabled = false; }); }
   else if (ctx.state.refresh?.status === 'done') drawProgress(live, ctx.state.refresh);
 }

@@ -1,3 +1,4 @@
+import { EMPLOYMENT } from './views-profile.js';
 import { api, busy, button, download, emptyState, errorBox, fmtDate, h, icon, langName, notice, safeUrl, reasonText, say, statusText, t, textOf } from './util.js';
 
 const FIT = {
@@ -34,11 +35,19 @@ export async function matchesView(root, ctx) {
     box.addEventListener('change', () => { opts[key] = box.checked; setPref({ hide: 'hide-lang', title: 'compare-title', excluded: 'show-excluded' }[key], box.checked); load(); });
     return h('label', { class: 'check' }, box, label, hint ? h('span', { class: 'sr', text: hint }) : null);
   };
-  root.append(h('div', { class: 'card' },
+  const filter = h('input', { type: 'search', id: 'f-filter', maxlength: '100', placeholder: t('matches.filterPlaceholder') });
+  let timer;
+  filter.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(() => load(), 350); });
+  opts.clear = () => { filter.value = ''; load(); filter.focus(); };
+  root.append(lookingFor(ctx), h('div', { class: 'card' },
+    h('div', { class: 'field' }, h('label', { for: 'f-filter', text: t('matches.filterLabel') }), filter),
     toggle('hide', t('matches.hideLang')), toggle('title', t('matches.compareTitle')), toggle('excluded', t('matches.showExcluded'))), results);
   const load = async () => {
     results.replaceChildren(h('p', { role: 'status', text: t('matches.loading') }), h('progress', { 'aria-label': t('matches.loading') }));
-    const query = `mode=${opts.title ? 'both' : 'task'}&limit=50&excluded=${opts.excluded ? 1 : 0}&hide_language_conflicts=${opts.hide ? 1 : 0}`;
+    const words = filter.value.trim();
+    opts.q = words;
+    const query = `mode=${opts.title ? 'both' : 'task'}&limit=50&excluded=${opts.excluded ? 1 : 0}&hide_language_conflicts=${opts.hide ? 1 : 0}`
+      + (words ? `&q=${encodeURIComponent(words)}` : '');
     try {
       const data = await api('GET', `/api/matches?${query}`);
       if (!ctx.alive()) return;
@@ -54,6 +63,25 @@ export async function matchesView(root, ctx) {
   api('GET', '/api/families').then((f) => { if (ctx.alive() && f.families?.length) root.append(families(f.families)); }).catch(() => {});
 }
 
+function lookingFor(ctx) {
+  const box = h('div', { class: 'card' }, h('h2', { class: 'label', text: t('matches.lookingFor') }), h('p', { role: 'status', text: t('matches.loading') }));
+  const list = (items) => (items && items.length ? items.join(', ') : t('matches.notSet'));
+  const kinds = Object.fromEntries(EMPLOYMENT);
+  api('GET', '/api/profile').then(({ profile: p }) => {
+    if (!ctx.alive()) return;
+    const langs = Object.entries(p.languages || {}).map(([code, level]) => `${langName(code)} ${level}`);
+    box.replaceChildren(h('h2', { class: 'label', text: t('matches.lookingFor') }),
+      h('ul', { class: 'facts' },
+        h('li', { text: t('matches.places', { list: list(p.locations) }) }),
+        h('li', { text: t('matches.remote', { list: list(p.remote_regions) }) }),
+        h('li', { text: t('matches.kinds', { list: list((p.employment || []).map((k) => (kinds[k] ? kinds[k]() : k))) }) }),
+        h('li', { text: t('matches.langs', { list: list(langs) }) })),
+      h('p', { class: 'hint', text: t('matches.changeHint') }),
+      h('div', { class: 'row' }, button(t('matches.change'), () => ctx.go('details'))));
+  }).catch(() => box.remove());
+  return box;
+}
+
 function families(list) {
   return h('details', { class: 'card' }, h('summary', { text: t('matches.familiesTitle') }), h('p', { class: 'hint', text: t('matches.familiesHint') }),
     h('ul', { class: 'list' }, list.map((f) => h('li', {}, h('b', { text: f.label }),
@@ -66,7 +94,13 @@ function drawResults(data, ctx, opts) {
   const lanes = ['actionable', 'verify first', ...(opts.excluded ? ['excluded'] : [])];
   const shown = lanes.reduce((n, l) => n + (task[l]?.length || 0), 0);
   const c = data.counts?.task || {};
-  out.push(h('p', { class: 'muted', text: t('matches.counts', { good: c.actionable ?? 0, look: c['verify first'] ?? 0 }) }));
+  const found = lanes.reduce((n, l) => n + (data.shown?.task?.[l] ?? 0), 0);
+  if (opts.q && found) {
+    out.push(h('p', { class: 'muted', role: 'status', text: found === 1 ? t('matches.filterOne', { q: opts.q }) : t('matches.filterCount', { n: found, q: opts.q }) }));
+  } else if (opts.q) {
+    out.push(emptyState(t('matches.emptyTitle'), t('matches.filterNone', { q: opts.q }), button(t('matches.filterClear'), opts.clear, 'primary')));
+    return out;
+  } else out.push(h('p', { class: 'muted', text: t('matches.counts', { good: c.actionable ?? 0, look: c['verify first'] ?? 0 }) }));
   if (!shown) {
     out.push(emptyState(t('matches.emptyTitle'), ctx.state.jobs.stored ? t('matches.emptyBody') : t('matches.emptyNoJobs'),
       button(t('matches.toJobs'), () => ctx.go('jobs'), 'primary')));

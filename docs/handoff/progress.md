@@ -2,6 +2,16 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-17 — owner feedback from trying the app
+
+- Matches page: a "What you are looking for" bar (places, remote countries, kinds of work, languages) with a Change
+  button. Saving details now returns to the matches when jobs are stored, since matches are redone on save.
+- Matches page: a filter box for words in the job title, company or place. The API takes `q` and returns `shown`
+  counts, so the filter covers every stored job, not just the first 50 (`docs/web-app/api.md`).
+- Find jobs page: a primary "Continue to your matches" button at the bottom once jobs are stored, like the other steps.
+- 194 offline tests. Browser check with fictional data: filter count, empty state and Clear, Change → save → matches,
+  German, 375 px, no console errors.
+
 ## 2026-11-17 — analyser 16, plainer reasons, richer fictional profiles
 
 - Plainer English reasons: language names instead of codes ("The profile lists German at B1"), and the

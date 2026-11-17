@@ -301,6 +301,28 @@ class MatchTests(AppTestCase):
         self.assertGreater(shown, 3)
         self.assertEqual(self.call("GET", "/api/matches?mode=nonsense")[0], 422)
 
+    def test_filter_by_words_in_title_company_or_place(self):
+        _, jobs, _ = load_demo()
+        self.seed(jobs)
+        self.make_profile()
+        everything = self.ok("GET", "/api/matches?mode=both&limit=200&excluded=1")
+        titles = [r["title"] for lanes in everything["results"]["task"].values() for r in lanes]
+        word = next(w for t in titles for w in t.split() if len(w) > 4)
+        found = self.ok("GET", f"/api/matches?mode=both&limit=200&excluded=1&q={word.upper()}")
+        self.assertEqual(found["query"], word.upper())
+        for name in ("task", "title"):
+            records = [r for lanes in found["results"][name].values() for r in lanes]
+            self.assertTrue(records or name == "title", name)
+            for record in records:
+                text = " ".join([record["title"], record["company"], *map(str, record.get("locations") or [])])
+                self.assertIn(word.casefold(), text.casefold())
+            self.assertEqual(found["shown"][name], {lane: len(rows) for lane, rows in found["results"][name].items()})
+        self.assertLess(sum(found["shown"]["task"].values()), len(titles))
+        two = self.ok("GET", f"/api/matches?mode=task&excluded=1&q={word}%20zzzz-nothing")
+        self.assertEqual(sum(two["shown"]["task"].values()), 0)
+        self.assertEqual(everything["counts"], found["counts"])
+        self.assertEqual(self.call("GET", "/api/matches?q=" + "x" * 101)[0], 422)
+
     def test_extra_fields_pay_age_deadline_languages_and_wording(self):
         self.seed([Job.load(SALARY_JOB)])
         self.make_profile()

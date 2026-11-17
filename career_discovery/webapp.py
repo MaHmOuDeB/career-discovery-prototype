@@ -108,7 +108,7 @@ def routes(service):
         except ValueError:
             raise ApiError(422, "invalid", "The limit must be a whole number.") from None
         return service.matches(first(r.query, "mode", "task"), limit, flag(r.query, "excluded"),
-                               flag(r.query, "hide_language_conflicts"))
+                               flag(r.query, "hide_language_conflicts"), first(r.query, "q", ""))
 
     def export(r):
         text = json.dumps(service.export_all(), ensure_ascii=False, indent=2)

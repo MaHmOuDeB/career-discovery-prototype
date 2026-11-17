@@ -43,6 +43,12 @@ ALL_LEVELS = {code: "A1" for code in ("de", "en", "fr", "es")}
 ASKED_LEVEL = re.compile(r"The ad specifies ([ABC][12])")
 
 
+
+def mentions(job, terms):
+    """Every filter word appears in the title, company or places (case-insensitive)."""
+    text = " ".join([job.title, job.company, *job.locations, *job.remote_regions]).casefold()
+    return all(term in text for term in terms)
+
 class ApiError(Exception):
     def __init__(self, status, code, message, fields=None):
         super().__init__(message)
@@ -276,31 +282,36 @@ class AppService:
         )
         return record
 
-    def matches(self, mode="task", limit=50, excluded=False, hide_language_conflicts=False):
+    def matches(self, mode="task", limit=50, excluded=False, hide_language_conflicts=False, query=""):
         if mode not in MODES:
             raise ApiError(422, "invalid", "The mode must be task, title or both.")
         if not 1 <= limit <= 200:
             raise ApiError(422, "invalid", "The limit must be between 1 and 200.")
+        query = " ".join(str(query or "").split())
+        if len(query) > 100:
+            raise ApiError(422, "invalid", "Use at most 100 characters in the filter.")
+        terms = query.casefold().split()
         now = self.clock()
         with self.open_store() as store:
             profile = self._profile(store, confirmed=True)
             rows = self._match(store, profile, now)
             applications = {a["job_key"]: a["status"] for a in store.applications()}
-            results, counts = {}, {}
+            results, counts, shown = {}, {}, {}
             for name in MODES[mode]:
                 ranked = split_ranked(rows, "baseline" if name == "title" else "task")
                 counts[name] = {lane: len(found) for lane, found in ranked.items()}
-                results[name] = {}
+                results[name], shown[name] = {}, {}
                 for lane in LANES:
                     if lane == "excluded" and not excluded:
                         continue
                     records = [self._decorate(row, profile, name == "title", berlin_date(now), applications)
-                               for row in ranked[lane]]
+                               for row in ranked[lane] if mentions(row.job, terms)]
                     if hide_language_conflicts:
                         records = [r for r in records if not r["language_summary"]["conflict"]]
+                    shown[name][lane] = len(records)
                     results[name][lane] = records[:limit]
-            return {"mode": mode, "corpus_vacancies": len(rows), "counts": counts, "results": results,
-                    "generated_at": now.isoformat()}
+            return {"mode": mode, "corpus_vacancies": len(rows), "counts": counts, "shown": shown, "query": query,
+                    "results": results, "generated_at": now.isoformat()}
 
     def recheck(self, key):
         with self.lock, self.open_store() as store:
