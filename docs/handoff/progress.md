@@ -7,8 +7,8 @@ Newest entry first. Each entry: date, what is done, what is open, the exact next
 - GitHub Actions (`.github/workflows/tests.yml`) runs the tests, demo and help on Ubuntu, macOS and Windows with
   Python 3.14 on every push. Windows found one real bug: no system time-zone database, so `Europe/Berlin` failed in
   `matching.py`. `berlin_date` now falls back to the EU summer-time rule; `tests/test_timezone.py` checks it against
-  the database. Other fixes: cross-platform bounded PDF extraction, UTF-8 for all text I/O, private JSON replaced after
-  the temp file closes. Report: `diagnostics/windows-portability-report.md`. 128 tests.
+  the database where it exists and with fixed switch dates everywhere. Other fixes: cross-platform bounded PDF extraction, UTF-8 for all text I/O, private JSON replaced after
+  the temp file closes. Report: `diagnostics/windows-portability-report.md`. 129 tests.
 - On Windows, files are not owner-only (README says so); PDF import needs Poppler on PATH.
 
 ## 2026-11-17 — published as a public GitHub repo (owner's decision)

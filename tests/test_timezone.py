@@ -10,6 +10,13 @@ def missing_zone(key):
     raise ZoneInfoNotFoundError(key)
 
 
+try:
+    ZoneInfo("Europe/Berlin")
+    HAS_DATABASE = True
+except ZoneInfoNotFoundError:
+    HAS_DATABASE = False
+
+
 class BerlinDateTests(unittest.TestCase):
     """Windows has no system time-zone database; the fallback must give the same Berlin date."""
 
@@ -21,12 +28,25 @@ class BerlinDateTests(unittest.TestCase):
                 yield from (start + timedelta(minutes=30 * step) for step in range(8 * 48))
             yield from (datetime(year, 1, 1, tzinfo=timezone.utc) + timedelta(hours=7 * step) for step in range(1252))
 
+    @unittest.skipUnless(HAS_DATABASE, "no time-zone database on this system (Windows); fixed dates below still run")
     def test_fallback_matches_the_time_zone_database(self):
         zone = ZoneInfo("Europe/Berlin")
         expected = [moment.astimezone(zone).date() for moment in self.instants()]
         with mock.patch.object(matching, "ZoneInfo", side_effect=missing_zone):
             actual = [matching.berlin_date(moment) for moment in self.instants()]
         self.assertEqual(actual, expected)
+
+    def test_fallback_on_known_switch_dates(self):
+        # 2026: summer time from 29 March, back to winter time on 25 October, both at 01:00 UTC.
+        cases = {(2026, 3, 29, 0, 59): "2026-03-29", (2026, 3, 29, 22, 30): "2026-03-30",
+                 (2026, 3, 28, 22, 30): "2026-03-28", (2026, 10, 24, 22, 30): "2026-10-25",
+                 (2026, 10, 25, 22, 30): "2026-10-25", (2026, 10, 25, 23, 30): "2026-10-26",
+                 (2026, 12, 31, 23, 0): "2027-01-01", (2026, 7, 1, 21, 59): "2026-07-01",
+                 (2026, 7, 1, 22, 0): "2026-07-02"}
+        with mock.patch.object(matching, "ZoneInfo", side_effect=missing_zone):
+            for parts, expected in cases.items():
+                moment = datetime(*parts, tzinfo=timezone.utc)
+                self.assertEqual(matching.berlin_date(moment).isoformat(), expected, parts)
 
     def test_uses_the_database_when_present(self):
         moment = datetime(2026, 11, 16, 23, 30, tzinfo=timezone.utc)
