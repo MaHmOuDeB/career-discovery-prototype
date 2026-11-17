@@ -68,6 +68,18 @@ class TrackerTests(unittest.TestCase):
         self.assertIn("'=cmd", text)
         self.assertIn('"Analyst, Data"', text)
 
+    def test_csv_neutralises_formulas_after_separators(self):
+        rows = [{"job_key": "k", "company": 'Acme;=HYPERLINK("http://x")', "title": "A, +cmd", "status": "applied",
+                 "applied_on": "", "follow_up_on": "", "notes": "x\n@SUM(1)\t=1", "url": "\t=1", "updated_at": "t"}]
+        text = applications_csv(rows)
+        self.assertIn("Acme;'=HYPERLINK", text)
+        self.assertIn(",' +cmd", text)
+        self.assertIn("\n'@SUM", text)
+        self.assertIn("\t'=1", text)
+        for line in text.splitlines():
+            for cell in line.replace(";", ",").split(","):
+                self.assertFalse(cell.strip('" ').startswith(("=", "@")), cell)
+
 
 if __name__ == "__main__":
     unittest.main()

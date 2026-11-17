@@ -1,11 +1,15 @@
 # Local web app API (v1)
 
 Server: `python -m career_discovery app [--port N] [--no-browser] [--state DIR] [--smoke]`. It binds 127.0.0.1 only
-(port 8765 or the next free one). `GET /` serves `career_discovery/web/index.html` with
-`<meta name="cd-token" content="...">` filled in per launch. Read it once; send it on every `/api/` call.
+(port 8765 or the next free one). On start the terminal prints, and the app opens, `http://127.0.0.1:<port>/?launch=<secret>`.
+That link works once: the server answers with `Set-Cookie: cd_session=<session secret>; HttpOnly; SameSite=Strict; Path=/` and
+`303` to `/`. Lost or used link: stop and start the app again. `GET /` serves `career_discovery/web/index.html` with
+`<meta name="cd-token" content="...">` filled in per launch, only when the cookie is present; without it `GET /` returns a small
+static page (English and German) that says to open the app from its starter window and contains no token. Static assets stay public.
+Read the token once; send it on every `/api/` call. Connections time out after 30 seconds.
 
 ## Rules for every call
-- Header `X-CD-Token: <token>` on every `/api/` request (401 `unauthorized` otherwise). Fetch downloads with this header
+- The `cd_session` cookie and header `X-CD-Token: <token>` on every `/api/` request (401 `unauthorized` without either). Fetch downloads with this header
   and save the blob; a plain link cannot send it.
 - Host must be `127.0.0.1:<port>` or `localhost:<port>`; a foreign `Origin` is refused (403).
 - Bodies: `application/json` (object) or `multipart/form-data`, at most 10 MB (413 `too_large`, 415 `unsupported_type`).
@@ -75,13 +79,13 @@ Statuses: `saved applied interview offer rejected withdrawn`.
   Applying without `applied_on` uses today (Berlin). `follow_up_on` defaults to 7 working days (Mon to Fri, no holidays) after
   `applied_on` and follows it if you change the date. 422 with `fields` for a bad status or date.
 - `DELETE /api/applications?job_key=<url-encoded key>`: `{deleted: true}`.
-- `GET /api/applications/export.csv`: UTF-8 with BOM, opens in Excel; cells starting `= + - @` are prefixed with `'`.
+- `GET /api/applications/export.csv`: UTF-8 with BOM, opens in Excel; cells that start with, or contain after `; , tab` or a newline, one of `= + - @` (and cells starting with tab or CR) get a `'` prefix.
 - `GET /api/summary`: `{today, week_start, applied_this_week, follow_ups_due: [row], interviews: [row], new_matches,
   last_visit, first_visit, counts}`. `new_matches` counts task matches not seen at the last `POST /api/summary/seen` `{}`
   (call it after the user has looked at their matches).
 
 ## Your data
 - `GET /api/export`: download JSON `{exported_at, profile, cv, feedback, applications, last_visit}` (attachment).
-- `POST /api/data/delete` `{"confirm": "DELETE"}`: removes profile, feedback, applications, uploaded CV cache, search logs and visit
-  markers. Cached jobs stay. Any other `confirm` is 422.
+- `POST /api/data/delete` `{"confirm": "DELETE"}`: removes profile, feedback, applications, uploaded CV cache, search logs, visit
+  markers and jobs imported from CSV. Jobs fetched from boards stay (public listings). Any other `confirm` is 422.
 - `POST /api/shutdown` `{}`: replies `{stopping: true}` then stops the server.

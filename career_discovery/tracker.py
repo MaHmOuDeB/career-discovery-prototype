@@ -1,6 +1,7 @@
 """Application tracker rules: statuses, follow-up dates and spreadsheet-safe export."""
 
 import csv
+import re
 from datetime import date, timedelta
 from io import StringIO
 
@@ -66,9 +67,12 @@ def normalise_application(data, existing, today):
             "follow_up_on": follow, "notes": notes.strip()}
 
 
+FORMULA_AFTER_SEPARATOR = re.compile(r"(^|[;,\t\r\n])( *[=+\-@])")
+
+
 def spreadsheet_cell(value):
-    text = "" if value is None else str(value)
-    return "'" + text if text[:1] in {"=", "+", "-", "@", "\t", "\r"} else text
+    text = FORMULA_AFTER_SEPARATOR.sub(r"\1'\2", "" if value is None else str(value))
+    return "'" + text if text[:1] in {"\t", "\r"} else text
 
 
 def applications_csv(rows):

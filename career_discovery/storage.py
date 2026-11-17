@@ -366,8 +366,9 @@ class Storage:
                 for row in rows]
 
     def delete_user_data(self):
-        """Remove feedback, applications, search logs and visit markers. Cached vacancies stay."""
+        """Remove feedback, applications, search logs, visit markers and CSV-imported jobs. Board listings stay."""
         db = self.connection()
         with db:
             for table in ("feedback", "application", "run", "meta"):
                 db.execute(f"DELETE FROM {table}")
+            db.execute("DELETE FROM job WHERE source='csv'")

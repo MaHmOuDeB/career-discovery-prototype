@@ -76,10 +76,12 @@ class AppTestCase(unittest.TestCase):
         self.thread.join(5)
 
     def call(self, method, path, body=None, *, token=True, host=None, origin=None, ctype="application/json",
-             raw=False, headers=None):
+             raw=False, headers=None, cookie=True):
         conn = http.client.HTTPConnection("127.0.0.1", self.port, timeout=10)
         self.addCleanup(conn.close)
         sent = {"Host": host or f"127.0.0.1:{self.port}", **(headers or {})}
+        if cookie:
+            sent["Cookie"] = f"cd_session={cookie if isinstance(cookie, str) else self.server.session}"
         if token:
             sent["X-CD-Token"] = token if isinstance(token, str) else self.server.token
         if origin:
@@ -134,6 +136,64 @@ class SecurityTests(AppTestCase):
         status, response, _ = self.call("GET", "/api/state")
         self.assertEqual(response.getheader("Cache-Control"), "no-store")
 
+    def test_page_without_the_session_cookie_has_no_token(self):
+        status, _, page = self.call("GET", "/", token=False, cookie=False, raw=True)
+        self.assertEqual(status, 200)
+        self.assertNotIn(self.server.token.encode(), page)
+        self.assertNotIn(b"cd-token", page)
+        self.assertIn(b"Open Career Discovery from its starter window", page)
+        self.assertIn("Career Discovery".encode(), page)
+        self.assertIn("Starterfenster".encode(), page)
+
+    def test_launch_secret_sets_the_cookie_once(self):
+        secret = self.server.launch_secret
+        status, response, _ = self.call("GET", f"/?launch={secret}", token=False, cookie=False, raw=True)
+        self.assertEqual(status, 303)
+        self.assertEqual(response.getheader("Location"), "/")
+        cookie = response.getheader("Set-Cookie")
+        self.assertIn(f"cd_session={self.server.session}", cookie)
+        for part in ("HttpOnly", "SameSite=Strict", "Path=/"):
+            self.assertIn(part, cookie)
+        status, _, page = self.call("GET", f"/?launch={secret}", token=False, cookie=False, raw=True)
+        self.assertEqual(status, 200)
+        self.assertNotIn(self.server.token.encode(), page)
+        status, _, page = self.call("GET", "/?launch=wrong", token=False, cookie=False, raw=True)
+        self.assertNotIn(self.server.token.encode(), page)
+
+    def test_api_needs_the_session_cookie_even_with_the_token(self):
+        for cookie in (False, "wrong"):
+            status, _, body = self.call("GET", "/api/state", cookie=cookie)
+            self.assertEqual(status, 401)
+            self.assertEqual(body["error"]["code"], "unauthorized")
+        status, _, _ = self.call("GET", "/api/export", cookie=False)
+        self.assertEqual(status, 401)
+
+    def test_idle_connections_are_dropped(self):
+        import socket
+        from career_discovery.webapp import Handler
+
+        Handler.timeout = 0.3
+        self.addCleanup(setattr, Handler, "timeout", 30)
+        for head in (b"GET /api/sta", None):
+            with socket.create_connection(("127.0.0.1", self.port), timeout=5) as sock:
+                if head is None:
+                    head = (f"POST /api/profile/new HTTP/1.1\r\nHost: 127.0.0.1:{self.port}\r\n"
+                            f"Cookie: cd_session={self.server.session}\r\nX-CD-Token: {self.server.token}\r\n"
+                            "Content-Type: application/json\r\nContent-Length: 50\r\n\r\n").encode()
+                sock.sendall(head)
+                chunks = []
+                while True:
+                    chunk = sock.recv(4096)
+                    if not chunk:
+                        break
+                    chunks.append(chunk)
+            self.assertNotIn(b" 500 ", b"".join(chunks))
+
+    def test_default_timeout_is_set(self):
+        from career_discovery.webapp import Handler
+
+        self.assertEqual(Handler.timeout, 30)
+
     def test_wrong_host_is_rejected_for_pages_and_api(self):
         for path in ("/", "/api/state"):
             status, _, body = self.call("GET", path, host="evil.example:80")
@@ -150,7 +210,8 @@ class SecurityTests(AppTestCase):
         conn = http.client.HTTPConnection("127.0.0.1", self.port, timeout=10)
         self.addCleanup(conn.close)
         conn.putrequest("POST", "/api/profile/new")
-        for name, value in (("X-CD-Token", self.server.token), ("Content-Type", "application/json"),
+        for name, value in (("X-CD-Token", self.server.token), ("Cookie", f"cd_session={self.server.session}"),
+                            ("Content-Type", "application/json"),
                             ("Content-Length", str(10 * 1024 * 1024 + 1))):
             conn.putheader(name, value)
         conn.endheaders()
@@ -377,6 +438,24 @@ class DataTests(AppTestCase):
         self.assertEqual(self.ok("GET", "/api/state")["jobs"]["stored"], len(jobs))
         with self.service.open_store() as store:
             self.assertEqual(store.connection().execute("SELECT COUNT(*) FROM run").fetchone()[0], 0)
+
+    def test_delete_all_also_removes_csv_imported_jobs_but_keeps_board_jobs(self):
+        jobs = load_demo()[1]
+        self.seed(jobs)
+        self.ok("POST", "/api/jobs/import", {"csv": "company,title,url\nAcme,Analyst,https://vacancies.example/a1\n"})
+        self.assertEqual(self.ok("GET", "/api/state")["jobs"]["stored"], len(jobs) + 1)
+        self.ok("POST", "/api/data/delete", {"confirm": "DELETE"})
+        self.assertEqual(self.ok("GET", "/api/state")["jobs"]["stored"], len(jobs))
+
+    def test_existing_data_folder_is_made_owner_only_on_posix(self):
+        import os
+        if os.name != "posix":
+            self.skipTest("POSIX permissions only")
+        folder = Path(self.folder.name) / "shared"
+        folder.mkdir(mode=0o755)
+        os.chmod(folder, 0o755)
+        AppService(folder)
+        self.assertEqual(folder.stat().st_mode & 0o777, 0o700)
 
     def test_shutdown_stops_the_server(self):
         self.assertEqual(self.ok("POST", "/api/shutdown", {})["stopping"], True)

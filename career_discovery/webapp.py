@@ -28,6 +28,19 @@ TYPES = {".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=u
          ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml",
          ".png": "image/png", ".ico": "image/x-icon", ".woff2": "font/woff2", ".txt": "text/plain; charset=utf-8"}
 TOKEN_TAG = re.compile(r'<meta\s+name="cd-token"\s+content="[^"]*"\s*/?>', re.I)
+COOKIE = "cd_session"
+LANDING = (
+    '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
+    "<title>Career Discovery</title></head>"
+    '<body style="font-family:system-ui,sans-serif;max-width:34rem;margin:4rem auto;padding:0 1rem;line-height:1.5">'
+    "<h1>Open Career Discovery from its starter window</h1>"
+    "<p>This page needs the link that the starter window printed (it begins with http://127.0.0.1: and ends with ?launch=...). "
+    "That link works once. If it was used or lost, close the starter window and start Career Discovery again.</p>"
+    '<h1 lang="de">Career Discovery aus dem Starterfenster öffnen</h1>'
+    '<p lang="de">Diese Seite braucht den Link, den das Starterfenster ausgegeben hat (er beginnt mit http://127.0.0.1: und endet mit '
+    "?launch=...). Der Link funktioniert nur einmal. Ist er verbraucht oder verloren, schließ das Starterfenster und "
+    "starte Career Discovery neu.</p></body></html>"
+).encode("utf-8")
 METHODS = ("GET", "POST", "PUT", "DELETE")
 
 
@@ -137,6 +150,7 @@ def routes(service):
 class Handler(BaseHTTPRequestHandler):
     server_version = "CareerDiscovery"
     sys_version = ""
+    timeout = 30
 
     def log_message(self, *_):
         pass
@@ -172,6 +186,8 @@ class Handler(BaseHTTPRequestHandler):
             self.dispatch()
         except ApiError as exc:
             self.fail(exc.status, exc.code, exc.message, exc.fields)
+        except TimeoutError:
+            self.close_connection = True
         except FieldErrors as exc:
             self.fail(422, "invalid", "Some details need fixing before they can be saved.", exc.fields)
         except ValueError as exc:
@@ -194,12 +210,36 @@ class Handler(BaseHTTPRequestHandler):
         if origin is not None and origin.lower() not in self.server.allowed_origins:
             raise ApiError(403, "bad_origin", "Requests from other websites are not allowed.")
 
+    def has_session(self):
+        for header in self.headers.get_all("Cookie") or []:
+            for item in header.split(";"):
+                name, _, value = item.strip().partition("=")
+                if name == COOKIE and secrets.compare_digest(value.encode("utf-8"), self.server.session.encode("utf-8")):
+                    return True
+        return False
+
+    def launch(self, query):
+        given = first(query, "launch", "")
+        if given and self.server.spend_launch_secret(given):
+            self.send(303, b"", "text/plain; charset=utf-8", extra={
+                "Location": "/", "Set-Cookie": f"{COOKIE}={self.server.session}; HttpOnly; SameSite=Strict; Path=/"})
+            return True
+        return False
+
     def dispatch(self):
         self.check_origin()
         parts = urlsplit(self.path)
         path = unquote(parts.path)
         if not path.startswith("/api/"):
+            if path in {"/", "/index.html"} and self.command in {"GET", "HEAD"}:
+                if self.launch(parse_qs(parts.query)):
+                    return
+                if not self.has_session():
+                    return self.send(200, LANDING, TYPES[".html"])
             return self.static(path)
+        if not self.has_session():
+            self.close_connection = True
+            raise ApiError(401, "unauthorized", "This request did not come from a window opened with the app's launch link.")
         token = self.headers.get("X-CD-Token") or ""
         if not secrets.compare_digest(token.encode("utf-8"), self.server.token.encode("utf-8")):
             self.close_connection = True
@@ -280,8 +320,18 @@ class AppServer(ThreadingHTTPServer):
         super().__init__(address, Handler)
         port = self.server_address[1]
         self.service, self.token, self.routes = service, secrets.token_urlsafe(32), routes(service)
+        self.session, self.launch_secret = secrets.token_urlsafe(32), secrets.token_urlsafe(24)
+        self.launch_lock = threading.Lock()
         self.allowed_hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
         self.allowed_origins = {f"http://{host}" for host in self.allowed_hosts}
+
+    def spend_launch_secret(self, given):
+        with self.launch_lock:
+            secret = self.launch_secret
+            if secret is None or not secrets.compare_digest(given.encode("utf-8"), secret.encode("utf-8")):
+                return False
+            self.launch_secret = None
+            return True
 
 
 def make_server(service, port=0):
@@ -306,12 +356,14 @@ def default_data_dir():
 
 
 def smoke(server, url):
-    from urllib.request import Request as Get, urlopen
+    from http.cookiejar import CookieJar
+    from urllib.request import HTTPCookieProcessor, Request as Get, build_opener
 
-    page = urlopen(url, timeout=10).read().decode("utf-8")
+    opener = build_opener(HTTPCookieProcessor(CookieJar()))
+    page = opener.open(f"{url}?launch={server.launch_secret}", timeout=10).read().decode("utf-8")
     if f'content="{server.token}"' not in page:
         raise SystemExit("Smoke test failed: the page did not carry the launch token.")
-    state = urlopen(Get(url + "api/state", headers={"X-CD-Token": server.token}), timeout=10)
+    state = opener.open(Get(url + "api/state", headers={"X-CD-Token": server.token}), timeout=10)
     if json.loads(state.read().decode("utf-8")).get("data_dir") is None:
         raise SystemExit("Smoke test failed: the state call returned no data folder.")
     print("OK")
@@ -333,12 +385,14 @@ def run_app(args, catalogue_path=None):
                 server.shutdown()
                 thread.join(5)
             return
-        print(f"Career Discovery is running at {url}")
+        launch = f"{url}?launch={server.launch_secret}"
+        print("Career Discovery is running. Your browser opens it now. If it does not, open this link in your browser.")
+        print(f"The link works once. To get a new one, close this window and start Career Discovery again:\n{launch}")
         print(f"Your data is kept in {service.root}")
         print("Press Ctrl+C in this window to stop it.")
         if not args.no_browser:
             import webbrowser
-            webbrowser.open(url)
+            webbrowser.open(launch)
         try:
             server.serve_forever(poll_interval=0.2)
         except KeyboardInterrupt:

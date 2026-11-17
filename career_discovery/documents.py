@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import threading
+import time
 from zipfile import BadZipFile, ZipFile
 
 from .analysis import BULLET, normal, task_tags
@@ -44,6 +45,8 @@ CONTEXTS = {
     "internships": "internship", "internship": "internship",
     "volunteering": "volunteering", "ehrenamt": "volunteering",
 }
+
+TEMP_PREFIX = "cd-"
 
 
 def document_data(path):
@@ -126,13 +129,23 @@ def _run_pdftotext(program, path):
     return raw
 
 
+def remove_stale_temp_copies(max_age=3600):
+    cutoff = time.time() - max_age
+    for path in Path(tempfile.gettempdir()).glob(TEMP_PREFIX + "*.pdf"):
+        try:
+            if path.is_file() and not path.is_symlink() and path.stat().st_mtime < cutoff:
+                path.unlink()
+        except OSError:
+            continue
+
+
 def pdf_segments(data):
     if not data.startswith(b"%PDF-"):
         raise ValueError("The file does not have a supported PDF header.")
     program = shutil.which("pdftotext")
     if not program:
         raise ValueError("PDF extraction needs the local Poppler pdftotext tool. DOCX and manual entry also work.")
-    handle, name = tempfile.mkstemp(suffix=".pdf")
+    handle, name = tempfile.mkstemp(prefix=TEMP_PREFIX, suffix=".pdf")
     try:
         with os.fdopen(handle, "wb") as stream:
             stream.write(data)

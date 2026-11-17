@@ -164,6 +164,40 @@ class PdfLimitTests(unittest.TestCase):
         finally:
             self.assertFalse(paths[0].exists())
 
+    def test_temp_copy_is_removed_when_the_process_raises(self):
+        with mock.patch.object(documents.shutil, "which", return_value="pdftotext"), \
+                mock.patch.object(documents.subprocess, "Popen", side_effect=RuntimeError("boom")):
+            before = set(Path(tempfile.gettempdir()).glob("cd-*.pdf"))
+            with self.assertRaises(RuntimeError):
+                list(pdf_segments(b"%PDF-1.4 fake"))
+            self.assertEqual(set(Path(tempfile.gettempdir()).glob("cd-*.pdf")), before)
+
+    def test_stale_named_temp_copies_are_cleaned_up(self):
+        import os, time
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(tempfile, "tempdir", folder):
+            old, fresh, other = (Path(folder) / n for n in ("cd-old.pdf", "cd-new.pdf", "keep.pdf"))
+            for path in (old, fresh, other):
+                path.write_bytes(b"x")
+            os.utime(old, (time.time() - 7200, time.time() - 7200))
+            documents.remove_stale_temp_copies()
+            self.assertEqual((old.exists(), fresh.exists(), other.exists()), (False, True, True))
+
+    def test_pdf_copy_uses_the_cd_prefix(self):
+        names = []
+        real = tempfile.mkstemp
+
+        def spy(*a, **k):
+            result = real(*a, **k)
+            names.append(Path(result[1]).name)
+            return result
+
+        with mock.patch.object(documents.shutil, "which", return_value="pdftotext"), \
+                mock.patch.object(documents.tempfile, "mkstemp", side_effect=spy), \
+                mock.patch.object(documents.subprocess, "Popen", side_effect=RuntimeError("boom")):
+            with self.assertRaises(RuntimeError):
+                list(pdf_segments(b"%PDF-1.4 fake"))
+        self.assertTrue(names[0].startswith("cd-") and names[0].endswith(".pdf"))
+
     def test_normal_output_is_split_into_pages_and_lines(self):
         process = FakeProcess(b"Built dashboards.\nUsed SQL.\fSecond page")
         self.assertEqual(self.run_pdf(process), [

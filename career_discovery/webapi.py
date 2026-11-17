@@ -14,7 +14,7 @@ import threading
 
 from . import __version__
 from .analysis import ANALYSER_VERSION, load_catalogue
-from .documents import EXTRACTOR_VERSION, MAX_DOCUMENT, extract_profile
+from .documents import EXTRACTOR_VERSION, MAX_DOCUMENT, extract_profile, remove_stale_temp_copies
 from .eligibility import language_findings
 from .matching import as_record, berlin_date, discover_families, run_match, split_ranked
 from .models import Evidence, Profile, clean_text
@@ -52,10 +52,14 @@ class ApiError(Exception):
 class AppService:
     def __init__(self, root, *, catalogue=None, boards_path=None, client_factory=PublicHTTP, clock=utcnow):
         root = Path(root)
-        fresh = not root.exists()
         root.mkdir(parents=True, exist_ok=True, mode=0o700)
-        if fresh and os.name == "posix":
-            os.chmod(root, 0o700)
+        if os.name == "posix":
+            try:
+                if root.stat().st_uid == os.getuid():
+                    os.chmod(root, 0o700)
+            except OSError:
+                pass
+        remove_stale_temp_copies()
         self.root = root.resolve()
         self.catalogue = catalogue or load_catalogue()
         self.boards_path = Path(boards_path) if boards_path else Path(__file__).with_name("boards.json")
@@ -299,14 +303,16 @@ class AppService:
                     "generated_at": now.isoformat()}
 
     def recheck(self, key):
-        with self.open_store() as store:
+        with self.lock, self.open_store() as store:
             job = store.job(key)
             if job.availability == "closed" or job.source not in {"ashby", "greenhouse"}:
                 raise ValueError("Only listed vacancies from the employer boards can be rechecked here. "
                                  "Open the employer link yourself instead.")
-            client = self.client_factory(budget=8)
             now = self.clock()
-            reviewed = verify_job(job, client, now, store.recent_listing(job, now))
+            listed_at = store.recent_listing(job, now)
+        client = self.client_factory(budget=8)
+        reviewed = verify_job(job, client, now, listed_at)
+        with self.lock, self.open_store() as store:
             if not store.update_status(job, reviewed):
                 raise ApiError(409, "changed", "The listing changed while it was checked. Try again.")
             result = {"job_key": key, "availability": reviewed.availability, "checked_at": reviewed.checked_at,
