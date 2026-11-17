@@ -9,7 +9,7 @@ import unicodedata
 
 from .models import Requirement, fingerprint
 
-ANALYSER_VERSION = 15
+ANALYSER_VERSION = 16
 
 SECTIONS = {
     "core": (
@@ -436,6 +436,8 @@ ACTION_OBJECTS = {
             "own", "conduct", "deliver", "support", "lead", "help", "walk") + r"|oversee(?:s|ing)?|run(?:s|ning)?|ran|led",
         r"(?:customer|client|user|merchant|partner|seller|kunden|enterprise|implementation)[- ]onboarding|"
         r"onboarding (?:of|for) (?:new )?(?:customers?|clients?|users?|merchants?|partners?|accounts?|sellers?)|"
+        r"onboarding (?:sessions?|calls?|meetings?|workshops?|webinars?) (?:for|with) (?:new )?"
+        r"(?:customers?|clients?|users?|merchants?|partners?|accounts?|sellers?)|"
         r"(?:new )?(?:customers?|clients?|users?|merchants?|partners?|accounts?|sellers?) (?:through|during|into) "
         r"(?:the |their )?(?:onboarding|implementation|go[- ]live|setup)",
     ), (

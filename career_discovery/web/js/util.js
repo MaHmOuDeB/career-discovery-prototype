@@ -41,7 +41,6 @@ async function loadReasons() {
 }
 
 function reasonValue(name, raw) {
-  if (name === 'code') return langName(raw);
   return store.reasons.values[name]?.[raw] ?? raw;
 }
 

@@ -2,6 +2,23 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-17 — analyser 16, plainer reasons, richer fictional profiles
+
+- Plainer English reasons: language names instead of codes ("The profile lists German at B1"), and the
+  `verified_requirements` jargon removed from the reason ("Check what the employer means by this line."). The German
+  table follows.
+- `ANALYSER_VERSION` 16: "onboarding sessions/calls … for new customers" now tags `onboard`. Held-out comparison in the
+  diagnosis: v1 identical, v2 +1 correct tag, demo and pilot coverage unchanged.
+- Richer fictional profiles (`fixtures/supply-profiles.json`, `scripts/profile-yield.py`): 15 evidence items instead of 3
+  keeps plausible at 2. Evidence is not the main limit. See "Richer fictional profiles" in the diagnosis.
+
+Open
+1. Vocabulary lane: duty recognition on analyst, operations and support titles; CV-side wording for `stakeholders`,
+   `customer_communication`, `process_improvement`. New held-out labels before tuning.
+2. Owner decision: keep the strict "English working language unconfirmed" and senior-title rules in the plausible count?
+3. Repeat supply observation on or after 23 November (`scripts/repeat-supply.sh`, from the baseline tag).
+4. Real starter runs on Windows and a fresh Mac; consented profiles and the human pilot.
+
 ## 2026-11-17 — German match reasons
 
 - The German interface now shows the matcher's reason sentences in German. `career_discovery/web/i18n/reasons.de.json`

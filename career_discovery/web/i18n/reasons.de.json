@@ -1,6 +1,7 @@
 {
   "_note": "German for the fixed English sentences the matcher and the still-open check write. The UI splits a reason into sentences and replaces each one that matches; {name} matches any text. tests/test_reasons.py fails when a reason sentence in the code has no entry here.",
   "values": {
+    "language": {"German": "Deutsch", "English": "Englisch", "French": "Französisch", "Spanish": "Spanisch"},
     "rating": {"met": "erfüllt", "unknown": "offen", "conflict": "Konflikt"},
     "status": {"open": "offen", "verified": "bestätigt offen", "unverified": "nicht bestätigt", "closed": "geschlossen"}
   },
@@ -11,9 +12,9 @@
     ["Matches a location in the profile.", "Passt zu einem Ort in deinem Profil."],
     ["The listing does not identify a work location.", "Die Anzeige nennt keinen Arbeitsort."],
     ["Outside the locations in the profile.", "Liegt außerhalb der Orte in deinem Profil."],
-    ["Profile declares {actual} in {code}.", "Dein Profil nennt {actual} für {code}."],
+    ["The profile lists {language} at {actual}.", "Dein Profil nennt {language} auf Niveau {actual}."],
     ["The ad specifies {required}.", "Die Anzeige verlangt {required}."],
-    ["Verify the employer's wording and the candidate's {code} proficiency.", "Prüf die Formulierung der Anzeige und deine Kenntnisse in {code}."],
+    ["Check the ad's exact {language} requirement against your own level.", "Prüf die genaue Anforderung an {language} in der Anzeige und vergleich sie mit deinem Niveau."],
     ["Compared with user-supplied enrolment status.", "Mit deiner Angabe zur Immatrikulation verglichen."],
     ["Verify the employer's graduation window.", "Prüf, welchen Zeitraum nach dem Abschluss der Arbeitgeber meint."],
     ["Compared with the candidate's own answer about needing sponsorship.", "Mit deiner Antwort zur Visa-Unterstützung verglichen."],
@@ -31,8 +32,7 @@
     ["The available evidence does not resolve this condition.", "Die vorhandenen Belege klären diese Bedingung nicht."],
     ["Optional wording makes the requirement unclear.", "Die Formulierung lässt offen, ob das Pflicht ist."],
     ["Treated as preferred by the wording or section.", "Laut Formulierung oder Abschnitt nur gewünscht."],
-    ["Check the employer's intent.", "Prüf, was der Arbeitgeber meint."],
-    ["Record this clause in verified_requirements once resolved.", "Halte das Ergebnis fest, sobald es geklärt ist."],
+    ["Check what the employer means by this line.", "Prüf, was der Arbeitgeber mit dieser Zeile meint."],
     ["Path {index}: {rating}.", "Weg {index}: {rating}."],
     ["The stated deadline has passed.", "Die genannte Bewerbungsfrist ist vorbei."],
     ["The source marked this vacancy closed.", "Die Quelle meldet die Stelle als geschlossen."],

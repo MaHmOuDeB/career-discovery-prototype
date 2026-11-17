@@ -103,3 +103,49 @@ by "insufficient task evidence": their duties are now recognised, but the fictio
 cover few of them. Only eight reach a stretch or transferable fit; two are plausible, the other six wait on
 responsibility coverage or an unconfirmed English working language. More catalogue tasks would not change this.
 The next measurement needs richer fictional or consented profiles, which is an owner decision.
+
+## Richer fictional profiles (17 November 2026, `ANALYSER_VERSION` 16, catalogue 4)
+
+The owner asked for everything that could be done the same day, so the evidence explanation above was tested with
+fictional profiles only (consented profiles stay an owner and volunteer step). `fixtures/supply-profiles.json` holds
+`technical-graduate-rich`: the scenario graduate's settings, languages and places with 15 CV-stated items
+instead of 3 (a working-student support job, two internships, the capstone). `technical-graduate-rich-de-b2` is the
+same with German B2. Run `python3 -B scripts/profile-yield.py`: it uses a temporary copy of `.state/pilot`, the
+frozen clock `2026-11-16T22:52:55+00:00` and prints aggregate counts only.
+
+| Measure (1181 listings) | scenario, 3 items | rich, 15 items | rich, German B2 |
+| --- | --- | --- | --- |
+| Tasks with evidence | 7 | 13 | 13 |
+| Plausible in the supply screen | 2 | 2 | 2 |
+| No conflict finding | 290 | 290 | 290 |
+| … of which insufficient evidence | 259 | 251 | 251 |
+| … transferable / stretch / strong fit | 3 / 8 / 0 | 10 / 8 / 0 | 10 / 8 / 0 |
+| Mandatory German conflicts | 86 | 86 | 81 |
+
+Five times the evidence does not raise yield, so evidence is not the main limit. ("No conflict finding" counts listings
+without any conflict finding; the 176 above used the earlier screen's definition.) What holds the pool back:
+- Location: 775 listings are outside Berlin or remote-Germany. That is supply, not a defect.
+- Fit to this kind of graduate: of the 251 clear but insufficient listings, about 200 are sales, marketing,
+  engineering, finance, design or other titles. Their duties are rightly outside a support and operations profile.
+- Duty recognition on relevant titles: about 49 are analyst, operations or support titles. Most list five or more
+  duties but have at most one recognised. This is the remaining lever.
+- The plausible rule itself: even the 18 better fits are held back by "English working language unconfirmed"
+  (284 listings), a senior title signal (362) or open responsibility coverage.
+- Evidence-side wording: three rich-profile lines tag nothing, or only `document_process`, although they describe
+  `stakeholders`, `customer_communication` and `process_improvement` work in past-tense CV wording ("Coordinated with
+  product, sales and finance colleagues…", "Wrote customer emails…", "Mapped the returns workflow… proposed changes").
+  These were not tuned here, so the profile does not become its own test.
+
+Next step: a vocabulary lane for duty recognition on analyst, operations and support titles, plus CV-side wording
+for the three newer tasks. Use held-out labels written before any tuning, then re-run `scripts/profile-yield.py`.
+Whether the English-working-language and senior-title rules should stay strict for the plausible count is an owner
+decision on the supply policy (a policy change needs a new `SUPPLY_POLICY_VERSION` and a comparability check).
+
+## `ANALYSER_VERSION` 16 (17 November 2026)
+
+The onboard pattern now accepts "onboarding sessions, calls, meetings, workshops or webinars for or with" new
+customers, clients or users. It closes the gap seen in the web-app walkthrough, where "Ran onboarding sessions for new
+customers" tagged only `teach`. Employee onboarding ("for new hires") and attending a session stay untagged.
+Comparison with v15 on the same clock: demo output identical; held-out v1 identical; pilot pool coverage identical
+(the pool has no such line); held-out v2 one more correct `onboard` tag, task precision / recall 0.938 / 0.215 to
+0.939 / 0.220, onboard recall 0 / 5 to 1 / 5, no new false positive.

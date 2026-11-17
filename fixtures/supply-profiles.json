@@ -1,0 +1,308 @@
+[
+  {
+    "schema_version": 1,
+    "id": "technical-graduate-rich",
+    "fictional": true,
+    "confirmed": true,
+    "stage": "early career",
+    "search_titles": [
+      "Data Analyst",
+      "Business Analyst"
+    ],
+    "keywords": [
+      "sql",
+      "python",
+      "data analysis"
+    ],
+    "locations": [
+      "Berlin"
+    ],
+    "remote_regions": [
+      "DE"
+    ],
+    "employment": [
+      "full_time",
+      "trainee"
+    ],
+    "languages": {
+      "en": "C1",
+      "de": "B1"
+    },
+    "enrolled": false,
+    "recent_graduate": true,
+    "needs_sponsorship": null,
+    "experience_months": {
+      "relevant": 12,
+      "sql": 8
+    },
+    "known_gaps": [
+      "salesforce",
+      "data pipeline"
+    ],
+    "interests": [
+      "implementation",
+      "reporting-automation"
+    ],
+    "evidence": [
+      {
+        "id": "capstone-1",
+        "text": "I helped troubleshoot student users' import errors and documented a workflow for submitting data.",
+        "locator": "Fictional CV, page 1, project 1",
+        "state": "cv_stated",
+        "context": "capstone",
+        "scope": "Supported a student project"
+      },
+      {
+        "id": "internship-1",
+        "text": "Built dashboards and reported KPIs on ticket backlogs during an internship.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "internship-2",
+        "text": "Used SQL to join tables and automated workflows to refresh a weekly spreadsheet.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "ws-1",
+        "text": "Resolved escalated customer support tickets for a SaaS product and wrote runbooks for the support team.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-2",
+        "text": "Prioritised incoming support requests by urgency and routed them to the right engineering team.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-3",
+        "text": "Ran onboarding sessions for new customers and configured their accounts and user permissions.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-4",
+        "text": "Built Excel and Power BI dashboards to report weekly support KPIs to the operations lead.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-5",
+        "text": "Used SQL to analyse ticket data and find the causes of recurring complaints.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-6",
+        "text": "Cleaned duplicate and incomplete records in the CRM and set up checks to keep the data accurate.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-7",
+        "text": "Documented the refund process as a step-by-step guide and kept the internal knowledge base up to date.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-8",
+        "text": "Coordinated with product, sales and finance colleagues to agree fixes for customer issues.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-9",
+        "text": "Ran training workshops for new support colleagues on the ticketing tool.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-10",
+        "text": "Wrote customer emails and help-centre articles explaining product changes.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "internship-3",
+        "text": "Mapped the returns workflow with the operations team and proposed changes that shortened handling time.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "internship-4",
+        "text": "Automated a weekly spreadsheet refresh with Python and documented how to run it.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      }
+    ]
+  },
+  {
+    "schema_version": 1,
+    "id": "technical-graduate-rich-de-b2",
+    "fictional": true,
+    "confirmed": true,
+    "stage": "early career",
+    "search_titles": [
+      "Data Analyst",
+      "Business Analyst"
+    ],
+    "keywords": [
+      "sql",
+      "python",
+      "data analysis"
+    ],
+    "locations": [
+      "Berlin"
+    ],
+    "remote_regions": [
+      "DE"
+    ],
+    "employment": [
+      "full_time",
+      "trainee"
+    ],
+    "languages": {
+      "en": "C1",
+      "de": "B2"
+    },
+    "enrolled": false,
+    "recent_graduate": true,
+    "needs_sponsorship": null,
+    "experience_months": {
+      "relevant": 12,
+      "sql": 8
+    },
+    "known_gaps": [
+      "salesforce",
+      "data pipeline"
+    ],
+    "interests": [
+      "implementation",
+      "reporting-automation"
+    ],
+    "evidence": [
+      {
+        "id": "capstone-1",
+        "text": "I helped troubleshoot student users' import errors and documented a workflow for submitting data.",
+        "locator": "Fictional CV, page 1, project 1",
+        "state": "cv_stated",
+        "context": "capstone",
+        "scope": "Supported a student project"
+      },
+      {
+        "id": "internship-1",
+        "text": "Built dashboards and reported KPIs on ticket backlogs during an internship.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "internship-2",
+        "text": "Used SQL to join tables and automated workflows to refresh a weekly spreadsheet.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "ws-1",
+        "text": "Resolved escalated customer support tickets for a SaaS product and wrote runbooks for the support team.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-2",
+        "text": "Prioritised incoming support requests by urgency and routed them to the right engineering team.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-3",
+        "text": "Ran onboarding sessions for new customers and configured their accounts and user permissions.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-4",
+        "text": "Built Excel and Power BI dashboards to report weekly support KPIs to the operations lead.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-5",
+        "text": "Used SQL to analyse ticket data and find the causes of recurring complaints.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-6",
+        "text": "Cleaned duplicate and incomplete records in the CRM and set up checks to keep the data accurate.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-7",
+        "text": "Documented the refund process as a step-by-step guide and kept the internal knowledge base up to date.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-8",
+        "text": "Coordinated with product, sales and finance colleagues to agree fixes for customer issues.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-9",
+        "text": "Ran training workshops for new support colleagues on the ticketing tool.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "ws-10",
+        "text": "Wrote customer emails and help-centre articles explaining product changes.",
+        "locator": "Fictional CV, page 1, working student",
+        "state": "cv_stated",
+        "context": "working_student"
+      },
+      {
+        "id": "internship-3",
+        "text": "Mapped the returns workflow with the operations team and proposed changes that shortened handling time.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      },
+      {
+        "id": "internship-4",
+        "text": "Automated a weekly spreadsheet refresh with Python and documented how to run it.",
+        "locator": "Fictional CV, page 1, internship",
+        "state": "cv_stated",
+        "context": "internship"
+      }
+    ]
+  }
+]

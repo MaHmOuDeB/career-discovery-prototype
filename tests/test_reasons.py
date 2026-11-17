@@ -113,10 +113,10 @@ class ReasonTranslationTests(unittest.TestCase):
             self.assertTrue(de.strip() and de != en, en)
 
     def test_composed_reasons_translate_sentence_by_sentence(self):
-        text = ("Path 1: conflict. Profile declares B1 in de. The ad specifies C1. "
+        text = ("Path 1: conflict. The profile lists German at B1. The ad specifies C1. "
                 "Path 2: unknown. Minimum of 24 months in sql experience. Comparable tenure is unconfirmed.")
         self.assertEqual(translate(text),
-                         "Weg 1: Konflikt. Dein Profil nennt B1 für de. Die Anzeige verlangt C1. "
+                         "Weg 1: Konflikt. Dein Profil nennt Deutsch auf Niveau B1. Die Anzeige verlangt C1. "
                          "Weg 2: offen. Mindestens 24 Monate Erfahrung (Bereich: sql). "
                          "Vergleichbare Erfahrungsdauer ist nicht bestätigt.")
 

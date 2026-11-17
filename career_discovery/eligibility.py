@@ -135,10 +135,10 @@ def language_findings(text, profile):
         actual = profile.languages.get(code)
         if required and actual:
             state = "met" if CEFR.index(actual) >= CEFR.index(required) else "conflict"
-            reason = f"Profile declares {actual.upper()} in {code}. The ad specifies {required}."
+            reason = f"The profile lists {LANGUAGES[code][0].title()} at {actual.upper()}. The ad specifies {required}."
         else:
             state = "unknown"
-            reason = f"Verify the employer's wording and the candidate's {code} proficiency."
+            reason = f"Check the ad's exact {LANGUAGES[code][0].title()} requirement against your own level."
         findings.append(Finding(state, f"language ({code})", text, reason))
     return findings
 
@@ -262,7 +262,7 @@ def check_requirement(requirement, profile, catalogue):
         if confirmed:
             return (Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line."),)
         return (Finding("unknown", "requirement intent", text,
-                        "Check the employer's intent. Record this clause in verified_requirements once resolved."),
+                        "Check what the employer means by this line."),
                 *unclear_language_findings(text, profile))
     alternatives = OR.split(tenure_parts(text, catalogue))
     groups = [tuple(found for part in and_split(clause) for condition in REQUIRED_JOIN.split(part)

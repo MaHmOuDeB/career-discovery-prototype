@@ -77,3 +77,11 @@ labelled against the new definitions before tuning. Mapped duty lines rose from 
 listings stayed at 2: the fictional profile's evidence, not the catalogue, now limits yield. Look-alike wording
 (code review, contract renewals, data quality, title-case benefit subheadings) is vetoed per task rather than by
 loosening the fit rule.
+
+## Analyser version 16 and richer fictional profiles on 17 November 2026
+
+`ANALYSER_VERSION` is 16: onboarding sessions or calls for new customers now count as `onboard`, with no held-out
+regression. Richer fictional profiles (`fixtures/supply-profiles.json`, `scripts/profile-yield.py`) showed that five
+times the evidence leaves plausible listings at 2. Location supply, out-of-profile titles, duty recognition on
+relevant titles and the strict plausible rule limit yield, not profile evidence. The diagnosis has the table.
+
