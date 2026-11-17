@@ -12,7 +12,7 @@ The owner approved the isolated CLI after the Phase 0 assessment. The implementa
 
 | Check | Reviewed baseline |
 | --- | --- |
-| Offline suite | 63 passing tests |
+| Offline suite | 63 passing tests at tag `baseline-2026-11-17`; 110 after the coverage-gap lane (see below) |
 | Fictional comparison | 96 profile–vacancy pairs. Task ranking found 12 relevant jobs in 18 filled actionable slots. Title ranking found 5 in 10. Treat these as designed checks with different denominators. |
 | Frozen public challenge set | 26 cases. Five of 24 application paths corroborated at the time of the final check. Nineteen stayed unverified. Two expired controls stayed closed. |
 | Private replay using provisional Berlin settings | Zero actionable in either mode on both samples. Task review first returned 0 in both. Title review first returned 6 among 26 cases and 129 among 1,298 listings. |
@@ -33,8 +33,8 @@ The owner approved the isolated CLI after the Phase 0 assessment. The implementa
 
 ## Open work
 
-- **Engineering.** Establish a reproducible cause of low discovery yield before changing the task catalogue or ranking. Evaluate a focused fix on held-out fictional or consented cases. Keep known language and other mandatory conflicts out of actionable results, preserve evidence attribution, and report review-first results separately.
-- **Repeat supply around 23 November 2026.** Use the same 12 public boards, fictional graduate constraints, catalogue and observation policy. Record successful scope, reasons for rejection, employer and role-family coverage, and link status. Keep any exploratory source or matching changes in a separate comparison.
+- **Engineering.** Done on 17 November 2026: the low-yield cause was reproduced and the parsing, vocabulary and language fixes were evaluated on a held-out fictional set. See [the diagnosis](diagnostics/2026-11-17-coverage-gap.md) and [the progress log](progress.md). Yield is still below the gate; the next step is an owner decision on catalogue scope or richer test profiles, described in the diagnosis under "Why yield is still low".
+- **Repeat supply around 23 November 2026.** Use the same 12 public boards, fictional graduate constraints, catalogue and observation policy. Record successful scope, reasons for rejection, employer and role-family coverage, and link status. Keep any exploratory source or matching changes in a separate comparison. Run `scripts/repeat-supply.sh` on or after 23 November: it uses a worktree of the frozen baseline tag, then runs the current method as a separate read-only `coverage` diagnostic.
 - **Human pilot.** The owner reviews and confirms the profile. Complete the 26 blind relevance and realism judgements, then audit explanation claims against the reviewed evidence. Run paired sessions with three to five consenting volunteers. Measure useful adjacent discoveries, time to find three viable jobs, link validity, explanation accuracy and observed reuse. Follow the consent and deletion workflow in the pilot protocol.
 
 ## Repeat the fictional supply observation

@@ -111,7 +111,8 @@ class ParsingTests(unittest.TestCase):
                   locations=("Berlin",))
         core = (Requirement("r001", "core", "Communicate with residents in German at C2 level"),)
         findings = eligibility(job, self.profile, core, self.catalogue, today=self.now.date())
-        self.assertIn(("language (de)", "conflict"), {(finding.subject, finding.state) for finding in findings})
+        self.assertIn(("language (de)", "unknown"), {(finding.subject, finding.state) for finding in findings})
+        self.assertNotIn(("language (de)", "conflict"), {(f.subject, f.state) for f in findings})
         plain = (Requirement("r001", "core", "Resolve escalated support cases"),)
         self.assertNotIn("language (de)", {f.subject for f in eligibility(job, self.profile, plain, self.catalogue,
                                                                           today=self.now.date())})
@@ -139,3 +140,39 @@ class SectionDutyTests(unittest.TestCase):
                 "Du bist ein Organisationstalent\n"
                 "Sie verfügen über gute Excel-Kenntnisse")
         self.assertEqual(self.kinds(text), ["core"] * 5)
+
+
+class DutyShapeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.catalogue = load_catalogue()
+
+    def rows(self, description):
+        return [(row.kind, row.text) for row in analyse_description(description, self.catalogue)]
+
+    def test_german_qualifications_are_not_duties_after_duty_headings(self):
+        for line in ("Du kennst dich mit SQL aus", "Du beherrschst Excel und Python", "Du denkst analytisch",
+                     "Du weißt, wie Daten fließen", "Berufserfahrung in der Analyse von Daten",
+                     "Ausbildung oder Studium in der Wirtschaft", "Kenntnisse in der Datenanalyse"):
+            with self.subTest(line=line):
+                self.assertNotIn("core", [kind for kind, _ in self.rows(f"Deine Aufgaben\n{line}")], line)
+
+    def test_german_duty_forms_stay_core(self):
+        for line in ("Du analysierst Kennzahlen im Vertrieb", "Erstellung von Reports für die Geschäftsführung",
+                     "Erfahrungsberichte erstellen und Dokumentation pflegen"):
+            with self.subTest(line=line):
+                self.assertEqual([kind for kind, _ in self.rows(f"Deine Aufgaben\n- {line}")], ["core"], line)
+
+    def test_duties_starting_with_a_shape_word_stay_core(self):
+        for line in ("Background checks on new vendors", "Knowledge transfer sessions for new hires",
+                     "Experience reports are compiled for customers"):
+            with self.subTest(line=line):
+                self.assertEqual([kind for kind, _ in self.rows(f"Responsibilities\n- {line}")], ["core"], line)
+
+    def test_real_qualification_lines_stay_unclear_in_core(self):
+        for line in ("Experience with SQL", "5 years of experience in analytics", "3+ years experience",
+                     "Knowledge of Python", "Degree in economics", "Background in finance",
+                     "Berufserfahrung in der Datenanalyse", "Erfahrung mit SQL", "Strong experience, ideally in retail",
+                     "Familiarity with dashboards"):
+            with self.subTest(line=line):
+                self.assertNotEqual([kind for kind, _ in self.rows(f"Responsibilities\n- {line}")], ["core"], line)

@@ -2,32 +2,30 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
-## 2026-11-17 — coverage-gap lane started
+## 2026-11-17 — coverage-gap lane complete
 
-Done
-- Baseline reproduced: 63 offline tests pass and the demo runs. The code is in a local git repository, baseline tagged
-  `baseline-2026-11-17`.
-- Cause of the low yield reproduced on the cached public corpus: see
-  [diagnostics/2026-11-17-coverage-gap.md](diagnostics/2026-11-17-coverage-gap.md) (findings F1 to F5).
-- Added `scripts/gates.sh`, `docs/agent-rules.md`, `docs/task-definitions.md` and `AGENTS.md`.
+Done (commits on the checked-out branch, after tag `baseline-2026-11-17`)
+- Cause of the low yield reproduced and fixed in the analyser; `ANALYSER_VERSION` 14, catalogue unchanged at 3.
+  Numbers, method and limits: [diagnostics/2026-11-17-coverage-gap.md](diagnostics/2026-11-17-coverage-gap.md).
+  Per-lane agent reports sit next to it (`lane1` parsing, `lane3` diagnostics, `lane4` vocabulary, `lane5` languages,
+  `lane-review` independent review).
+- New: `coverage` and `heldout` CLI commands, `fixtures/heldout/` (24 independent labelled fictional ads),
+  `scripts/gates.sh`, `scripts/repeat-supply.sh`, `AGENTS.md`, `docs/agent-rules.md`, `docs/task-definitions.md`.
+- 110 offline tests pass; the demo output is identical to the baseline.
 
-Plan for this lane (status in brackets)
-1. [in progress] Parsing correctness: F3, F4, F5 and the missed headings in F2. Files: `career_discovery/analysis.py`,
-   `career_discovery/eligibility.py`, tests.
-2. [in progress] Held-out fictional set `fixtures/heldout/vacancies.json`, written without reading the vocabulary.
-3. [in progress] `coverage` and `heldout` diagnostics commands: `career_discovery/diagnostics.py`, CLI, tests.
-4. [pending] Vocabulary recall (F1): English and German duty wording for the existing tasks, precision checked.
-5. [pending] Bump `ANALYSER_VERSION` to 12 and the catalogue version to 4. Measure baseline against new on the same
-   frozen pool and clock, plus the held-out set. Record the numbers in the diagnosis file.
-6. [pending] Update the handoff, decisions and README.
+Independent review: 8 reproduced findings in `diagnostics/lane-review.md`, all fixed with tests (`ANALYSER_VERSION` 14).
 
-Step 2 and 3 done. Held-out baseline (tag `baseline-2026-11-17`, technical-graduate, 24 ads): 34 of 118 duties
-detected, task precision 0.857 (6 of 7), recall 0.054, 6 of 111 qualifications leak into duties, 9 of 17 mandatory
-language conflicts detected. Keep the held-out file out of every tuning brief; score it only at step 5.
+Open
+1. Repeat supply observation on or after 23 November 2026: run `scripts/repeat-supply.sh` (bounded public GETs to
+   the 12 reviewed boards). It refuses to run earlier. Record its printed summary here and in the handoff.
+2. Owner decision on yield (see "Why yield is still low" in the diagnosis): add catalogue tasks for unmapped duty
+   themes such as process improvement and customer communication, or evaluate with richer fictional or consented
+   profiles. Either change needs a catalogue version bump and a fresh held-out set or blind precision review.
+3. Human pilot steps in the handoff are unchanged and need the owner and volunteers.
 
-Step 1 done and committed (b0e4c77): 80 tests pass; zero-duty listings in the cached corpus fell from 333 to 253.
-Step 4 in progress: vocabulary in `analysis.py`/`catalog.json`, tests in `tests/test_vocabulary.py`, report in
-`diagnostics/lane4-vocabulary-report.md`, precision sample in `.state/vocab/sample.json` for a blind check. If this
-step was interrupted, check `git status`; uncommitted vocabulary edits are the work in progress.
+Rules that keep later results comparable
+- Never tune on `fixtures/heldout/`. If it is used for development, write a new held-out set before claiming results.
+- Compare analyser versions on the same frozen pool and clock: `coverage --at 2026-11-16T22:52:55+00:00` on
+  `.state/pilot`, against a worktree of the baseline tag.
 
-Next step (old note): finish step 1, run `scripts/gates.sh`, commit, then start step 4.
+Next step: item 1 on or after 23 November; item 2 waits for the owner.

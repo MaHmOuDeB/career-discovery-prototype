@@ -122,6 +122,19 @@ class DiagnosticsTests(unittest.TestCase):
         self.assertEqual(run("coverage", "--at", "2026-11-16T00:00:00+00:00")["jobs"], 0)
         self.assertFalse((state / "vacancies.sqlite").exists())
 
+    def test_cli_coverage_invalid_title_regex_is_a_clean_error(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        proc = subprocess.run([sys.executable, "-B", "-m", "career_discovery", "--state", temp.name,
+                               "coverage", "--titles", "("], cwd=PROJECT, capture_output=True, text=True, timeout=20)
+        self.assertEqual(proc.returncode, 2)
+        self.assertNotIn("Traceback", proc.stderr)
+        self.assertIn("Error:", proc.stderr)
+
+    def test_coverage_report_rejects_an_invalid_title_regex(self):
+        with self.assertRaises(ValueError):
+            coverage_report(self.jobs, self.profile, self.catalogue, NOW, title_pattern="(")
+
 
 if __name__ == "__main__":
     unittest.main()

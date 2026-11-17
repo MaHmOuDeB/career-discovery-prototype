@@ -4,7 +4,7 @@ from datetime import date
 from dataclasses import replace
 import re
 
-from .analysis import OPTIONAL, asserted_phrase, contains, normal
+from .analysis import NEGATION, NO_LANGUAGE, OPTIONAL, asserted_phrase, contains, normal
 from .models import CEFR, Finding
 
 LANGUAGES = {
@@ -44,6 +44,20 @@ OPEN_POOL = re.compile(r"\b(?:talent pool|talent community|spontaneous applicati
                        r"general application|initiativbewerbung)\b", re.I)
 OR = re.compile(r"\s+(?:or|oder)\s+(?!(?:higher|above|better|more|greater|höher|mehr|besser|darüber)\b)", re.I)
 AND = re.compile(r"(?<!-)\s+(?:and|und)\s+|,\s*(?=(?:German|English|Deutsch|Englisch)\b)", re.I)
+BARE_LANGUAGE_END = re.compile(r"\b(?:" + "|".join(LANGUAGE_TERMS) + r")$", re.I)
+LANGUAGE_START = re.compile(r"^(?:" + "|".join(LANGUAGE_TERMS) + r")\b", re.I)
+
+
+def and_split(clause):
+    """Split on and/und, but keep two bare language terms together so a level after the second is not lost."""
+    parts = AND.split(clause)
+    merged = [parts[0]]
+    for part in parts[1:]:
+        if BARE_LANGUAGE_END.search(merged[-1]) and LANGUAGE_START.match(part):
+            merged[-1] = f"{merged[-1]} and {part}"
+        else:
+            merged.append(part)
+    return merged
 COUNTRY_ALIASES = {
     "germany": "de", "deutschland": "de", "de": "de", "european union": "eu", "eu": "eu",
     "usa": "us", "united states": "us", "us": "us", "united kingdom": "gb", "uk": "gb",
@@ -246,7 +260,7 @@ def check_requirement(requirement, profile, catalogue):
                         "Check the employer's intent. Record this clause in verified_requirements once resolved."),
                 *unclear_language_findings(text, profile))
     alternatives = OR.split(tenure_parts(text, catalogue))
-    groups = [tuple(found for part in AND.split(clause) for condition in REQUIRED_JOIN.split(part)
+    groups = [tuple(found for part in and_split(clause) for condition in REQUIRED_JOIN.split(part)
                     for found in clause_findings(condition, profile, catalogue))
               for clause in alternatives]
     if len(groups) > 1:
@@ -291,6 +305,8 @@ def eligibility(job, profile, requirements, catalogue, today=None):
         else:
             if NO_SPONSORSHIP.search(req.text) or AUTH.search(req.text):
                 findings.extend(explicit_status(req.text, profile))
-            if LEVEL.search(req.text):
-                findings.extend(language_findings(req.text, profile))
+            if LEVEL.search(req.text) and not (NEGATION.search(normal(req.text)) or NO_LANGUAGE.search(req.text)):
+                findings.extend(replace(item, state="unknown", reason=item.reason + " The line describes a duty.")
+                                if item.state == "conflict" else item
+                                for item in language_findings(req.text, profile))
     return tuple(findings)

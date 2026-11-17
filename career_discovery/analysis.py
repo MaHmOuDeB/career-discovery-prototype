@@ -9,7 +9,7 @@ import unicodedata
 
 from .models import Requirement, fingerprint
 
-ANALYSER_VERSION = 13
+ANALYSER_VERSION = 14
 
 SECTIONS = {
     "core": (
@@ -112,7 +112,7 @@ ROLE_VERB = re.compile(
     r"analyse|analyze|assess|audit|automate|build|collect|coordinate|create|deliver|design|develop|"
     r"document|drive|enable|evaluate|execute|facilitate|forecast|handle|implement|investigate|lead|"
     r"maintain|manage|monitor|onboard|operate|orchestrate|own|plan|prepare|process|prospect|reconcile|"
-    r"report|resolve|review|run|support|test|track|train|triage|troubleshoot|work|write|"
+    r"report|resolve|review|run|support|teach|test|track|train|translate|triage|troubleshoot|tutor|work|write|"
     r"analysiere|arbeite|baue|betreue|entwickle|erstelle|koordiniere|pflege|plane|unterstütze)\w*\b", re.I
 )
 # Inside a duties section, plain lines without bullets also read as duties when they open with an English action,
@@ -121,9 +121,10 @@ SECTION_DUTY = re.compile(
     r"^(?:you (?:will |can )?|you[’']ll )?(?:collaborate|communicate|conduct|configure|debug|diagnose|educate|ensure|"
     r"fix|guide|help|identify|improve|integrate|keep|liaise|match|optimi[sz]e|organi[sz]e|partner|produce|provide|"
     r"respond|schedule|set up|update)\w*\b"
-    r"|^du (?!bist|hast|bringst|kannst|sprichst|verfügst|besitzt|möchtest|willst|überzeugst)\w+st\b"
+    r"|^du (?!bist|hast|bringst|kannst|sprichst|verfügst|besitzt|möchtest|willst|überzeugst|kennst|beherrschst|denkst|weißt)\w+st\b"
     r"|^sie (?!sind|haben|bringen|können|sprechen|verfügen|besitzen|möchten|überzeugen)\w+en\b"
     r"|^(?:eigenständige |selbstständige |operative |kontinuierliche |enge |aktive )?"
+    r"(?!(?:berufs)?erfahrung|ausbildung|studium|kenntnis)"
     r"(?:\w+ung|analyse|pflege|aufbau|koordination|kommunikation|dokumentation|mitarbeit|mitwirkung|übernahme|"
     r"identifikation|implementierung|optimierung|moderation|konzeption|präsentation|kontrolle)(?:en)?\b"
     r"(?=.{0,40}\b(?:von|der|des|und|sowie|im|in|bei|mit|für|unserer|unseres|neuer)\b)", re.I
@@ -137,8 +138,10 @@ REQUIRED_QUALIFICATION = re.compile(r"\b(?:\d{1,2}\s*\+?\s*(?:years?|jahre)\s+(?
 QUALIFICATION_LEAD = (r"^(?:(?:you (?:have|bring)|du (?:hast|bringst)|proven|solid|strong|hands-on|excellent|fluent|"
                       r"sehr gute|fundierte|gute|umfassende)\s+)*(?:an?\s+)?(?:\d{1,2}\s*\+?\s*)?")
 QUALIFICATION_SHAPE = re.compile(QUALIFICATION_LEAD + r"(?:experience|years?|proficien\w*|knowledge(?![- ]?base)|degree|background|"
-                                 r"familiarity|erfahrung\w*|kenntnisse|sprachkenntnisse|abgeschlossen\w* studium|"
-                                 r"jahre\w*)\b", re.I)
+                                 r"familiarity|(?:berufs)?erfahrung\w*|kenntnisse|sprachkenntnisse|abgeschlossen\w* studium|"
+                                 r"jahre\w*)\b"
+                                 r"(?=\s*(?:$|[,:(]|(?:with|in der|in|of|on|using|across|mit|im|als|oder|der|von|an|"
+                                 r"(?:of )?experience|(?:berufs)?erfahrung)\b))", re.I)
 
 
 def heading_kind(text):
@@ -194,8 +197,8 @@ ADJECTIVAL_GUARD = "".join(f"(?<!{verb} )" for verb in (
     "owning", "manage", "manages", "managing", "solve", "solves", "solving", "take", "takes", "taking", "work on"))
 DOC_VERBS = (silent_e("creat", "updat", "produc", "prepar", "curat", "compil") + "|"
              + regular("develop", "build", "maintain", "draft", "publish") + r"|built|writ(?:e|es|ing)|wrote")
-RUN_VERBS = (silent_e("facilitat", "moderat", "provid") + "|" + regular("conduct", "deliver", "host", "hold") +
-             r"|run(?:s|ning)?|ran|giv(?:e|es|ing)|gave|held|carr(?:y|ies|ied|ying) out")
+RUN_VERBS = (silent_e("facilitat", "moderat", "provid") + "|" + regular("conduct", "deliver", "host") +
+             r"|run(?:s|ning)?|ran|giv(?:e|es|ing)|gave|carr(?:y|ies|ied|ying) out")
 DE_MAKE_VERBS = (r"erstell\w*|entwickl\w*|bau(?:e|st|t|en)?|aufbau\w*|pfleg\w*|aktualisier\w*|konzipier\w*|implementier\w*|"
                  r"verantwort\w*|übernimm\w*|übernehm\w*|umsetz\w*|durchführ\w*|führ(?:e|st|t|en)|verfass\w*|erarbeit\w*|"
                  r"einricht\w*|verwalt\w*|etablier\w*|bereitstell\w*|erzeug\w*|überarbeit\w*|gestalt\w*")
@@ -551,8 +554,15 @@ TASK_PATTERNS = {
     task: re.compile("|".join(pair_pattern(*pair) for pair in pairs))
     for task, pairs in ACTION_OBJECTS.items()
 }
-INTENT_ONLY = re.compile(r"\b(?:learn(?:ing)? (?:to|about)|plans? to|planned to|want to|interested in|"
-                         r"exposure to|read about|watched|observed)\b", re.I)
+INTENT_ONLY = re.compile(r"\b(?:learn(?:ing)? (?:to|about)|plans? to|planned to|want(?:ed)? to|interested in|"
+                         r"exposure to|read about|watched|observed|applied for|enrolled in|studied|attended|"
+                         r"(?:course|seminar|workshop)s? on|lectures?|wrote about|provided with|received|certificates?)\b",
+                         re.I)
+EVIDENCE_OTHER_SUBJECT = re.compile(r"(?<!with )(?<!alongside )(?<!and )(?<!to )(?<!for )(?<!by )\b"
+                                    r"(?:colleagues|managers|others|they|the team|engineers|staff|students)\b")
+JOB_OTHER_SUBJECT = re.compile(r"\b(?:we|wir|our|unser\w*|engineers|managers|colleagues|the team)\b")
+JOB_CANDIDATE = re.compile(r"\b(?:you|your|someone|candidate|du|dein\w*)\b")
+JOB_RECIPIENT = re.compile(r"^(?:for you|für dich|für sie|dir)\b")
 
 
 TASK_EXCLUSION = re.compile(r"\b(?:rather than|instead of|excluding|don t|doesn t|won t|statt|anstatt|anstelle von)\b", re.I)
@@ -576,6 +586,11 @@ def task_is_asserted(clause, hit, *, evidence):
     context = f"{before} {hit.group()}"
     after = " ".join(clause[hit.end():].split()[:5])
     actor_context = f"{prefix} {hit.group()}"
+    if evidence and EVIDENCE_OTHER_SUBJECT.search(prefix):
+        return False
+    if not evidence and (JOB_RECIPIENT.match(clause[hit.end():].strip())
+                         or JOB_OTHER_SUBJECT.search(prefix) and not JOB_CANDIDATE.search(prefix)):
+        return False
     return not (OTHER_ACTOR.search(actor_context) or NEGATION.search(context) or TASK_EXCLUSION.search(context) or POST_EXCLUSION.search(after)
                 or (evidence and (INTENT_ONLY.search(actor_context) or EVIDENCE_SCOPE.search(actor_context)
                                   or before.endswith(" learning")
@@ -683,8 +698,9 @@ def split_duties(text, catalogue, tags):
 
 
 def plain_language_line(text, bullet, section):
-    return (not bullet and section in {"", "unclear"} and bool(LANGUAGE_TERM.search(text))
-            and bool(LANGUAGE_LEVEL.search(text) or STRONG_LANGUAGE.search(text)))
+    return (not bullet and section in {"", "unclear", "core"} and bool(LANGUAGE_TERM.search(text))
+            and bool(LANGUAGE_LEVEL.search(text) or STRONG_LANGUAGE.search(text))
+            and not (section == "core" and ROLE_VERB.search(text)))
 
 
 def qualification_shaped(text):

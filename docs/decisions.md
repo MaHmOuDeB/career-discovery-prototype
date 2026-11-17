@@ -49,3 +49,21 @@ The original employer snapshot was re-analysed with the updated catalogue at its
 The first review led to changes in mixed requirements, scoped tenure, evidence attribution, repeated-task scoring, seniority review, availability status and pilot diagnostics. The second reproduced further eligibility, attribution and availability errors. Its fixes separate mandatory minimums from preferences, retain remaining explicit conditions, check the candidate's role in the stated task, preserve duration operators, and require an enabled application control from a recent, exact employer listing. Older automatic proof is downgraded when loaded. The final offline suite passed 63 tests.
 
 The benchmark recheck corroborated five Greenhouse application controls. Nineteen Ashby application URLs responded but remained unverified, and two expired controls stayed closed. The first 12-board supply observation remains below the minimum. The local review and benchmark are complete. Human usefulness and live supply still require independent ratings and a repeat observation.
+
+## Coverage-gap lane on 17 November 2026
+
+The low supply yield was reproduced on the cached public pool: about 5% of duty lines mapped to any task, a third
+of listings yielded no duties, and qualification lines under duty headings bypassed the eligibility checks, so two
+German C2 requirements produced no conflict. The analyser now recognises more section headings (both sides of dash
+headings), keeps qualifications out of duties, recognises duty wording in English and German, and gives every
+mandatory language line a finding. `ANALYSER_VERSION` is 14; the catalogue is unchanged at version 3.
+
+Unmapped duties still count against fit. Treating them as neutral would raise yield but would let roles whose main
+duties are outside the catalogue look like strong fits, so it was not done. Qualifier-only language wording
+("fließend", "native") still infers no CEFR level and stays unknown, as the earlier rule set out; an inferred level
+would exclude listings on an assumption, and both outcomes keep a listing out of the actionable lane.
+
+Evaluation uses a held-out set of 24 labelled fictional ads written without access to the vocabulary, plus a blind
+precision review of newly tagged public lines. Results and limits are in
+[the diagnosis](handoff/diagnostics/2026-11-17-coverage-gap.md). The supply baseline stays frozen at git tag
+`baseline-2026-11-17`; `scripts/repeat-supply.sh` runs the repeat observation from that tag.

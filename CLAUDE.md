@@ -12,7 +12,7 @@ python3 -B -m career_discovery demo
 python3 -B -m career_discovery --help
 ```
 
-The reviewed baseline passed 63 offline tests. The demo exercises four fictional profiles against 24 fictional vacancies. PDF import uses a local Poppler installation for `pdftotext`. The demo and core CLI use the standard library.
+The reviewed baseline (git tag `baseline-2026-11-17`) passed 63 offline tests; the current code passes 110. Run `scripts/gates.sh` for all offline gates. The demo exercises four fictional profiles against 24 fictional vacancies. PDF import uses a local Poppler installation for `pdftotext`. The demo and core CLI use the standard library.
 
 ## Code map
 
@@ -33,4 +33,4 @@ The reviewed baseline passed 63 offline tests. The demo exercises four fictional
 
 ## Current status
 
-Both independent review rounds and their fixes are complete. The private replay found zero actionable matches, and the first fictional supply screen fell short of the project target. Prioritize a reproducible coverage gap supported by evidence and the planned pilot checks in [the handoff](docs/handoff/README.md).
+Both independent review rounds and their fixes are complete. On 17 November 2026 the low-yield cause was reproduced and fixed in the analyser (`ANALYSER_VERSION` 14): duty headings, qualification lines, English and German duty wording, and silent mandatory-language gaps. See [the diagnosis](docs/handoff/diagnostics/2026-11-17-coverage-gap.md). Yield is still below the supply gate; the next step needs an owner decision on catalogue scope or richer test profiles. The repeat supply observation runs from the frozen baseline tag with `scripts/repeat-supply.sh` on or after 23 November. Keep `fixtures/heldout/` out of tuning work.

@@ -18,7 +18,10 @@ def rate(numerator, denominator):
 
 
 def coverage_report(jobs, profile, catalogue, now, analyser=None, title_pattern=None):
-    pattern = re.compile(title_pattern, re.I) if title_pattern else None
+    try:
+        pattern = re.compile(title_pattern, re.I) if title_pattern else None
+    except re.error as exc:
+        raise ValueError(f"Invalid --titles regular expression: {exc}") from exc
     chosen = [job for job in jobs if job.availability != "closed" and (not pattern or pattern.search(job.title))]
     analyser = analyser or (lambda job: analyse_description(job.description, catalogue))
     rows = run_match(chosen, profile, catalogue, now, analyser=analyser)

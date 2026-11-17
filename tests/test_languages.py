@@ -1,8 +1,9 @@
+from datetime import date
 import unittest
 
 from career_discovery.analysis import LANGUAGE_TERM, analyse_description, load_catalogue
-from career_discovery.eligibility import check_requirement
-from career_discovery.models import Profile, Requirement
+from career_discovery.eligibility import check_requirement, eligibility
+from career_discovery.models import Job, Profile, Requirement
 
 
 class LanguageRequirementTests(unittest.TestCase):
@@ -17,6 +18,34 @@ class LanguageRequirementTests(unittest.TestCase):
 
     def kinds(self, description):
         return {row.text: row.kind for row in analyse_description(description, self.catalogue)}
+
+    def core_findings(self, text):
+        job = Job("test", "board", "p", "Example", "Analyst", "https://example.com/p", locations=("Berlin",))
+        found = eligibility(job, self.profile, (Requirement("r001", "core", text),), self.catalogue,
+                            today=date(2026, 11, 16))
+        return [item.state for item in found if item.subject.startswith("language")]
+
+    def test_core_duty_lines_never_give_a_language_conflict(self):
+        for text in ("Teach German to C1 learners in small groups", "Review contracts, no German C2 needed",
+                     "Document defects found in the Level C1 firmware in German",
+                     "Communicate with residents in German at C2 level"):
+            with self.subTest(text=text):
+                self.assertNotIn("conflict", self.core_findings(text))
+        self.assertEqual(self.core_findings("Review contracts, no German C2 needed"), [])
+
+    def test_short_language_lines_under_role_headings_are_requirements(self):
+        for lead in ("Your Role", "You will", "Deine Rolle"):
+            for line in ("German: C2", "German C1"):
+                rows = {row.text: row.kind for row in analyse_description(f"{lead}\n{line}", self.catalogue)}
+                self.assertEqual(rows.get(line), "mandatory", (lead, line))
+
+    def test_two_bare_languages_share_no_level(self):
+        for text in ("German and English C1", "Deutsch und Englisch auf C1-Niveau"):
+            found = dict(self.findings(text))
+            self.assertIn("language (de)", found, text)
+            self.assertEqual(found["language (de)"], "unknown", text)
+        self.assertEqual(dict(self.findings("German and English C1"))["language (en)"], "met")
+        self.assertEqual(dict(self.findings("Deutsch- und Englischkenntnisse C1"))["language (de)"], "conflict")
 
     def test_or_better_is_a_floor_not_an_alternative(self):
         for text in ("German B2 or better", "Deutsch B2 oder besser", "German C1 or higher",
@@ -81,9 +110,17 @@ class SharedAndUnclearLanguageTests(unittest.TestCase):
 
     def test_unclear_bullet_still_gets_a_language_check(self):
         from career_discovery.analysis import load_catalogue
-        from career_discovery.eligibility import check_requirement
+        from career_discovery.eligibility import check_requirement, eligibility
         from career_discovery.models import Requirement
         findings = check_requirement(Requirement("r001", "unclear", "Deutsch auf C2-Niveau", ()), self.profile,
                                      load_catalogue())
         self.assertIn(("language (de)", "conflict"), {(f.subject, f.state) for f in findings})
         self.assertIn("requirement intent", {f.subject for f in findings})
+
+
+class LanguageAsSubjectMatterTests(unittest.TestCase):
+    def test_teaching_a_language_is_a_duty_not_a_requirement(self):
+        from career_discovery.analysis import analyse_description, load_catalogue
+        rows = analyse_description("Responsibilities\n- Teach German to C1 learners in small groups\n"
+                                   "- Translate English C1 exam material", load_catalogue())
+        self.assertEqual([row.kind for row in rows], ["core", "core"])

@@ -194,6 +194,38 @@ class VocabularyTests(unittest.TestCase):
         self.assertIn("troubleshoot", task_tags("Resolved support tickets for customers", self.catalogue, evidence=True))
         self.assertIn("teach", task_tags("Delivered training sessions to staff", self.catalogue, evidence=True))
 
+    def test_evidence_does_not_credit_work_the_text_does_not_show(self):
+        for line in ("Colleagues resolve tickets while I observe", "Managers handle escalations; I watched",
+                     "Applied for a role handling tickets", "Enrolled in a course on handling tickets",
+                     "Wrote about incident post-mortems", "Studied how to fix bugs in a lecture",
+                     "Provided with training sessions", "Seminar on running training sessions",
+                     "Wanted to run training sessions", "Hold a course certificate",
+                     "Attended a lecture on fixing bugs", "Received training sessions",
+                     "They resolved support tickets", "The team handled escalations"):
+            with self.subTest(line=line):
+                self.assertEqual(task_tags(line, self.catalogue, evidence=True), (), line)
+
+    def test_evidence_positives_survive_the_guards(self):
+        for line, task in (("Delivered training sessions to staff", "teach"),
+                           ("Resolved escalated tickets", "troubleshoot"),
+                           ("Worked with engineers to fix bugs", "troubleshoot")):
+            with self.subTest(line=line):
+                self.assertIn(task, task_tags(line, self.catalogue, evidence=True))
+
+    def test_job_side_benefits_and_other_actors_are_not_duties(self):
+        for line in ("We provide training sessions and workshops for you", "Wir bieten dir Schulungen und Trainings an",
+                     "Wir halten regelmäßig Seminare ab", "Our managers hold training sessions for new hires",
+                     "Our support team resolves tickets and you escalate edge cases",
+                     "Engineers fix bugs while you document requirements"):
+            with self.subTest(line=line):
+                tags = task_tags(line, self.catalogue)
+                self.assertNotIn("teach", tags)
+                self.assertNotIn("troubleshoot", tags)
+
+    def test_job_side_candidate_duties_stay(self):
+        self.assertIn("teach", task_tags("We expect you to run training sessions", self.catalogue))
+        self.assertIn("teach", task_tags("You will deliver training sessions to staff", self.catalogue))
+
 
 if __name__ == "__main__":
     unittest.main()
