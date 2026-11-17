@@ -2,6 +2,19 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-17 — local web app (in progress)
+
+Owner chose option 1: a local web app opened in the browser, easy install for Windows and Mac. Spec, owner picks and
+quotes: `docs/web-app/spec.md` (look B "friendly guide", double-click starter with uv, English and German UI,
+core features plus tracker, still-open check, language filter, wording helper, pay, deadlines, adjacent roles).
+Lanes (playbook order: foundation alone first)
+1. [in progress] Backend: `career_discovery/webapp.py`, API contract `docs/web-app/api.md`, tracker table, `salary.py`,
+   tests. Report: `docs/web-app/backend-report.md`.
+2. [pending] Interface: `career_discovery/web/` (HTML, CSS, JS, `i18n/en.json`, `de.json`), against `api.md`.
+3. [pending] Starters (`Start Career Discovery.command`, `.bat`, `start.sh`), README install section, CI smoke.
+4. [pending] Independent security review of the local server; browser verification; push; CI on three OSes.
+If interrupted: `git status` shows uncommitted lane work; read the lane report before continuing.
+
 ## 2026-11-17 — Windows support and CI
 
 - GitHub Actions (`.github/workflows/tests.yml`) runs the tests, demo and help on Ubuntu, macOS and Windows with
