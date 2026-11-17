@@ -22,6 +22,8 @@ SECTIONS = {
         "in this role you will", "in this role you ll", "what you will be doing", "your day to day responsibilities",
         "aufgaben", "deine aufgaben", "ihre aufgaben", "das erwartet dich", "das sind deine aufgaben",
         "dein aufgabenbereich", "was du bei uns machst", "das erwartet dich bei uns",
+        "you will", "you ll", "your role", "deine rolle", "ihre rolle", "dein verantwortungsbereich",
+        "deine verantwortung", "deine verantwortlichkeiten",
     ),
     "mandatory": (
         "requirements", "required qualifications", "minimum qualifications", "must have",
@@ -32,7 +34,10 @@ SECTIONS = {
         "was du dafür mitbringst", "das erwarten wir",
     ),
     "unclear": ("qualifications", "about you", "what you bring", "your profile", "what makes you a fit",
-                "about the role", "the role", "dein profil", "ihr profil"),
+                "about the role", "the role", "dein profil", "ihr profil",
+                "who you are", "you are", "you have", "your experience", "your skills", "your skillset",
+                "what you bring to the table", "das zeichnet dich aus", "was dich auszeichnet",
+                "deine skills", "deine qualifikationen", "ihre qualifikationen"),
     "preferred": ("preferred qualifications", "nice to have", "nice-to-have", "nice-to-haves",
                   "bonus points", "bonus", "wünschenswert", "von vorteil", "pluspunkte", "wäre von vorteil",
                   "damit punktest du zusätzlich"),
@@ -42,13 +47,18 @@ SECTIONS = {
         "why us", "what's in it for you", "equal opportunity", "interview process",
         "was wir bieten", "das bieten wir", "das bieten wir dir", "über uns", "unsere benefits",
         "bewerbungsprozess", "so geht es für dich weiter", "where you belong",
+        "you ll get", "what you ll get", "what you ll get in return", "working conditions",
+        "why join now", "deine benefits", "wir bieten dir",
     ),
 }
 OPTIONAL = re.compile(r"\b(?:preferred|nice to have|a (?:(?:strong|big|significant) )?(?:plus|bonus|advantage)|"
                       r"desirable|optional|wünschenswert|"
                       r"von vorteil|von vorteil wäre|idealerweise|ideally|not required|nicht erforderlich)\b", re.I)
 MANDATORY = re.compile(r"\b(?:mandatory|required|must (?:have|be|hold|possess)|minimum|zwingend|"
-                       r"erforderlich|vorausgesetzt|mindestens|unbedingt)\b", re.I)
+                       r"erforderlich|vorausgesetzt|mindestens|unbedingt|hard requirements?|a must(?:-have)?|"
+                       r"(?:is|are) (?:absolutely )?essential|essential (?:requirements?|skills?|qualifications?)|"
+                       r"(?:ist|sind) (?:eine? )?(?:pflicht|muss|voraussetzung)|pflichtvoraussetzung|"
+                       r"grundvoraussetzung|voraussetzung (?:ist|sind))\b", re.I)
 NO_LANGUAGE = re.compile(r"^(?:no |kein(?:e|er)? ).{0,45}(?:required|erforderlich)\b|"
                          r"\b(?:german|english|deutsch|englisch) (?:is )?not required\b", re.I)
 NEGATION = re.compile(r"\b(?:no|not|never|without|lack(?:ed|ing|s)?|didn t|haven t|hasn t|kein(?:e|en|er)?|nicht|ohne)\b", re.I)
@@ -111,14 +121,22 @@ REQUIRED_QUALIFICATION = re.compile(r"\b(?:\d{1,2}\s*\+?\s*(?:years?|jahre)\s+(?
                                    r"experience|[ABC][12]|work authori[sz]ation|sponsorship)\b", re.I)
 
 
+QUALIFICATION_LEAD = (r"^(?:(?:you (?:have|bring)|du (?:hast|bringst)|proven|solid|strong|hands-on|excellent|fluent|"
+                      r"sehr gute|fundierte|gute|umfassende)\s+)*(?:an?\s+)?(?:\d{1,2}\s*\+?\s*)?")
+QUALIFICATION_SHAPE = re.compile(QUALIFICATION_LEAD + r"(?:experience|years?|proficien\w*|knowledge(?![- ]?base)|degree|background|"
+                                 r"familiarity|erfahrung\w*|kenntnisse|sprachkenntnisse|abgeschlossen\w* studium|"
+                                 r"jahre\w*)\b", re.I)
+
+
 def heading_kind(text):
     key = normal(text.strip("# ").replace("’", "'"))
     if key in HEADING:
         return HEADING[key]
     for delimiter in (" – ", " — ", " - "):
-        prefix = normal(text.split(delimiter, 1)[0])
-        if prefix in HEADING:
-            return HEADING[prefix]
+        if delimiter in text:
+            for side in text.split(delimiter, 1):
+                if (kind := HEADING.get(normal(side.strip("# ").replace("’", "'")))):
+                    return kind
     return None
 
 
@@ -322,6 +340,13 @@ def split_duties(text, catalogue, tags):
     return [(text, tags)]
 
 
+def qualification_shaped(text):
+    if QUALIFICATION_SHAPE.match(text):
+        return True
+    return bool(LANGUAGE_TERM.search(text) and (LANGUAGE_LEVEL.search(text) or LANGUAGE_QUALIFIER.search(text))
+                and not ROLE_VERB.search(text))
+
+
 def requirement_chunks(description):
     """Yield bounded lines, including headings followed by content on the same line."""
     for raw in description.splitlines():
@@ -368,21 +393,23 @@ def analyse_description(description, catalogue):
                 and not (MANDATORY.search(text) or OPTIONAL.search(text))):
             continue
         tags = task_tags(text, catalogue)
+        qualification = section == "core" and qualification_shaped(text)
+        kind_section = "unclear" if qualification else section
         if NO_LANGUAGE.search(text) and not re.search(r"\b(?:but|however|aber|jedoch)\b", text, re.I):
             kind = "preferred"
-        elif OPTIONAL.search(text) and MANDATORY.search(text) and section != "preferred" and not re.search(
+        elif OPTIONAL.search(text) and MANDATORY.search(text) and kind_section != "preferred" and not re.search(
             r"\b(?:not required|nicht erforderlich)\b", text, re.I
         ):
             kind = "unclear"
-        elif section != "preferred" and ambiguous_language_preference(text):
+        elif kind_section != "preferred" and ambiguous_language_preference(text):
             kind = "unclear"
-        elif OPTIONAL.search(text) or section == "preferred":
+        elif OPTIONAL.search(text) or kind_section == "preferred":
             kind = "preferred"
-        elif (MANDATORY.search(text) or section == "mandatory"
-              or section == "additional" and CANDIDATE_CONDITION.search(text)
-              or section == "unclear" and REQUIRED_QUALIFICATION.search(text)):
+        elif (MANDATORY.search(text) or kind_section == "mandatory"
+              or kind_section == "additional" and CANDIDATE_CONDITION.search(text)
+              or kind_section == "unclear" and REQUIRED_QUALIFICATION.search(text)):
             kind = "mandatory"
-        elif section == "unclear" and (bullet or re.match(r"^(?:experience|proficien|strong|knowledge|you have)", text, re.I)):
+        elif kind_section == "unclear" and (qualification or bullet or re.match(r"^(?:experience|proficien|strong|knowledge|you have)", text, re.I)):
             kind = "unclear"
         elif (section == "core" and (bullet or ROLE_VERB.search(text))) or (tags and ROLE_VERB.search(text)):
             kind = "core"

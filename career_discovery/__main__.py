@@ -5,10 +5,12 @@ from dataclasses import replace
 from itertools import zip_longest
 from pathlib import Path
 import sqlite3
+from datetime import datetime, timezone
 from time import monotonic
 
 from .analysis import load_catalogue
 from .demo import load_demo
+from .diagnostics import coverage_report, heldout_report
 from .documents import document_data, extract_profile
 from .evaluation import demo_comparison, pilot_metrics
 from .matching import as_record, discover_families, run_match, split_ranked
@@ -135,6 +137,44 @@ def search_command(args, store, catalogue):
     return "\n".join(lines)
 
 
+def diagnostic_clock(value):
+    if not value:
+        return datetime.now(timezone.utc)
+    moment = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)
+
+
+def diagnostic_profile(profile_id, state):
+    scenarios = load_demo()[0]
+    if not profile_id:
+        return scenarios[0]
+    for profile in scenarios:
+        if profile.id == profile_id:
+            return profile
+    if not (Path(state) / "profiles" / f"{identifier(profile_id)}.json").exists():
+        raise ValueError("Unknown profile.")
+    store = Storage(state)
+    try:
+        return store.profile(identifier(profile_id))
+    finally:
+        store.close()
+
+
+def diagnostics_command(args, catalogue):
+    profile = diagnostic_profile(args.profile, args.state)
+    now = diagnostic_clock(args.at)
+    if args.command == "heldout":
+        return heldout_report(args.path, profile, catalogue, now)
+    jobs = []
+    if (Path(args.state) / "vacancies.sqlite").exists():
+        store = Storage(args.state)
+        try:
+            jobs = store.jobs()
+        finally:
+            store.close()
+    return coverage_report(jobs, profile, catalogue, now, title_pattern=args.titles)
+
+
 def demo_command(args, catalogue):
     profiles, jobs, labels = load_demo()
     transfers = None
@@ -221,6 +261,13 @@ def main_parser():
     supply = commands.add_parser("supply", help="Capture or inspect fictional-scenario vacancy coverage.")
     supply.add_argument("--profile", help="Optional reviewed local profile for a one-off analysis.")
     supply.add_argument("--history", action="store_true")
+    coverage = commands.add_parser("coverage", help="Aggregate duty and task coverage over the stored vacancies.")
+    heldout = commands.add_parser("heldout", help="Score the parser against a labelled held-out vacancy file.")
+    heldout.add_argument("path")
+    for sub in (coverage, heldout):
+        sub.add_argument("--profile", help="Fictional scenario or local profile ID. Defaults to the supply scenario.")
+        sub.add_argument("--at", help="ISO 8601 clock for the assessment. Defaults to now.")
+    coverage.add_argument("--titles", help="Only vacancies whose title matches this regular expression.")
     semantics = commands.add_parser("semantic", help="Exchange reviewed semantic proposals on fictional evidence.")
     semantics_commands = semantics.add_subparsers(dest="semantic_command", required=True)
     semantics_commands.add_parser("prepare").add_argument("output")
@@ -319,6 +366,8 @@ def main(arguments=None):
             value = demo_command(args, catalogue)
         elif args.command == "semantic":
             value = semantic_command(args, catalogue)
+        elif args.command in {"coverage", "heldout"}:
+            value = diagnostics_command(args, catalogue)
         elif args.command == "evaluate":
             value = pilot_metrics(read_json(args.judgements))
         else:

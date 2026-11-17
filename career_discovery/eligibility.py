@@ -271,6 +271,9 @@ def eligibility(job, profile, requirements, catalogue, today=None):
     for req in requirements:
         if req.kind != "core":
             findings.extend(check_requirement(req, profile, catalogue))
-        elif NO_SPONSORSHIP.search(req.text) or AUTH.search(req.text):
-            findings.extend(explicit_status(req.text, profile))
+        else:
+            if NO_SPONSORSHIP.search(req.text) or AUTH.search(req.text):
+                findings.extend(explicit_status(req.text, profile))
+            if LEVEL.search(req.text):
+                findings.extend(language_findings(req.text, profile))
     return tuple(findings)

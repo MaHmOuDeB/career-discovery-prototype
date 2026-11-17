@@ -21,4 +21,8 @@ Plan for this lane (status in brackets)
    frozen pool and clock, plus the held-out set. Record the numbers in the diagnosis file.
 6. [pending] Update the handoff, decisions and README.
 
-Next step: finish steps 1 to 3, run `scripts/gates.sh`, commit, then start step 4.
+Step 2 and 3 done. Held-out baseline (tag `baseline-2026-11-17`, technical-graduate, 24 ads): 34 of 118 duties
+detected, task precision 0.857 (6 of 7), recall 0.054, 6 of 111 qualifications leak into duties, 9 of 17 mandatory
+language conflicts detected. Keep the held-out file out of every tuning brief; score it only at step 5.
+
+Next step: finish step 1, run `scripts/gates.sh`, commit, then start step 4.

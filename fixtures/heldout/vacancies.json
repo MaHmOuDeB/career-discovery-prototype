@@ -1,0 +1,1762 @@
+[
+  {
+    "id": "h01",
+    "language": "en",
+    "company": "Kestrel Metrics GmbH",
+    "title": "Data Analyst, Reporting",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "🚀 About Kestrel\nKestrel Metrics is a Berlin scale-up helping 400 independent grocers plan smarter. We are 120 people and growing.\n\n🧭 What you'll do\nKeep the weekly commercial scorecard up to date and walk store managers through the movements\nDig into churn and basket data to understand why some regions stall\nOwn our Looker dashboards, from the data model to the last tooltip\nSpot broken feeds and sanity-check the numbers before they reach leadership\nWrite queries against our Postgres warehouse to answer ad-hoc questions from Sales and Ops\nComfortable explaining numbers to people who do not love numbers\n\n🎯 What you bring\nTwo or more years in an analytics or reporting role\nStrong SQL; you think in joins\nBusiness-fluent English, as our team works in English\nGerman at B2 or higher is a plus\nExperience with dbt or Airflow\n\n🎁 What we offer\nFlexible hours, 30 days of holiday, a Deutschlandticket and a learning budget of 1,000 EUR.",
+    "duties": [
+      {
+        "text": "Keep the weekly commercial scorecard up to date and walk store managers through the movements",
+        "tasks": [
+          "report_kpis",
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Dig into churn and basket data to understand why some regions stall",
+        "tasks": [
+          "data_analysis"
+        ]
+      },
+      {
+        "text": "Own our Looker dashboards, from the data model to the last tooltip",
+        "tasks": [
+          "dashboard"
+        ]
+      },
+      {
+        "text": "Spot broken feeds and sanity-check the numbers before they reach leadership",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Write queries against our Postgres warehouse to answer ad-hoc questions from Sales and Ops",
+        "tasks": [
+          "sql"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Comfortable explaining numbers to people who do not love numbers",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Two or more years in an analytics or reporting role",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Strong SQL; you think in joins",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Business-fluent English, as our team works in English",
+        "kind": "mandatory"
+      },
+      {
+        "text": "German at B2 or higher is a plus",
+        "kind": "preferred"
+      },
+      {
+        "text": "Experience with dbt or Airflow",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h02",
+    "language": "en",
+    "company": "Lumen Freight Technologies",
+    "title": "Business Intelligence Analyst",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "ABOUT US — LUMEN FREIGHT\nWe build routing software for mid-sized logistics companies. Our Berlin office is in Kreuzberg.\n\nTHE ROLE — WHAT YOU WILL DO\n- Work with product and ops leads to define the success metrics for each new feature\n- Build Power BI reports and automate their monthly refresh\n- Analyse delivery-time data and explain where delays originate\n- Help design and read out A/B tests on our dispatcher interface\n- Document metric definitions in our internal wiki\n\nREQUIREMENTS — WHO YOU ARE\n- 3 years of experience as BI or data analyst\n- Advanced Power BI or Tableau skills\n- Fluent English (C1)\n- Basic Python for data wrangling\n- Knowledge of the logistics sector would be helpful\n\nBENEFITS — WHAT YOU GET\n- Hybrid work, a modern office and a monthly wellbeing allowance",
+    "duties": [
+      {
+        "text": "Work with product and ops leads to define the success metrics for each new feature",
+        "tasks": [
+          "metric_design",
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Build Power BI reports and automate their monthly refresh",
+        "tasks": [
+          "dashboard",
+          "automate"
+        ]
+      },
+      {
+        "text": "Analyse delivery-time data and explain where delays originate",
+        "tasks": [
+          "data_analysis"
+        ]
+      },
+      {
+        "text": "Help design and read out A/B tests on our dispatcher interface",
+        "tasks": [
+          "experiment"
+        ]
+      },
+      {
+        "text": "Document metric definitions in our internal wiki",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "3 years of experience as BI or data analyst",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Advanced Power BI or Tableau skills",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English (C1)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Basic Python for data wrangling",
+        "kind": "preferred"
+      },
+      {
+        "text": "Knowledge of the logistics sector would be helpful",
+        "kind": "unclear"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h03",
+    "language": "en",
+    "company": "Foldwise Insurance Tech",
+    "title": "Operations Associate",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Foldwise is a Berlin insurtech that handles policy changes for 50k customers.\n\nRole: Operations Associate (Claims & Policy Admin)\nTeam: Operations, reporting to the Head of Ops\n\nResponsibilities:\nCheck incoming premium payments against policy records and chase any mismatches\nSort the daily queue of customer requests and hand complex cases to the right specialist\nMaintain our Google Sheets trackers and send a Monday summary of open volumes and processing times\nKeep our step-by-step handling guides current as processes change\nSuggest and set up small automations in Zapier to remove copy-paste work\n\nQualifications:\n1-2 years in operations, back office or insurance\nVery good Excel or Sheets skills\nFluent English; German is a hard requirement, minimum B2 (spoken and written)\nExperience with Zendesk is nice to have\n\nPerks: Free lunch, dog-friendly office, 28 days leave.",
+    "duties": [
+      {
+        "text": "Check incoming premium payments against policy records and chase any mismatches",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Sort the daily queue of customer requests and hand complex cases to the right specialist",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Maintain our Google Sheets trackers and send a Monday summary of open volumes and processing times",
+        "tasks": [
+          "spreadsheets",
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Keep our step-by-step handling guides current as processes change",
+        "tasks": [
+          "document_process"
+        ]
+      },
+      {
+        "text": "Suggest and set up small automations in Zapier to remove copy-paste work",
+        "tasks": [
+          "automate"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "1-2 years in operations, back office or insurance",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Very good Excel or Sheets skills",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English; German is a hard requirement, minimum B2 (spoken and written)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with Zendesk is nice to have",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "B2",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h04",
+    "language": "en",
+    "company": "Parcelio Systems",
+    "title": "Technical Support Engineer (Tier 2)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Parcelio makes the shipping label platform used by 3,000 online shops. We are based in Berlin Mitte.\n\nOur support engineers are the last stop before engineering. You will\nReproduce bugs reported by merchants and find the root cause in logs and API traces\nTake over escalated tickets from Tier 1 and get them solved or handed to dev with a clean write-up\nFix broken carrier connections together with the integrations team and test the webhook flow end to end\nCreate help-centre articles when a new issue pops up more than twice\nYou need a solid understanding of REST APIs and JSON\nExperience with Postman or curl is expected\nAt least two years in technical support or a similar job\nFluent English is mandatory, German is a nice extra\nYou are calm when a merchant is panicking\nPrior exposure to Datadog or Kibana helps\nWe offer a permanent contract, equity options and a team that actually reads its own docs.",
+    "duties": [
+      {
+        "text": "Reproduce bugs reported by merchants and find the root cause in logs and API traces",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Take over escalated tickets from Tier 1 and get them solved or handed to dev with a clean write-up",
+        "tasks": [
+          "triage",
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Fix broken carrier connections together with the integrations team and test the webhook flow end to end",
+        "tasks": [
+          "systems_integration",
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Create help-centre articles when a new issue pops up more than twice",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You need a solid understanding of REST APIs and JSON",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with Postman or curl is expected",
+        "kind": "mandatory"
+      },
+      {
+        "text": "At least two years in technical support or a similar job",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English is mandatory, German is a nice extra",
+        "kind": "mandatory"
+      },
+      {
+        "text": "You are calm when a merchant is panicking",
+        "kind": "unclear"
+      },
+      {
+        "text": "Prior exposure to Datadog or Kibana helps",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h05",
+    "language": "en",
+    "company": "Northbeam Mobility",
+    "title": "Customer Support Specialist",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Northbeam runs e-scooters in six German cities. Our support team is the voice of the brand.\n\nAbout the job\n- Help riders who cannot unlock, pay or end a ride, via chat and email\n- Flag safety incidents immediately and escalate them to the city operations lead\n- Track your own response time and satisfaction score and share trends in our weekly meeting\n- Add new answers to the internal knowledge base\n\nYou should have\n- Previous customer service experience, ideally in B2C\n- Fluent English and German (C1 or above) — this is a hard requirement for the Berlin team\n- Availability for shifts including some weekends\n- A third language such as Turkish, Arabic or Polish\n\nWhy Northbeam\n- 30 days of holiday, free rides, regular team events",
+    "duties": [
+      {
+        "text": "Help riders who cannot unlock, pay or end a ride, via chat and email",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Flag safety incidents immediately and escalate them to the city operations lead",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Track your own response time and satisfaction score and share trends in our weekly meeting",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Add new answers to the internal knowledge base",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Previous customer service experience, ideally in B2C",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English and German (C1 or above) — this is a hard requirement for the Berlin team",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Availability for shifts including some weekends",
+        "kind": "mandatory"
+      },
+      {
+        "text": "A third language such as Turkish, Arabic or Polish",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h06",
+    "language": "en",
+    "company": "Brightloom Software",
+    "title": "Implementation Specialist",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Brightloom sells workforce planning software to hospital groups and care homes. HQ: Berlin-Charlottenburg.\n\n• Lead customers from signature to go-live and keep their project leads in the loop\n• Set up shift templates, roles and permissions in the customer's tenant\n• Connect our product to the customer's HR and payroll system via CSV and API\n• Clean and check the staff master data customers send us before importing it\n• Run live walkthroughs and train the first group of users\n• You are happy to travel to customer sites two or three days a month\n\nMust-haves:\n• Experience in SaaS onboarding or implementation\n• Understanding of how APIs and data imports work\n• Business-fluent English\n• Verhandlungssicheres Deutsch (C1) is a hard requirement, as most customers are German\n• Background in healthcare or HR\n\nNice to have:\n• SQL basics\n• Previous experience with Salesforce",
+    "duties": [
+      {
+        "text": "Lead customers from signature to go-live and keep their project leads in the loop",
+        "tasks": [
+          "onboard",
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Set up shift templates, roles and permissions in the customer's tenant",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Connect our product to the customer's HR and payroll system via CSV and API",
+        "tasks": [
+          "systems_integration"
+        ]
+      },
+      {
+        "text": "Clean and check the staff master data customers send us before importing it",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Run live walkthroughs and train the first group of users",
+        "tasks": [
+          "teach"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You are happy to travel to customer sites two or three days a month",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience in SaaS onboarding or implementation",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Understanding of how APIs and data imports work",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Business-fluent English",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Verhandlungssicheres Deutsch (C1) is a hard requirement, as most customers are German",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Background in healthcare or HR",
+        "kind": "preferred"
+      },
+      {
+        "text": "SQL basics",
+        "kind": "preferred"
+      },
+      {
+        "text": "Previous experience with Salesforce",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h07",
+    "language": "en",
+    "company": "Quill Academy Labs",
+    "title": "Customer Education Manager",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "📚 Who we are\nQuill Academy Labs is a Berlin-based B2B platform for sales teams. Our customers need to learn fast.\n\n📝 Your day to day\nCreate self-paced courses and short video lessons for new product features\nBuild interactive modules in Articulate Storyline and Rise\nManage our customer academy in Docebo, including enrolments and certificates\nHost a live webinar every other week for admins and power users\nReport on course completion and feedback scores each month\nSit down with Product and CS to learn what customers struggle with\n\n✅ What you need\nExperience designing training for adults, ideally software users\nStrong writing skills in English\nGerman on conversational level\nA background in instructional design\n\n💶 Salary band: 55-65k, plus bonus.",
+    "duties": [
+      {
+        "text": "Create self-paced courses and short video lessons for new product features",
+        "tasks": [
+          "develop_learning"
+        ]
+      },
+      {
+        "text": "Build interactive modules in Articulate Storyline and Rise",
+        "tasks": [
+          "authoring"
+        ]
+      },
+      {
+        "text": "Manage our customer academy in Docebo, including enrolments and certificates",
+        "tasks": [
+          "lms"
+        ]
+      },
+      {
+        "text": "Host a live webinar every other week for admins and power users",
+        "tasks": [
+          "teach"
+        ]
+      },
+      {
+        "text": "Report on course completion and feedback scores each month",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Sit down with Product and CS to learn what customers struggle with",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Experience designing training for adults, ideally software users",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Strong writing skills in English",
+        "kind": "mandatory"
+      },
+      {
+        "text": "German on conversational level",
+        "kind": "preferred"
+      },
+      {
+        "text": "A background in instructional design",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h08",
+    "language": "en",
+    "company": "Tallyfox Cloud",
+    "title": "Revenue Operations Analyst",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "TALLYFOX CLOUD — BERLIN\nTallyfox is a 250-person SaaS company with a go-to-market team across Europe.\n\nWHAT YOU WILL OWN\n- Produce the weekly pipeline, forecast and bookings reports for the CRO\n- Keep Salesforce clean by auditing duplicates, missing owners and stale opportunities\n- Match closed-won deals with finance records and sort out exceptions at month end\n- Automate lead routing and handover rules in the CRM\n- Define how we measure sales-cycle length and conversion by stage\n- Support the sales managers during quarterly planning and territory design\n\nWHAT WE LOOK FOR\n- 2+ years in RevOps, Sales Ops or sales analytics\n- Advanced spreadsheet skills\n- Fluent English; German is optional\n- Experience with Salesforce, HubSpot or Clari\n- Familiarity with SQL",
+    "duties": [
+      {
+        "text": "Produce the weekly pipeline, forecast and bookings reports for the CRO",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Keep Salesforce clean by auditing duplicates, missing owners and stale opportunities",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Match closed-won deals with finance records and sort out exceptions at month end",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Automate lead routing and handover rules in the CRM",
+        "tasks": [
+          "automate"
+        ]
+      },
+      {
+        "text": "Define how we measure sales-cycle length and conversion by stage",
+        "tasks": [
+          "metric_design"
+        ]
+      },
+      {
+        "text": "Support the sales managers during quarterly planning and territory design",
+        "tasks": [
+          "sales"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "2+ years in RevOps, Sales Ops or sales analytics",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Advanced spreadsheet skills",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English; German is optional",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with Salesforce, HubSpot or Clari",
+        "kind": "preferred"
+      },
+      {
+        "text": "Familiarity with SQL",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h09",
+    "language": "en",
+    "company": "Cardigo Health",
+    "title": "Customer Support Specialist, Clinic Software",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Cardigo builds practice management software for physiotherapy and rehab clinics.\n\nYou will be the first contact for clinic staff who work with our product.\nAnswer calls and tickets about scheduling, billing and patient file problems\nGuide clinic staff through correct entry of treatment notes and patient records\nPrioritise tickets by urgency; anything touching patient data goes straight to the on-call engineer\nSet up new clinic accounts, treatment templates and user rights\nWrite short how-to guides for new features\nRequirements:\nA degree or training in a health-related field OR 2 years of software support\nComfort with patient data rules and GDPR\nEnglish C1; German at C1 level is required, because the clinics speak German\nExperience with an EHR or practice system\n\nBenefits: 32 days off, mental health days, central Berlin office.",
+    "duties": [
+      {
+        "text": "Answer calls and tickets about scheduling, billing and patient file problems",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Guide clinic staff through correct entry of treatment notes and patient records",
+        "tasks": [
+          "clinical_documentation"
+        ]
+      },
+      {
+        "text": "Prioritise tickets by urgency; anything touching patient data goes straight to the on-call engineer",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Set up new clinic accounts, treatment templates and user rights",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Write short how-to guides for new features",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "A degree or training in a health-related field OR 2 years of software support",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Comfort with patient data rules and GDPR",
+        "kind": "mandatory"
+      },
+      {
+        "text": "English C1; German at C1 level is required, because the clinics speak German",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with an EHR or practice system",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h10",
+    "language": "en",
+    "company": "Vantor Pay",
+    "title": "Senior Backend Engineer (Go)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Vantor Pay is a Berlin payments scale-up processing 2 million transactions a day.\n\nWhat you will do\n- Design and build services in Go that handle card and SEPA payments\n- Own the reliability of our ledger service and improve latency\n- Review code and mentor mid-level engineers\n- Take part in the on-call rotation\n\nWhat you bring\n- 5+ years of backend development, ideally in Go or Rust\n- Strong knowledge of PostgreSQL and Kafka\n- Experience with Kubernetes\n- Fluent English\n\nWe offer\n- Remote-friendly work, stock options, 30 days of holiday",
+    "duties": [
+      {
+        "text": "Design and build services in Go that handle card and SEPA payments",
+        "tasks": []
+      },
+      {
+        "text": "Own the reliability of our ledger service and improve latency",
+        "tasks": []
+      },
+      {
+        "text": "Review code and mentor mid-level engineers",
+        "tasks": []
+      },
+      {
+        "text": "Take part in the on-call rotation",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "5+ years of backend development, ideally in Go or Rust",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Strong knowledge of PostgreSQL and Kafka",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with Kubernetes",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h11",
+    "language": "en",
+    "company": "Meridian Cloud Security",
+    "title": "Account Executive, Mid-Market",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "💼 The company\nMeridian Cloud Security protects SaaS data for companies with 200 to 2,000 employees.\n\n🔥 The job\nRun full-cycle deals from first call to signature\nBuild your own pipeline with outbound outreach and events\nPresent live demos to CISOs and IT heads\nNegotiate contract terms and close in line with quota\nKeep your forecast accurate in Salesforce\n\n🙋 About you\n4+ years of closing experience in B2B SaaS\nTrack record of exceeding quota\nNative-level German and fluent English\nBased in Berlin, with travel within DACH\n\n🎁 Package: OTE 140k, uncapped commission, equity.",
+    "duties": [
+      {
+        "text": "Run full-cycle deals from first call to signature",
+        "tasks": [
+          "sales"
+        ]
+      },
+      {
+        "text": "Build your own pipeline with outbound outreach and events",
+        "tasks": [
+          "sales"
+        ]
+      },
+      {
+        "text": "Present live demos to CISOs and IT heads",
+        "tasks": [
+          "sales"
+        ]
+      },
+      {
+        "text": "Negotiate contract terms and close in line with quota",
+        "tasks": [
+          "sales"
+        ]
+      },
+      {
+        "text": "Keep your forecast accurate in Salesforce",
+        "tasks": [
+          "report_kpis",
+          "sales"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "4+ years of closing experience in B2B SaaS",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Track record of exceeding quota",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Native-level German and fluent English",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Based in Berlin, with travel within DACH",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C2",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h12",
+    "language": "en",
+    "company": "Pixelhaus Studio",
+    "title": "Product Designer",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "ABOUT PIXELHAUS\nWe design the mobile banking app of a Berlin neobank.\n\nYOUR MISSION\n- Craft end-to-end user flows from sketch to polished UI in Figma\n- Run usability tests and turn findings into design changes\n- Maintain and extend our design system\n- Work hand in hand with engineers on implementation\n\nYOUR PROFILE\n- 3 to 5 years of product design experience with a strong portfolio\n- Deep knowledge of Figma and prototyping\n- Fluent English\n\nPERKS\n- Hardware of your choice, 28 days leave, team retreats",
+    "duties": [
+      {
+        "text": "Craft end-to-end user flows from sketch to polished UI in Figma",
+        "tasks": []
+      },
+      {
+        "text": "Run usability tests and turn findings into design changes",
+        "tasks": []
+      },
+      {
+        "text": "Maintain and extend our design system",
+        "tasks": []
+      },
+      {
+        "text": "Work hand in hand with engineers on implementation",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "3 to 5 years of product design experience with a strong portfolio",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Deep knowledge of Figma and prototyping",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fluent English",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h13",
+    "language": "de",
+    "company": "Kornblume Retail Group",
+    "title": "Reporting Analyst (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "🏢 Über uns\nDie Kornblume Retail Group ist ein Berliner Händlerverbund mit über 80 Filialen und einem wachsenden Onlineshop.\n\n📊 Deine Aufgaben\nDu aktualisierst täglich unsere Umsatz- und Bestandskennzahlen und kommentierst Auffälligkeiten für die Filialleitung\nDu baust und pflegst Dashboards in Power BI für Vertrieb und Einkauf\nDu ziehst Daten per SQL aus unserem Data Warehouse und bereitest sie auf\nDu prüfst die Datenqualität und klärst Abweichungen mit den Kolleg:innen aus der IT\nDu automatisierst wiederkehrende Excel-Reports\nDu unterstützt den Einkauf bei der Bestandsplanung mit Auswertungen\n\n🎓 Das bringst du mit\nMindestens zwei Jahre Erfahrung im Reporting oder Controlling\nSehr gute Excel-Kenntnisse und erste Erfahrung mit SQL\nFließende Deutschkenntnisse (C1), da wir intern auf Deutsch arbeiten\nGute Englischkenntnisse (B2) wären schön\nErfahrung mit Power BI oder Qlik\n\n🎁 Das bieten wir\n30 Urlaubstage, Jobticket, Mitarbeiterrabatt und flexible Arbeitszeiten.",
+    "duties": [
+      {
+        "text": "Du aktualisierst täglich unsere Umsatz- und Bestandskennzahlen und kommentierst Auffälligkeiten für die Filialleitung",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Du baust und pflegst Dashboards in Power BI für Vertrieb und Einkauf",
+        "tasks": [
+          "dashboard"
+        ]
+      },
+      {
+        "text": "Du ziehst Daten per SQL aus unserem Data Warehouse und bereitest sie auf",
+        "tasks": [
+          "sql"
+        ]
+      },
+      {
+        "text": "Du prüfst die Datenqualität und klärst Abweichungen mit den Kolleg:innen aus der IT",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Du automatisierst wiederkehrende Excel-Reports",
+        "tasks": [
+          "automate"
+        ]
+      },
+      {
+        "text": "Du unterstützt den Einkauf bei der Bestandsplanung mit Auswertungen",
+        "tasks": [
+          "inventory"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Mindestens zwei Jahre Erfahrung im Reporting oder Controlling",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sehr gute Excel-Kenntnisse und erste Erfahrung mit SQL",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fließende Deutschkenntnisse (C1), da wir intern auf Deutsch arbeiten",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Gute Englischkenntnisse (B2) wären schön",
+        "kind": "preferred"
+      },
+      {
+        "text": "Erfahrung mit Power BI oder Qlik",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h14",
+    "language": "de",
+    "company": "Hanseatic Fulfilment Solutions",
+    "title": "Sachbearbeiter Operations (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Hanseatic Fulfilment Solutions betreibt Logistikzentren und eine Plattform für Onlinehändler. Standort: Berlin-Spandau.\n\nIhre Aufgaben:\nAbgleich von Wareneingängen mit Bestellungen und Klärung von Differenzen\nÜberwachung der Lagerbestände und Anstoßen von Nachbestellungen\nErstellung von Reports zu Durchlaufzeiten und Fehlerquoten\nPflege von Arbeitsanweisungen und Prozessbeschreibungen\nAbstimmung mit Spediteuren, Lagerteams und Kunden bei Lieferproblemen\nAuswertung in Excel und Aufbereitung der Ergebnisse für die Standortleitung\nKenntnisse in SAP oder einem anderen Warenwirtschaftssystem sind von Vorteil\n\nIhr Profil:\nAbgeschlossene Ausbildung im kaufmännischen Bereich oder in der Logistik\nErfahrung in der Auftragsabwicklung oder im Lager\nSicherer Umgang mit Excel\nZwingend erforderlich: verhandlungssicheres Deutsch (C1)\nEnglisch auf gutem Niveau, von Vorteil\n\nWir bieten Ihnen einen sicheren Arbeitsplatz, tarifnahe Bezahlung und 30 Tage Urlaub.",
+    "duties": [
+      {
+        "text": "Abgleich von Wareneingängen mit Bestellungen und Klärung von Differenzen",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Überwachung der Lagerbestände und Anstoßen von Nachbestellungen",
+        "tasks": [
+          "inventory"
+        ]
+      },
+      {
+        "text": "Erstellung von Reports zu Durchlaufzeiten und Fehlerquoten",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Pflege von Arbeitsanweisungen und Prozessbeschreibungen",
+        "tasks": [
+          "document_process"
+        ]
+      },
+      {
+        "text": "Abstimmung mit Spediteuren, Lagerteams und Kunden bei Lieferproblemen",
+        "tasks": [
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Auswertung in Excel und Aufbereitung der Ergebnisse für die Standortleitung",
+        "tasks": [
+          "spreadsheets"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Kenntnisse in SAP oder einem anderen Warenwirtschaftssystem sind von Vorteil",
+        "kind": "preferred"
+      },
+      {
+        "text": "Abgeschlossene Ausbildung im kaufmännischen Bereich oder in der Logistik",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung in der Auftragsabwicklung oder im Lager",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sicherer Umgang mit Excel",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Zwingend erforderlich: verhandlungssicheres Deutsch (C1)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Englisch auf gutem Niveau, von Vorteil",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h15",
+    "language": "de",
+    "company": "Funkwerk Cloud",
+    "title": "Technical Support (Level 1) (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Funkwerk Cloud bietet Telefonie- und Videosoftware für kleine Unternehmen. Wir sitzen in Berlin-Friedrichshain.\n\nDas erwartet dich:\nDu hilfst Kund:innen per Chat, Telefon und Mail bei Verbindungs- und Audioproblemen\nDu bewertest eingehende Tickets, löst einfache Fälle selbst und gibst schwierige an Level 2 weiter\nDu richtest Anschlüsse, Rufgruppen und Nutzerrechte in den Kundenkonten ein\nDu schreibst Hilfeartikel für unsere Wissensdatenbank\nDas bringst du mit:\nErste Erfahrung im IT-Support oder Helpdesk\nTechnisches Grundverständnis zu Netzwerken (DNS, VPN, Ports)\nSehr gutes Deutsch (C1) und gutes Englisch (B2)\nErfahrung mit Zendesk oder Freshdesk\nSpaß an Schichtarbeit\n\nBei uns erwarten dich ein unbefristeter Vertrag, ein starkes Team und ein Budget für Weiterbildung.",
+    "duties": [
+      {
+        "text": "Du hilfst Kund:innen per Chat, Telefon und Mail bei Verbindungs- und Audioproblemen",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Du bewertest eingehende Tickets, löst einfache Fälle selbst und gibst schwierige an Level 2 weiter",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Du richtest Anschlüsse, Rufgruppen und Nutzerrechte in den Kundenkonten ein",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Du schreibst Hilfeartikel für unsere Wissensdatenbank",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Erste Erfahrung im IT-Support oder Helpdesk",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Technisches Grundverständnis zu Netzwerken (DNS, VPN, Ports)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sehr gutes Deutsch (C1) und gutes Englisch (B2)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung mit Zendesk oder Freshdesk",
+        "kind": "preferred"
+      },
+      {
+        "text": "Spaß an Schichtarbeit",
+        "kind": "unclear"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B2",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h16",
+    "language": "de",
+    "company": "Rosenthal Energie Digital",
+    "title": "Kundenservice-Mitarbeiter Energie (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Rosenthal Energie Digital ist ein junger Ökostromanbieter aus Berlin mit über 200.000 Kunden.\n\nAufgaben\n- Bearbeitung von Kundenanfragen zu Abrechnung, Abschlägen und Zählerständen\n- Prüfung von Rechnungen und Zahlungseingängen sowie Klärung von Unstimmigkeiten\n- Weiterleitung komplexer Beschwerden an die zuständigen Fachbereiche\n- Pflege und Korrektur von Kundenstammdaten im CRM\n- Dokumentation aller Kundenkontakte nach unseren Qualitätsstandards\n- Freude am Telefonieren und Teamfähigkeit\n\nAnforderungen\n- Abgeschlossene kaufmännische Ausbildung oder vergleichbare Erfahrung\n- Mehrjährige Berufserfahrung im Kundenservice\n- Sehr gute Deutschkenntnisse, mindestens C1; Englisch ist kein Muss\n- Kenntnisse im Energiemarkt oder in SAP IS-U\n\nWir bieten\n- 30 Tage Urlaub, Gleitzeit und einen Zuschuss zum Deutschlandticket",
+    "duties": [
+      {
+        "text": "Bearbeitung von Kundenanfragen zu Abrechnung, Abschlägen und Zählerständen",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Prüfung von Rechnungen und Zahlungseingängen sowie Klärung von Unstimmigkeiten",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Weiterleitung komplexer Beschwerden an die zuständigen Fachbereiche",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Pflege und Korrektur von Kundenstammdaten im CRM",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Dokumentation aller Kundenkontakte nach unseren Qualitätsstandards",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Freude am Telefonieren und Teamfähigkeit",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Abgeschlossene kaufmännische Ausbildung oder vergleichbare Erfahrung",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Mehrjährige Berufserfahrung im Kundenservice",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sehr gute Deutschkenntnisse, mindestens C1; Englisch ist kein Muss",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kenntnisse im Energiemarkt oder in SAP IS-U",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h17",
+    "language": "de",
+    "company": "Zeitwerk Software",
+    "title": "Onboarding Manager (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "ZEITWERK — ZEITERFASSUNG FÜR DAS HANDWERK\nWir sind ein Berliner Startup mit 90 Mitarbeitenden und über 5.000 Handwerksbetrieben als Kunden.\n\nDEINE AUFGABEN\n- Du begleitest neue Kunden von der Vertragsunterzeichnung bis zum erfolgreichen Start\n- Du richtest Projekte, Stundensätze und Mitarbeiterkonten in der Software ein\n- Du prüfst Daten, die Kunden aus Excel mitbringen, und bereinigst sie vor dem Import\n- Du führst Online-Schulungen für Inhaber und Büroteams durch\n- Du gibst Feedback aus dem Onboarding an Produkt und Vertrieb weiter\n\nDEIN PROFIL\n- Erfahrung im Kundenerfolg, Onboarding oder in der Softwareeinführung\n- Freude daran, komplexe Dinge einfach zu erklären\n- Fließendes Deutsch; sehr gutes Englisch von Vorteil\n- Erfahrung im Handwerk oder in der Baubranche\n\nWAS WIR BIETEN\n- Remote-Optionen, Workation und ein modernes Büro in Berlin-Mitte",
+    "duties": [
+      {
+        "text": "Du begleitest neue Kunden von der Vertragsunterzeichnung bis zum erfolgreichen Start",
+        "tasks": [
+          "onboard"
+        ]
+      },
+      {
+        "text": "Du richtest Projekte, Stundensätze und Mitarbeiterkonten in der Software ein",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Du prüfst Daten, die Kunden aus Excel mitbringen, und bereinigst sie vor dem Import",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Du führst Online-Schulungen für Inhaber und Büroteams durch",
+        "tasks": [
+          "teach"
+        ]
+      },
+      {
+        "text": "Du gibst Feedback aus dem Onboarding an Produkt und Vertrieb weiter",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Erfahrung im Kundenerfolg, Onboarding oder in der Softwareeinführung",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Freude daran, komplexe Dinge einfach zu erklären",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fließendes Deutsch; sehr gutes Englisch von Vorteil",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung im Handwerk oder in der Baubranche",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C2",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h18",
+    "language": "de",
+    "company": "Lernhaus Digital GmbH",
+    "title": "Customer Training Specialist (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Das Lernhaus Digital entwickelt Software für die berufliche Weiterbildung und schult Bildungsträger im Umgang mit der Plattform.\n\nIhre Aufgaben:\nKonzeption und Erstellung von Schulungsunterlagen, Lernvideos und Übungsaufgaben\nUmsetzung interaktiver E-Learning-Module mit Articulate 360\nBetreuung der Kundenakademie im Learning-Management-System, inklusive Kursverwaltung und Teilnehmerreports\nDurchführung von Workshops und Webinaren für Administratoren und Dozenten\nZusammenarbeit mit Produktmanagement und Support bei neuen Releases\nSichere Moderations- und Präsentationskompetenz\n\nIhr Profil:\nAbgeschlossenes Studium im Bereich Pädagogik, Medien oder vergleichbar\nErfahrung in der Erwachsenenbildung oder in der Erstellung digitaler Lerninhalte\nVerhandlungssicheres Deutsch (C1), da alle Schulungen auf Deutsch stattfinden\nEnglischkenntnisse (B2)\nErfahrung mit Moodle oder Docebo\n\nWir bieten: flexible Arbeitszeiten, Homeoffice und ein Weiterbildungsbudget.",
+    "duties": [
+      {
+        "text": "Konzeption und Erstellung von Schulungsunterlagen, Lernvideos und Übungsaufgaben",
+        "tasks": [
+          "develop_learning"
+        ]
+      },
+      {
+        "text": "Umsetzung interaktiver E-Learning-Module mit Articulate 360",
+        "tasks": [
+          "authoring"
+        ]
+      },
+      {
+        "text": "Betreuung der Kundenakademie im Learning-Management-System, inklusive Kursverwaltung und Teilnehmerreports",
+        "tasks": [
+          "lms"
+        ]
+      },
+      {
+        "text": "Durchführung von Workshops und Webinaren für Administratoren und Dozenten",
+        "tasks": [
+          "teach"
+        ]
+      },
+      {
+        "text": "Zusammenarbeit mit Produktmanagement und Support bei neuen Releases",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Sichere Moderations- und Präsentationskompetenz",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Abgeschlossenes Studium im Bereich Pädagogik, Medien oder vergleichbar",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung in der Erwachsenenbildung oder in der Erstellung digitaler Lerninhalte",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Verhandlungssicheres Deutsch (C1), da alle Schulungen auf Deutsch stattfinden",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Englischkenntnisse (B2)",
+        "kind": "preferred"
+      },
+      {
+        "text": "Erfahrung mit Moodle oder Docebo",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h19",
+    "language": "de",
+    "company": "Tarifwerk Vertriebssysteme",
+    "title": "Sales Operations Specialist (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Tarifwerk ist ein SaaS-Anbieter für Preis- und Angebotsmanagement mit Sitz in Berlin.\n\nIhre Aufgaben:\nWöchentliche Berichterstattung zu Pipeline, Abschlussquoten und Umsatzprognose\nSicherstellung sauberer Daten im CRM (HubSpot), insbesondere bei Dubletten und fehlenden Feldern\nAufbau von Workflows zur automatischen Lead-Zuweisung und Angebotsfreigabe\nDefinition von Vertriebskennzahlen gemeinsam mit der Vertriebsleitung\nAbstimmung der Abschlüsse mit der Buchhaltung und Klärung offener Posten\nUnterstützung des Vertriebsteams bei Angebotserstellung und Provisionsabrechnung\nWir erwarten von Ihnen:\nAbgeschlossenes Studium oder Ausbildung im kaufmännischen Bereich\nMindestens zwei Jahre Erfahrung im Vertriebsinnendienst, Sales Ops oder Controlling\nSehr gute Excel-Kenntnisse; SQL ist wünschenswert\nFließende Deutsch- und gute Englischkenntnisse (B2)\n\nSie profitieren von einem unbefristeten Vertrag, 30 Urlaubstagen und regelmäßigen Teamevents.",
+    "duties": [
+      {
+        "text": "Wöchentliche Berichterstattung zu Pipeline, Abschlussquoten und Umsatzprognose",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Sicherstellung sauberer Daten im CRM (HubSpot), insbesondere bei Dubletten und fehlenden Feldern",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Aufbau von Workflows zur automatischen Lead-Zuweisung und Angebotsfreigabe",
+        "tasks": [
+          "automate"
+        ]
+      },
+      {
+        "text": "Definition von Vertriebskennzahlen gemeinsam mit der Vertriebsleitung",
+        "tasks": [
+          "metric_design"
+        ]
+      },
+      {
+        "text": "Abstimmung der Abschlüsse mit der Buchhaltung und Klärung offener Posten",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Unterstützung des Vertriebsteams bei Angebotserstellung und Provisionsabrechnung",
+        "tasks": [
+          "sales"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Abgeschlossenes Studium oder Ausbildung im kaufmännischen Bereich",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Mindestens zwei Jahre Erfahrung im Vertriebsinnendienst, Sales Ops oder Controlling",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sehr gute Excel-Kenntnisse; SQL ist wünschenswert",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fließende Deutsch- und gute Englischkenntnisse (B2)",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B2",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h20",
+    "language": "de",
+    "company": "Medibase Praxissoftware",
+    "title": "Support Specialist Praxissoftware (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "🩺 Medibase\nMit unserer Software organisieren über 2.000 Arztpraxen in Deutschland ihre Termine und Abrechnung. Standort Berlin-Mitte.\n\n🛠 Das machst du bei uns\nDu löst Probleme mit Terminbuch, Abrechnung und Schnittstellen, die Praxisteams per Telefon oder Ticket melden\nDu erklärst Praxispersonal, wie Befunde, Diagnosen und Patientenakten sauber erfasst werden\nDu unterstützt bei der Anbindung von Laborsystemen und der Telematikinfrastruktur\nDu richtest neue Praxen ein und passt Formulare und Vorlagen an\nDu priorisierst kritische Störungen und eskalierst sie an die Entwicklung\n\n🧩 Was du mitbringst\nAusbildung als MFA oder Erfahrung im Praxis- bzw. Klinikumfeld, alternativ im Software-Support\nZwingend: sehr gutes Deutsch (mindestens C1)\nGrundkenntnisse in Englisch\nKenntnisse im Umgang mit Datenschutz im Gesundheitswesen\n\n🌱 Benefits: 30 Tage Urlaub, Gesundheitsbudget, Jobrad.",
+    "duties": [
+      {
+        "text": "Du löst Probleme mit Terminbuch, Abrechnung und Schnittstellen, die Praxisteams per Telefon oder Ticket melden",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Du erklärst Praxispersonal, wie Befunde, Diagnosen und Patientenakten sauber erfasst werden",
+        "tasks": [
+          "clinical_documentation"
+        ]
+      },
+      {
+        "text": "Du unterstützt bei der Anbindung von Laborsystemen und der Telematikinfrastruktur",
+        "tasks": [
+          "systems_integration"
+        ]
+      },
+      {
+        "text": "Du richtest neue Praxen ein und passt Formulare und Vorlagen an",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Du priorisierst kritische Störungen und eskalierst sie an die Entwicklung",
+        "tasks": [
+          "triage"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Ausbildung als MFA oder Erfahrung im Praxis- bzw. Klinikumfeld, alternativ im Software-Support",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Zwingend: sehr gutes Deutsch (mindestens C1)",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Grundkenntnisse in Englisch",
+        "kind": "preferred"
+      },
+      {
+        "text": "Kenntnisse im Umgang mit Datenschutz im Gesundheitswesen",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "B1",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "h21",
+    "language": "de",
+    "company": "Wilhelmi & Partner Legal Tech",
+    "title": "Rechtsanwalt / Jurist (m/w/d) Vertragsrecht",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Wir sind eine Berliner Legal-Tech-Kanzlei mit Schwerpunkt Technologie- und Vertragsrecht.\n\nIhre Aufgaben:\nPrüfung und Verhandlung von IT-Verträgen, SaaS-Vereinbarungen und Datenschutzdokumenten\nBeratung von Mandanten zu DSGVO und KI-Regulierung\nVertretung von Mandanten in außergerichtlichen Verfahren\nMitarbeit an Gutachten und Schriftsätzen\n\nIhr Profil:\nZwei bestandene juristische Staatsexamina\nMindestens drei Jahre Erfahrung im IT- oder Vertragsrecht\nVerhandlungssicheres Deutsch und fließendes Englisch\nZulassung als Rechtsanwalt in Deutschland\n\nWir bieten Ihnen eine attraktive Vergütung und flexible Arbeitsmodelle.",
+    "duties": [
+      {
+        "text": "Prüfung und Verhandlung von IT-Verträgen, SaaS-Vereinbarungen und Datenschutzdokumenten",
+        "tasks": []
+      },
+      {
+        "text": "Beratung von Mandanten zu DSGVO und KI-Regulierung",
+        "tasks": []
+      },
+      {
+        "text": "Vertretung von Mandanten in außergerichtlichen Verfahren",
+        "tasks": []
+      },
+      {
+        "text": "Mitarbeit an Gutachten und Schriftsätzen",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Zwei bestandene juristische Staatsexamina",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Mindestens drei Jahre Erfahrung im IT- oder Vertragsrecht",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Verhandlungssicheres Deutsch und fließendes Englisch",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Zulassung als Rechtsanwalt in Deutschland",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C2",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h22",
+    "language": "de",
+    "company": "Voltaris Gebäudetechnik",
+    "title": "Elektriker / Elektroniker für Betriebstechnik (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Voltaris installiert Ladeinfrastruktur und Photovoltaikanlagen in Berlin und Brandenburg.\n\nDas erwartet dich:\n- Du installierst und wartest Wallboxen, Verteiler und PV-Anlagen\n- Du führst Prüfungen nach VDE durch und dokumentierst sie auf dem Tablet\n- Du suchst Fehler in elektrischen Anlagen und behebst sie vor Ort\n- Du arbeitest eng mit dem Montageteam zusammen\n\nDas bringst du mit:\n- Abgeschlossene Ausbildung als Elektroniker für Energie- und Gebäudetechnik\n- Führerschein Klasse B\n- Gute Deutschkenntnisse, B2 oder besser\n\nWir bieten Firmenwagen, Tarifvertrag und 30 Tage Urlaub.",
+    "duties": [
+      {
+        "text": "Du installierst und wartest Wallboxen, Verteiler und PV-Anlagen",
+        "tasks": []
+      },
+      {
+        "text": "Du führst Prüfungen nach VDE durch und dokumentierst sie auf dem Tablet",
+        "tasks": [
+          "document_process"
+        ]
+      },
+      {
+        "text": "Du suchst Fehler in elektrischen Anlagen und behebst sie vor Ort",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Du arbeitest eng mit dem Montageteam zusammen",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Abgeschlossene Ausbildung als Elektroniker für Energie- und Gebäudetechnik",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Führerschein Klasse B",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Gute Deutschkenntnisse, B2 oder besser",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "B2",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h23",
+    "language": "de",
+    "company": "Talentschmiede Berlin",
+    "title": "Recruiter Tech (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "TALENTSCHMIEDE BERLIN — RECRUITER TECH\nWir besetzen Entwicklerstellen für Berliner Startups und wachsen schnell.\n\nDEINE AUFGABEN\n- Du suchst und sprichst Softwareentwickler:innen über LinkedIn und Netzwerke an\n- Du führst Erstgespräche und begleitest Kandidaten durch den Prozess\n- Du berätst Hiring Manager zu Marktlage und Gehältern\n- Du verhandelst Angebote und schließt Vermittlungen ab\n\nDEIN PROFIL\n- Mindestens zwei Jahre Erfahrung im Tech-Recruiting\n- Fließendes Deutsch und Englisch\n- Kommunikationsstärke und Verhandlungsgeschick\n\nBENEFITS\n- Provisionsmodell, 28 Urlaubstage und ein tolles Team",
+    "duties": [
+      {
+        "text": "Du suchst und sprichst Softwareentwickler:innen über LinkedIn und Netzwerke an",
+        "tasks": []
+      },
+      {
+        "text": "Du führst Erstgespräche und begleitest Kandidaten durch den Prozess",
+        "tasks": []
+      },
+      {
+        "text": "Du berätst Hiring Manager zu Marktlage und Gehältern",
+        "tasks": [
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Du verhandelst Angebote und schließt Vermittlungen ab",
+        "tasks": [
+          "sales"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Mindestens zwei Jahre Erfahrung im Tech-Recruiting",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Fließendes Deutsch und Englisch",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kommunikationsstärke und Verhandlungsgeschick",
+        "kind": "mandatory"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "h24",
+    "language": "de",
+    "company": "Quantcraft Analytics",
+    "title": "BI-Analyst (m/w/d)",
+    "locations": [
+      "Berlin"
+    ],
+    "employment": "full_time",
+    "description": "Quantcraft Analytics ist ein Berliner Anbieter für Marketing-Auswertungen und verbindet Daten von über 500 Werbekonten.\n\nAufgabenbereich:\nAnalyse von Kampagnendaten zur Identifikation von Mustern und Ursachen für Leistungsschwankungen\nEntwicklung und Pflege von Tableau-Dashboards für Kunden\nAufbau und Betrieb von ETL-Strecken zur Zusammenführung von Werbe- und Shopdaten\nErstellung komplexer SQL-Abfragen auf BigQuery\nPlanung und Auswertung von A/B-Tests gemeinsam mit den Kunden\nBewertung der Güte unserer Attributionsmodelle\nAnforderungsprofil:\nStudium in Statistik, Informatik, Wirtschaft oder vergleichbar\nMindestens zwei Jahre Berufserfahrung im Bereich BI oder Analytics\nSehr gute SQL-Kenntnisse\nDeutsch auf muttersprachlichem Niveau (C2); Englisch fließend\nKenntnisse in Python oder R\n\nWir bieten: Hybrides Arbeiten, 30 Tage Urlaub und Zugang zu Fachkonferenzen.",
+    "duties": [
+      {
+        "text": "Analyse von Kampagnendaten zur Identifikation von Mustern und Ursachen für Leistungsschwankungen",
+        "tasks": [
+          "data_analysis"
+        ]
+      },
+      {
+        "text": "Entwicklung und Pflege von Tableau-Dashboards für Kunden",
+        "tasks": [
+          "dashboard"
+        ]
+      },
+      {
+        "text": "Aufbau und Betrieb von ETL-Strecken zur Zusammenführung von Werbe- und Shopdaten",
+        "tasks": [
+          "pipeline"
+        ]
+      },
+      {
+        "text": "Erstellung komplexer SQL-Abfragen auf BigQuery",
+        "tasks": [
+          "sql"
+        ]
+      },
+      {
+        "text": "Planung und Auswertung von A/B-Tests gemeinsam mit den Kunden",
+        "tasks": [
+          "experiment"
+        ]
+      },
+      {
+        "text": "Bewertung der Güte unserer Attributionsmodelle",
+        "tasks": [
+          "evaluate_systems"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Studium in Statistik, Informatik, Wirtschaft oder vergleichbar",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Mindestens zwei Jahre Berufserfahrung im Bereich BI oder Analytics",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Sehr gute SQL-Kenntnisse",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Deutsch auf muttersprachlichem Niveau (C2); Englisch fließend",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kenntnisse in Python oder R",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C2",
+        "mandatory": true
+      },
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  }
+]
