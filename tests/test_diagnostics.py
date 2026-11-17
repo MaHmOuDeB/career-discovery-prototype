@@ -45,7 +45,7 @@ class DiagnosticsTests(unittest.TestCase):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         path = Path(temp.name) / "heldout.json"
-        path.write_text(json.dumps(items))
+        path.write_text(json.dumps(items), encoding="utf-8")
         return path
 
     def test_coverage_on_demo_jobs_is_aggregate_only(self):
@@ -114,7 +114,7 @@ class DiagnosticsTests(unittest.TestCase):
 
         def run(*args):
             proc = subprocess.run([sys.executable, "-B", "-m", "career_discovery", "--state", str(state), *args],
-                                  cwd=PROJECT, capture_output=True, text=True, timeout=20)
+                                  cwd=PROJECT, capture_output=True, text=True, encoding="utf-8", timeout=20)
             self.assertEqual(proc.returncode, 0, proc.stderr)
             return json.loads(proc.stdout)
 
@@ -126,7 +126,7 @@ class DiagnosticsTests(unittest.TestCase):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         proc = subprocess.run([sys.executable, "-B", "-m", "career_discovery", "--state", temp.name,
-                               "coverage", "--titles", "("], cwd=PROJECT, capture_output=True, text=True, timeout=20)
+                               "coverage", "--titles", "("], cwd=PROJECT, capture_output=True, text=True, encoding="utf-8", timeout=20)
         self.assertEqual(proc.returncode, 2)
         self.assertNotIn("Traceback", proc.stderr)
         self.assertIn("Error:", proc.stderr)
@@ -153,7 +153,7 @@ class QualifierLevelTests(unittest.TestCase):
                                           {"language": "en", "level": None, "mandatory": True}]}
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "set.json"
-            path.write_text(json.dumps([item]))
+            path.write_text(json.dumps([item]), encoding="utf-8")
             report = heldout_report(path, profile, load_catalogue(), NOW)
         self.assertEqual(report["language_conflicts_expected"], 0)
         self.assertEqual(report["language_open_expected"], 2)

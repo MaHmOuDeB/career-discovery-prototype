@@ -1,11 +1,15 @@
 from io import BytesIO
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
+import threading
 import unittest
+from unittest import mock
 from zipfile import ZipFile
 
 from career_discovery.analysis import load_catalogue
+from career_discovery import documents
 from career_discovery.documents import docx_segments, document_data, extract_profile, pdf_segments
 
 DOCUMENT_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
@@ -100,3 +104,96 @@ class DocumentsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FakeProcess:
+    def __init__(self, output, returncode=0, block=False):
+        self.stdout = FakeStream(output, self, block)
+        self.returncode = None
+        self.final = returncode
+        self.killed = threading.Event()
+
+    def kill(self):
+        self.killed.set()
+        if self.returncode is None:
+            self.returncode = -9
+
+    def wait(self, timeout=None):
+        if self.returncode is None:
+            self.returncode = self.final
+        return self.returncode
+
+
+class FakeStream:
+    def __init__(self, output, process, block):
+        self.data = BytesIO(output)
+        self.process = process
+        self.block = block
+        self.closed = False
+
+    def read(self, size):
+        if self.block:
+            self.process.killed.wait(5)
+            return b""
+        return self.data.read(size)
+
+    def close(self):
+        self.closed = True
+
+
+class PdfLimitTests(unittest.TestCase):
+    def run_pdf(self, process, seconds=None):
+        paths = []
+
+        def popen(command, **kwargs):
+            paths.append(Path(command[-2]))
+            self.assertTrue(paths[0].is_file())
+            self.assertEqual(Path(paths[0]).read_bytes(), b"%PDF-1.4 fake")
+            self.assertIs(kwargs["stdout"], subprocess.PIPE)
+            return process
+
+        patches = [mock.patch.object(documents.shutil, "which", return_value="pdftotext"),
+                   mock.patch.object(documents.subprocess, "Popen", side_effect=popen)]
+        if seconds is not None:
+            patches.append(mock.patch.object(documents, "PDF_SECONDS", seconds))
+        for patch in patches:
+            patch.start()
+            self.addCleanup(patch.stop)
+        try:
+            return list(pdf_segments(b"%PDF-1.4 fake"))
+        finally:
+            self.assertFalse(paths[0].exists())
+
+    def test_normal_output_is_split_into_pages_and_lines(self):
+        process = FakeProcess(b"Built dashboards.\nUsed SQL.\fSecond page")
+        self.assertEqual(self.run_pdf(process), [
+            ("PDF page 1, extracted line 1", "Built dashboards."),
+            ("PDF page 1, extracted line 2", "Used SQL."),
+            ("PDF page 2, extracted line 1", "Second page"),
+        ])
+
+    def test_output_over_the_cap_is_killed_and_rejected(self):
+        process = FakeProcess(b"a" * (documents.MAX_TEXT + 1))
+        with self.assertRaisesRegex(ValueError, "within the limits"):
+            self.run_pdf(process)
+        self.assertTrue(process.killed.is_set())
+
+    def test_output_exactly_at_the_cap_is_accepted(self):
+        process = FakeProcess(b"a" * documents.MAX_TEXT)
+        self.assertEqual(len(self.run_pdf(process)), 1)
+
+    def test_timeout_kills_the_process_and_reports_incomplete_extraction(self):
+        process = FakeProcess(b"", block=True)
+        with self.assertRaisesRegex(ValueError, "did not complete"):
+            self.run_pdf(process, seconds=0.05)
+        self.assertTrue(process.killed.is_set())
+
+    def test_failing_extractor_is_reported(self):
+        with self.assertRaisesRegex(ValueError, "within the limits"):
+            self.run_pdf(FakeProcess(b"", returncode=1))
+
+    def test_missing_poppler_is_reported(self):
+        with mock.patch.object(documents.shutil, "which", return_value=None):
+            with self.assertRaisesRegex(ValueError, "Poppler"):
+                list(pdf_segments(b"%PDF-1.4 fake"))
+

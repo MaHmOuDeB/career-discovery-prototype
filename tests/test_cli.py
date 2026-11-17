@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -21,9 +22,32 @@ class CLITests(unittest.TestCase):
 
     def cli(self, *args, code=0):
         proc = subprocess.run([sys.executable, "-B", "-m", "career_discovery", "--state", str(self.state), *args],
-                              cwd=PROJECT, capture_output=True, text=True, timeout=10)
+                              cwd=PROJECT, capture_output=True, text=True, encoding="utf-8", timeout=10)
         self.assertEqual(proc.returncode, code, proc.stderr + proc.stdout)
         return proc.stdout if code == 0 else proc.stderr
+
+    @unittest.skipIf(os.name == "nt", "POSIX permission bits do not exist on Windows")
+    def test_private_files_and_directories_are_owner_only(self):
+        from career_discovery.storage import Storage, write_private_json
+
+        target = self.tmp / "private" / "record.json"
+        write_private_json(target, {"ok": True})
+        self.assertEqual(target.stat().st_mode & 0o777, 0o600)
+        self.assertEqual(target.parent.stat().st_mode & 0o777, 0o700)
+        store = Storage(self.state)
+        self.addCleanup(store.close)
+        store.connection()
+        self.assertEqual(self.state.stat().st_mode & 0o777, 0o700)
+        self.assertEqual((self.state / "vacancies.sqlite").stat().st_mode & 0o777, 0o600)
+
+    def test_write_private_json_replaces_an_existing_file_and_leaves_no_temporary(self):
+        from career_discovery.storage import write_private_json
+
+        target = self.tmp / "out" / "record.json"
+        write_private_json(target, {"n": 1})
+        write_private_json(target, {"n": 2})
+        self.assertEqual(json.loads(target.read_bytes()), {"n": 2})
+        self.assertEqual([item.name for item in target.parent.iterdir()], ["record.json"])
 
     def test_full_local_profile_vacancy_and_feedback_flow(self):
         cv = self.tmp / "fictional.docx"
@@ -35,7 +59,7 @@ class CLITests(unittest.TestCase):
         profile = json.loads(draft.read_bytes())
         profile.update({"locations": ["Berlin"], "remote_regions": ["DE"], "languages": {"en": "C1"},
                         "employment": ["full_time"], "search_titles": ["Data Analyst"], "keywords": ["sql"]})
-        draft.write_text(json.dumps(profile))
+        draft.write_text(json.dumps(profile), encoding="utf-8")
         self.cli("profile", "confirm", "alexa")
         self.cli("profile", "import", "alexa", str(cv))
         record = json.loads(self.cli("profile", "show", "alexa"))
@@ -44,7 +68,7 @@ class CLITests(unittest.TestCase):
 
         file = self.tmp / "jobs.csv"
         url = "https://career.example/listing/234"
-        with file.open("w", newline="") as stream:
+        with file.open("w", newline="", encoding="utf-8") as stream:
             writer = csv.writer(stream)
             writer.writerow(["company", "title", "url", "locations", "employment", "description"])
             writer.writerow(["Imaginary Tools", "Workflow Associate", url, "Berlin, Germany", "full_time",
@@ -79,7 +103,8 @@ class CLITests(unittest.TestCase):
         self.cli("profile", "export", "alexa", str(export))
         exported = json.loads(export.read_bytes())
         self.assertEqual(exported["feedback"][0]["would_consider"], "yes")
-        self.assertEqual(export.stat().st_mode & 0o777, 0o600)
+        if os.name != "nt":
+            self.assertEqual(export.stat().st_mode & 0o777, 0o600)
         self.cli("profile", "delete", "alexa", "--yes")
         self.assertFalse(draft.exists())
 

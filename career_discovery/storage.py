@@ -37,9 +37,14 @@ def write_private_json(path: Path, value):
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
-            os.replace(temporary, path)
-        finally:
+        except BaseException:
+            stream.close()
             temporary.unlink(missing_ok=True)
+            raise
+    try:
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def profile_data(profile):

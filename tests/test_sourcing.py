@@ -95,7 +95,7 @@ class AdapterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             config = Path(folder) / "boards.json"
             config.write_text(json.dumps([{"ats": "ashby", "slug": "company.example", "company": "Test",
-                                           "local_use_reviewed": True}]))
+                                           "local_use_reviewed": True}]), encoding="utf-8")
             board, = load_boards(config)
             self.assertTrue(board.url.endswith("/company.example"))
         payload = ashby_payload()
@@ -112,7 +112,7 @@ class AdapterTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             file = Path(folder) / "source.csv"
             file.write_text('company,title,url,description\nFiction,Associate,https://employer.example/job,'
-                            '"Responsibilities:\nTroubleshoot errors."\n')
+                            '"Responsibilities:\nTroubleshoot errors."\n', encoding="utf-8", newline="")
             private_job, = load_csv(file, keep_description=False)
             job, = load_csv(file, keep_description=True)
             self.assertFalse(private_job.description)

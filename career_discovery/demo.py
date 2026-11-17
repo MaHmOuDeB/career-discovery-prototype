@@ -9,10 +9,10 @@ FIXTURES = Path(__file__).resolve().parent.parent / "fixtures"
 
 
 def load_demo():
-    profiles = [Profile.load(data) for data in json.loads((FIXTURES / "profiles.json").read_text())]
+    profiles = [Profile.load(data) for data in json.loads((FIXTURES / "profiles.json").read_text(encoding="utf-8"))]
     jobs = []
     for index, company, title, location, employment, description, *options in json.loads(
-        (FIXTURES / "vacancies.json").read_text()
+        (FIXTURES / "vacancies.json").read_text(encoding="utf-8")
     ):
         jobs.append(Job.load({
             "source": "fictional", "board": "demo", "external_id": index, "company": company,
@@ -20,5 +20,5 @@ def load_demo():
             "locations": [location] if location else [], "employment": employment,
             "availability": "fixture_open", **(options[0] if options else {}),
         }))
-    labels = json.loads((FIXTURES / "labels.json").read_text())
+    labels = json.loads((FIXTURES / "labels.json").read_text(encoding="utf-8"))
     return profiles, jobs, labels

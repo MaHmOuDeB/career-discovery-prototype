@@ -8,7 +8,7 @@ For Claude Code, see [CLAUDE.md](CLAUDE.md); for Codex and other agents, [AGENTS
 
 ## Quick start
 
-Use Python 3.14 on macOS or Linux. The standard library handles the matcher, storage, CSV and DOCX. A local Poppler installation with pdftotext is needed for PDF imports. The demo and offline tests require no network or credentials.
+Use Python 3.14 on macOS, Linux or Windows. The standard library handles the matcher, storage, CSV and DOCX. A local Poppler installation with pdftotext is needed for PDF imports. The demo and offline tests require no network or credentials.
 
     git clone https://github.com/MaHmOuDeB/career-discovery-prototype.git
     cd career-discovery-prototype
@@ -17,6 +17,19 @@ Use Python 3.14 on macOS or Linux. The standard library handles the matcher, sto
     python3 -B -m unittest discover -s tests -v
 
 The demo runs four fictional profiles against 24 fictional vacancies. It uses the same corpus, eligibility checks, and top-five cap for both rankings. Underfilled lists are shown as such. Fixture results are a check on designed cases. Real relevance and usefulness need human ratings.
+
+### Windows
+
+1. Install Python 3.14 from [python.org](https://www.python.org/downloads/windows/) and use the `py` launcher instead of `python3`.
+2. Clone the repository, or download the ZIP from GitHub and extract it.
+3. In PowerShell, from the project folder:
+
+       py -B -m career_discovery demo
+       py -B -m career_discovery demo --profile technical-graduate --details
+       py -B -m unittest discover -s tests -v
+
+4. DOCX imports work without extra software. PDF imports need Poppler for Windows with `pdftotext.exe` on `PATH`.
+5. The `scripts/*.sh` helpers need Git Bash (or WSL).
 
 ## Import and review a profile
 
@@ -59,7 +72,7 @@ search --verify adds up to ten bounded rechecks on supported ATS-hosted applicat
     python3 -B -m career_discovery profile export my-profile "/path/to/private-export.json"
     python3 -B -m career_discovery profile delete my-profile --yes
 
-Feedback records the candidate’s judgement and can include a correction. Export includes the profile and saved feedback. Deletion removes the local profile, its feedback and its search logs. Originals and any exports are controlled by the user. New files are private to the local account by file permissions. Put the state directory on local storage outside cloud sync. The prototype does not encrypt files itself.
+Feedback records the candidate’s judgement and can include a correction. Export includes the profile and saved feedback. Deletion removes the local profile, its feedback and its search logs. Originals and any exports are controlled by the user. On macOS and Linux, new files and the state directory are owner-only through file permissions. On Windows they inherit the access rules of the folder they are created in, so keep the state directory inside your own user profile folder. Put the state directory on local storage outside cloud sync. The prototype does not encrypt files itself.
 
 ## Coverage diagnostics
 

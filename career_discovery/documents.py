@@ -4,12 +4,14 @@ from dataclasses import replace
 from hashlib import sha256
 from io import BytesIO
 import json
+import os
 from pathlib import Path
 import re
 import shutil
 import subprocess
 import sys
-from tempfile import TemporaryFile
+import tempfile
+import threading
 from zipfile import BadZipFile, ZipFile
 
 from .analysis import BULLET, normal, task_tags
@@ -89,10 +91,39 @@ def docx_segments(data):
         yield from json.loads(result.stdout)
 
 
-def _limit_pdf_write():
-    import resource
+PDF_SECONDS = 12
 
-    resource.setrlimit(resource.RLIMIT_FSIZE, (MAX_TEXT, MAX_TEXT))
+
+def _run_pdftotext(program, path):
+    process = subprocess.Popen(
+        [program, "-f", "1", "-l", "12", "-q", "-layout", "-enc", "UTF-8", str(path), "-"],
+        stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+    )
+    expired = threading.Event()
+
+    def expire():
+        expired.set()
+        process.kill()
+
+    timer = threading.Timer(PDF_SECONDS, expire)
+    timer.start()
+    try:
+        raw = process.stdout.read(MAX_TEXT + 1)
+        if len(raw) > MAX_TEXT:
+            process.kill()
+            process.wait()
+            raise ValueError("PDF text could not be extracted within the limits. Use manual entry or DOCX.")
+        process.wait()
+        if expired.is_set():
+            raise subprocess.TimeoutExpired(program, PDF_SECONDS)
+    finally:
+        timer.cancel()
+        process.kill()
+        process.wait()
+        process.stdout.close()
+    if process.returncode:
+        raise ValueError("PDF text could not be extracted within the limits. Use manual entry or DOCX.")
+    return raw
 
 
 def pdf_segments(data):
@@ -101,19 +132,15 @@ def pdf_segments(data):
     program = shutil.which("pdftotext")
     if not program:
         raise ValueError("PDF extraction needs the local Poppler pdftotext tool. DOCX and manual entry also work.")
+    handle, name = tempfile.mkstemp(suffix=".pdf")
     try:
-        with TemporaryFile() as output:
-            process = subprocess.run(
-                [program, "-f", "1", "-l", "12", "-q", "-layout", "-enc", "UTF-8", "-", "-"],
-                input=data, stdout=output, stderr=subprocess.DEVNULL, timeout=12,
-                preexec_fn=_limit_pdf_write,
-            )
-            output.seek(0)
-            raw = output.read(MAX_TEXT)
+        with os.fdopen(handle, "wb") as stream:
+            stream.write(data)
+        raw = _run_pdftotext(program, name)
     except (OSError, subprocess.SubprocessError) as exc:
         raise ValueError("PDF extraction did not complete. Copy the evidence into a manual profile.") from exc
-    if process.returncode:
-        raise ValueError("PDF text could not be extracted within the limits. Use manual entry or DOCX.")
+    finally:
+        Path(name).unlink(missing_ok=True)
     for page, content in enumerate(raw.decode("utf-8", errors="replace").split("\f"), 1):
         for line, part in enumerate(content.splitlines(), 1):
             yield f"PDF page {page}, extracted line {line}", part

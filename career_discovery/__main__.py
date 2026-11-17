@@ -5,6 +5,7 @@ from dataclasses import replace
 from itertools import zip_longest
 from pathlib import Path
 import sqlite3
+import sys
 from datetime import datetime, timezone
 from time import monotonic
 
@@ -382,4 +383,6 @@ def main(arguments=None):
 
 
 if __name__ == "__main__":
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8")
     main()
