@@ -58,7 +58,9 @@ class TrackerTests(unittest.TestCase):
         store = Storage(folder.name)
         self.addCleanup(store.close)
         self.assertEqual(store.applications(), [])
-        self.assertEqual(Storage(folder.name).applications(), [])
+        again = Storage(folder.name)
+        self.addCleanup(again.close)
+        self.assertEqual(again.applications(), [])
 
     def test_csv_is_spreadsheet_safe(self):
         text = applications_csv([{"job_key": "k", "company": "=cmd|' /C calc'!A0", "title": "Analyst, Data",

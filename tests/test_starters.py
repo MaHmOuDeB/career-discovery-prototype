@@ -17,7 +17,7 @@ def dry_run(script, **extra):
     env = {k: v for k, v in os.environ.items() if not k.startswith("CD_")}
     env.update({"CD_DRY_RUN": "1", **extra})
     return subprocess.run(
-        ["sh", str(script)], cwd="/", env=env, capture_output=True, text=True, timeout=30
+        ["sh", str(script)], cwd="/", env=env, capture_output=True, text=True, encoding="utf-8", timeout=30
     )
 
 
@@ -40,7 +40,7 @@ class StarterFiles(unittest.TestCase):
 
     def test_contents(self):
         for path in (BAT, COMMAND, SH):
-            text = path.read_text()
+            text = path.read_text(encoding="utf-8")
             self.assertIn("-m career_discovery app", text, path.name)
             self.assertIn("--no-project --python 3.12", text, path.name)
             self.assertIn("astral.sh", text, path.name)
@@ -93,7 +93,7 @@ class StarterDryRun(unittest.TestCase):
             self.assertIn(str(folder), result.stdout)
 
     def test_check_script_passes(self):
-        result = subprocess.run(["sh", str(CHECK)], capture_output=True, text=True, timeout=60)
+        result = subprocess.run(["sh", str(CHECK)], capture_output=True, text=True, encoding="utf-8", timeout=60)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 

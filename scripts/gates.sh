@@ -21,7 +21,7 @@ gate() {
 }
 
 gate compile python3 -B -m compileall -q career_discovery tests
-gate unit-tests python3 -B -m unittest discover -s tests -q
+gate unit-tests python3 -B -X warn_default_encoding -W error::EncodingWarning -m unittest discover -s tests -q
 gate demo python3 -B -m career_discovery demo
 gate help python3 -B -m career_discovery --help
 grep -E '^Ran [0-9]+ tests' "$log" | tail -n 1 >> "$summary"
