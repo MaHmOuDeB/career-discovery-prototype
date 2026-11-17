@@ -67,3 +67,13 @@ Evaluation uses a held-out set of 24 labelled fictional ads written without acce
 precision review of newly tagged public lines. Results and limits are in
 [the diagnosis](handoff/diagnostics/2026-11-17-coverage-gap.md). The supply baseline stays frozen at git tag
 `baseline-2026-11-17`; `scripts/repeat-supply.sh` runs the repeat observation from that tag.
+
+## Catalogue version 4 on 17 November 2026
+
+The owner chose to add catalogue tasks for the dominant unmapped duty themes. `process_improvement`,
+`quality_compliance` and `customer_communication` were added with five transfers whose reasons say what still needs
+checking; `stakeholders` was reworded. `ANALYSER_VERSION` is 15. A second held-out set (`fixtures/heldout-v2/`) was
+labelled against the new definitions before tuning. Mapped duty lines rose from 12.4% to 18.4%, but plausible
+listings stayed at 2: the fictional profile's evidence, not the catalogue, now limits yield. Look-alike wording
+(code review, contract renewals, data quality, title-case benefit subheadings) is vetoed per task rather than by
+loosening the fit rule.

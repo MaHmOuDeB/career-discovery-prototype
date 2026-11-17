@@ -68,11 +68,38 @@ An independent review then reproduced eight defects in the new code (evidence ov
 Four listings lost a baseline "strong fit". In each, the baseline had parsed only two duties; the remaining duties
 are now recognised and unmatched, so the lower fit is the honest one.
 
+## Results after the catalogue lane (17 November 2026, `ANALYSER_VERSION` 15, catalogue 4)
+
+The owner chose to add catalogue tasks. New: `process_improvement`, `quality_compliance`, `customer_communication`,
+with five transfers; `stakeholders` reworded and given wider wording. Definitions: `docs/task-definitions.md`.
+Same pool, clock and profile. "v14" is commit 1daba14.
+
+| Measure | v14 | v15 |
+| --- | --- | --- |
+| Duty lines mapped to a task, whole pool | 12.4% | 18.4% |
+| Same, 161 analyst, operations, support and training titles | 19.6% | 26.7% |
+| Listings with no recognised duty | 193 | 180 |
+| Listings with a mandatory language conflict | 78 | 86 |
+| Plausible in the supply screen | 2 | 2 |
+| Held-out v1 task precision / recall, all tasks | 0.897 / 0.232 | 0.788 / 0.232 |
+| Held-out v1 precision, catalogue-3 tasks only | 0.897 (26/29) | 0.897 (26/29) |
+| Held-out v2 duties recognised (157) | 93 | 99 |
+| Held-out v2 task precision / recall | 0.931 / 0.129 | 0.938 / 0.215 |
+| Held-out v2 mandatory language conflicts (17) | 14 | 17 |
+| Held-out v2 open (qualifier-only) requirements flagged (5) | 5 | 5 |
+
+`fixtures/heldout-v2/` (24 ads) was written against the version 4 definitions without access to the vocabulary and
+scored once on v14 before any change. Its task rows are an independent check. Its language rows are development
+numbers: four language fixes were driven by its misses ("native or C2", "jeweils mindestens B2", markdown-bold
+headings, bulleted language lines before any heading), then tested with separate wording.
+The v1 drop is a labelling artefact: v1 was labelled before the new tasks existed, so new-task tags on v1 duties
+score as false positives. Restricted to the tasks v1 knew, precision is unchanged. A blind review of new-task tags on
+public lines found 0.89 precision before the look-alike guards were added. The demo output is identical to the baseline.
+
 ## Why yield is still low
 
-The parser now sees about twice as many duties, but the fictional graduate has three evidence items, and nearby
-roles list five to eight duties, mostly coordination, process improvement and customer communication. About 80% of
-duty lines in those titles still map to no catalogue task. Unmapped duties count against fit by design. The next
-gains need a decision, not a parser fix: either add catalogue tasks for the dominant unmapped duty themes
-(stakeholder coordination is covered, process improvement and customer communication are not), or evaluate with
-richer fictional or consented profiles. Both change what is being measured and need the owner's call.
+After both lanes the bottleneck is evidence, not vocabulary. Of 176 listings with no hard conflict, 168 are held back
+by "insufficient task evidence": their duties are now recognised, but the fictional graduate's three evidence items
+cover few of them. Only eight reach a stretch or transferable fit; two are plausible, the other six wait on
+responsibility coverage or an unconfirmed English working language. More catalogue tasks would not change this.
+The next measurement needs richer fictional or consented profiles, which is an owner decision.

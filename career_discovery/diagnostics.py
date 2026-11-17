@@ -80,6 +80,7 @@ def heldout_report(path, profile, catalogue, now):
     items = json.loads(Path(path).read_text(encoding="utf-8"))
     duties_total = duties_detected = qualifications_total = leaks = 0
     expected_conflicts = detected_conflicts = unexpected_conflicts = 0
+    open_expected = open_flagged = 0
     counts = Counter()
     misses = []
     for item in items:
@@ -110,14 +111,27 @@ def heldout_report(path, profile, catalogue, now):
                                "expected": {"kind": qualification["kind"], "tasks": []},
                                "got": {"kind": "core", "tasks": sorted({t for r in matches for t in r.tasks})}})
         conflicts = {f.subject for f in row.findings if f.state == "conflict" and LANGUAGE_SUBJECT.match(f.subject)}
-        expected_subjects = set()
+        flagged = {f.subject for f in row.findings
+                   if f.state in {"conflict", "unknown"} and LANGUAGE_SUBJECT.match(f.subject)}
+        expected_subjects, open_subjects = set(), set()
         for need in item.get("language_requirements", []):
             actual = profile.languages.get(need["language"])
-            if need.get("mandatory") and actual and CEFR.index(need["level"].upper()) > CEFR.index(actual):
-                expected_subjects.add(f"language ({need['language']})")
+            level = str(need.get("level") or "").upper()
+            subject = f"language ({need['language']})"
+            if not need.get("mandatory") or not actual:
+                continue
+            if level in CEFR:
+                if CEFR.index(level) > CEFR.index(actual):
+                    expected_subjects.add(subject)
+            else:
+                # A qualifier such as "fluent" sets no CEFR level, so the matcher should flag it, not decide it.
+                open_subjects.add(subject)
+        open_subjects -= expected_subjects
         expected_conflicts += len(expected_subjects)
         detected_conflicts += len(expected_subjects & conflicts)
-        unexpected_conflicts += len(conflicts - expected_subjects)
+        unexpected_conflicts += len(conflicts - expected_subjects - open_subjects)
+        open_expected += len(open_subjects)
+        open_flagged += len(open_subjects & flagged)
     tasks = sorted({task for task, _ in counts})
     per_task = {task: prf(counts[task, "true_positive"], counts[task, "predicted"], counts[task, "expected"])
                 for task in tasks}
@@ -132,5 +146,7 @@ def heldout_report(path, profile, catalogue, now):
         "language_conflicts_expected": expected_conflicts,
         "language_conflicts_detected": detected_conflicts,
         "language_conflicts_unexpected": unexpected_conflicts,
+        "language_open_expected": open_expected,
+        "language_open_flagged": open_flagged,
         "misses": misses,
     }

@@ -138,3 +138,23 @@ class DiagnosticsTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class QualifierLevelTests(unittest.TestCase):
+    def test_qualifier_or_missing_levels_count_as_open_requirements(self):
+        import tempfile
+        from career_discovery.analysis import load_catalogue
+        from career_discovery.demo import load_demo
+        profile = next(p for p in load_demo()[0] if p.id == "technical-graduate")
+        item = {"id": "q1", "language": "en", "company": "Example GmbH", "title": "Support Associate",
+                "description": "Your responsibilities\n- Resolve customer tickets\nYour profile\n- Fluent German",
+                "duties": [], "qualifications": [],
+                "language_requirements": [{"language": "de", "level": "fluent", "mandatory": True},
+                                          {"language": "en", "level": None, "mandatory": True}]}
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "set.json"
+            path.write_text(json.dumps([item]))
+            report = heldout_report(path, profile, load_catalogue(), NOW)
+        self.assertEqual(report["language_conflicts_expected"], 0)
+        self.assertEqual(report["language_open_expected"], 2)
+        self.assertEqual(report["language_open_flagged"], 1)

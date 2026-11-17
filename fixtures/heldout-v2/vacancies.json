@@ -1,0 +1,1978 @@
+[
+ {
+  "id": "v01",
+  "language": "en",
+  "company": "Nordwind Freight Tech",
+  "title": "Operations Associate",
+  "locations": [
+   "Hamburg"
+  ],
+  "employment": "full_time",
+  "description": "Operations Associate at Nordwind Freight Tech\n\nNordwind Freight Tech builds software for mid-sized freight forwarders. We care about getting details right: every shipment record is checked against agreed standards before it leaves our system.\n\n🚀 What you'll do\n• Monitor daily shipment exceptions and resolve discrepancies between carrier statuses and our records\n• Spot recurring delays in the booking workflow and redesign the steps to cut handling time\n• Check booking data against our internal data standards before it is released to carriers\n• Keep carrier partners and the sales team informed about status changes and open actions\n• Maintain the weekly on-time delivery report in Google Sheets\n• Write and update step-by-step guides for the operations team\n\n🧩 What you bring\n• 1-2 years in operations, logistics or a similar coordination role\n• Comfortable with spreadsheets and basic formulas\n• Business-fluent English (C1)\n• German at B1 or above is a plus\n\n🎁 Why join us\nA team that values clear communication and honest feedback\nLearning budget of 1,000 EUR per year\n30 days of vacation",
+  "duties": [
+   {
+    "text": "Monitor daily shipment exceptions and resolve discrepancies between carrier statuses and our records",
+    "tasks": [
+     "reconcile",
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Spot recurring delays in the booking workflow and redesign the steps to cut handling time",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Check booking data against our internal data standards before it is released to carriers",
+    "tasks": [
+     "quality_compliance",
+     "data_quality"
+    ]
+   },
+   {
+    "text": "Keep carrier partners and the sales team informed about status changes and open actions",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Maintain the weekly on-time delivery report in Google Sheets",
+    "tasks": [
+     "report_kpis",
+     "spreadsheets"
+    ]
+   },
+   {
+    "text": "Write and update step-by-step guides for the operations team",
+    "tasks": [
+     "document_process"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "1-2 years in operations, logistics or a similar coordination role",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Comfortable with spreadsheets and basic formulas",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Business-fluent English (C1)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "German at B1 or above is a plus",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": "B1",
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v02",
+  "language": "en",
+  "company": "Lumetra Software",
+  "title": "Customer Success Manager",
+  "locations": [
+   "Berlin",
+   "Remote (Germany)"
+  ],
+  "employment": "full_time",
+  "description": "Customer Success Manager at Lumetra Software\n\nLumetra is a partner-first company: we believe long-term relationships are built on honest communication and high product standards.\n\nAbout the role — Customer Success Manager\n\nYour mission — what you will own\n* Run onboarding calls with new customers and get their teams live within 30 days\n* Answer questions from customer admins by email and chat and keep them updated on open requests\n* Prepare quarterly business reviews with usage metrics and renewal risks\n* Collect product feedback and hand it over to the product team with clear examples\n* Identify steps in our onboarding checklist that slow customers down and propose a leaner flow\n* Handle complaints from unhappy accounts and agree a recovery plan with them\n\nYour profile — what you bring\n* 3+ years in customer success, account management or consulting\n* Experience with a CRM such as HubSpot or Salesforce\n* Excellent written and spoken English (native or C2)\n\nNice to have —\n* Familiarity with SQL for pulling usage data\n* Some German is a nice-to-have\n\nPerks —\nHome-office budget and a monthly team day in Berlin\nRegular partner events with our integration partners",
+  "duties": [
+   {
+    "text": "Run onboarding calls with new customers and get their teams live within 30 days",
+    "tasks": [
+     "onboard",
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Answer questions from customer admins by email and chat and keep them updated on open requests",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Prepare quarterly business reviews with usage metrics and renewal risks",
+    "tasks": [
+     "report_kpis",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Collect product feedback and hand it over to the product team with clear examples",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Identify steps in our onboarding checklist that slow customers down and propose a leaner flow",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Handle complaints from unhappy accounts and agree a recovery plan with them",
+    "tasks": [
+     "customer_communication"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "3+ years in customer success, account management or consulting",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Experience with a CRM such as HubSpot or Salesforce",
+    "kind": "preferred"
+   },
+   {
+    "text": "Excellent written and spoken English (native or C2)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Familiarity with SQL for pulling usage data",
+    "kind": "preferred"
+   },
+   {
+    "text": "Some German is a nice-to-have",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C2",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": "basic",
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v03",
+  "language": "en",
+  "company": "Brightloop",
+  "title": "Customer Support Specialist",
+  "locations": [
+   "Munich"
+  ],
+  "employment": "full_time",
+  "description": "Customer Support Specialist at Brightloop\n\nAt Brightloop we hold ourselves to high standards of service. Our values: be kind, be clear, be quick.\n\nResponsibilities:\nResolve technical tickets from users of our scheduling app, from login problems to sync errors\nPrioritise incoming tickets by severity and escalate critical incidents to engineering\nWrite clear replies that explain the fix in plain language\nTurn recurring ticket topics into help-centre articles\nReview a sample of closed tickets each week against our support quality checklist\nSuggest changes to the macros and ticket flow that reduce repeat contacts\nReport first-response time and satisfaction scores to the support lead\n\nRequirements:\n1+ year in a customer-facing support role\nFluent English (C1) and German (B2)\nExperience with Zendesk or Intercom\n\nBenefits:\nRemote-friendly with a co-working allowance\nClear career path from support to success or product",
+  "duties": [
+   {
+    "text": "Resolve technical tickets from users of our scheduling app, from login problems to sync errors",
+    "tasks": [
+     "troubleshoot",
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Prioritise incoming tickets by severity and escalate critical incidents to engineering",
+    "tasks": [
+     "triage",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Write clear replies that explain the fix in plain language",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Turn recurring ticket topics into help-centre articles",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Review a sample of closed tickets each week against our support quality checklist",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Suggest changes to the macros and ticket flow that reduce repeat contacts",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Report first-response time and satisfaction scores to the support lead",
+    "tasks": [
+     "report_kpis",
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "1+ year in a customer-facing support role",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Fluent English (C1) and German (B2)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Experience with Zendesk or Intercom",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v04",
+  "language": "en",
+  "company": "Vantage Pharma Packaging",
+  "title": "Quality Assurance Coordinator",
+  "locations": [
+   "Frankfurt"
+  ],
+  "employment": "full_time",
+  "description": "Quality Assurance Coordinator at Vantage Pharma Packaging\n\nVantage Pharma Packaging has produced safe packaging for over 40 years. Quality and compliance are not a department here, they are how we work.\n\nWhat you will be doing\n- Coordinate incoming goods inspections and release of packaging batches according to GMP requirements\n- Prepare and track internal audits and follow up open findings with department heads\n- Document deviations and corrective actions in the quality management system\n- Degree or apprenticeship in a scientific or technical field\n- Review SOPs yearly and simplify steps that cause rework on the line\n- Analyse reject rates per line and report them in the monthly quality review\n- Communicate with customers on complaint cases and send them the investigation result\n- Knowledge of GMP or ISO 9001 is required\n- Experience as an internal auditor\n- German C1 and English B2\n\nOur offer\nStable family-owned company with a long-term view\nCompany pension scheme",
+  "duties": [
+   {
+    "text": "Coordinate incoming goods inspections and release of packaging batches according to GMP requirements",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Prepare and track internal audits and follow up open findings with department heads",
+    "tasks": [
+     "quality_compliance",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Document deviations and corrective actions in the quality management system",
+    "tasks": [
+     "quality_compliance",
+     "document_process"
+    ]
+   },
+   {
+    "text": "Review SOPs yearly and simplify steps that cause rework on the line",
+    "tasks": [
+     "document_process",
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Analyse reject rates per line and report them in the monthly quality review",
+    "tasks": [
+     "report_kpis",
+     "data_analysis"
+    ]
+   },
+   {
+    "text": "Communicate with customers on complaint cases and send them the investigation result",
+    "tasks": [
+     "customer_communication",
+     "troubleshoot"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Degree or apprenticeship in a scientific or technical field",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Knowledge of GMP or ISO 9001 is required",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Experience as an internal auditor",
+    "kind": "preferred"
+   },
+   {
+    "text": "German C1 and English B2",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v05",
+  "language": "en",
+  "company": "Kestrel Mobility",
+  "title": "Business Operations Analyst",
+  "locations": [
+   "Berlin"
+  ],
+  "employment": "full_time",
+  "description": "Business Operations Analyst at Kestrel Mobility\n\nKestrel Mobility runs shared electric vehicles in twelve European cities. We work with city partners and keep our safety standards high.\n\n## The job\n* Map the end-to-end workflow of vehicle handover and find steps that can be removed or merged\n* Define the KPIs for our fleet operations and agree targets with city managers\n* Build and maintain Looker dashboards for the operations leadership team\n* Query our warehouse with SQL to explain why turnaround times differ between cities\n* Automate recurring weekly reports with scripts and scheduled queries\n* Run small pilots in two cities and measure whether the new process works\n* Present findings to city teams and align next steps with them\n\n## You\n* Strong SQL skills\n* 2+ years in analytics, consulting or operations\n* Looker or Tableau experience\n* Professional English (C1)\n* German (A2 or higher) is a bonus",
+  "duties": [
+   {
+    "text": "Map the end-to-end workflow of vehicle handover and find steps that can be removed or merged",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Define the KPIs for our fleet operations and agree targets with city managers",
+    "tasks": [
+     "metric_design",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Build and maintain Looker dashboards for the operations leadership team",
+    "tasks": [
+     "dashboard",
+     "report_kpis"
+    ]
+   },
+   {
+    "text": "Query our warehouse with SQL to explain why turnaround times differ between cities",
+    "tasks": [
+     "sql",
+     "data_analysis"
+    ]
+   },
+   {
+    "text": "Automate recurring weekly reports with scripts and scheduled queries",
+    "tasks": [
+     "automate",
+     "report_kpis"
+    ]
+   },
+   {
+    "text": "Run small pilots in two cities and measure whether the new process works",
+    "tasks": [
+     "experiment",
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Present findings to city teams and align next steps with them",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Strong SQL skills",
+    "kind": "mandatory"
+   },
+   {
+    "text": "2+ years in analytics, consulting or operations",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Looker or Tableau experience",
+    "kind": "preferred"
+   },
+   {
+    "text": "Professional English (C1)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "German (A2 or higher) is a bonus",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": "A2",
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v06",
+  "language": "en",
+  "company": "Tidewell Systems",
+  "title": "Implementation Consultant",
+  "locations": [
+   "Cologne",
+   "Remote (Germany)"
+  ],
+  "employment": "full_time",
+  "description": "Implementation Consultant at Tidewell Systems\n\nTidewell Systems provides HR software to 800 companies. We work as partners with our customers and are certified to ISO 27001.\n\n🛠 What you will do\n→ Configure our HR platform for new customers: roles, approval chains and notification settings\n→ Connect the platform to payroll and identity systems through REST APIs and fix sync issues\n→ Lead kick-off workshops and train customer admins on the setup\n→ Write handover documents that describe each customer's configuration\n→ Keep the project sponsor and the customer's IT team updated on progress and risks\n→ Check each go-live against our implementation checklist and data-protection requirements\n→ Feed back lessons from projects to improve our standard implementation playbook\n\n🎯 What we are looking for\n→ 2+ years of implementation or consulting experience in software\n→ Basic understanding of APIs and JSON\n→ Willingness to travel up to 20 percent\n→ German (C1) and English (C1)\n\n➕ Nice to have\n→ Experience with GDPR requirements in HR software",
+  "duties": [
+   {
+    "text": "Configure our HR platform for new customers: roles, approval chains and notification settings",
+    "tasks": [
+     "configuration"
+    ]
+   },
+   {
+    "text": "Connect the platform to payroll and identity systems through REST APIs and fix sync issues",
+    "tasks": [
+     "systems_integration",
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Lead kick-off workshops and train customer admins on the setup",
+    "tasks": [
+     "onboard",
+     "teach"
+    ]
+   },
+   {
+    "text": "Write handover documents that describe each customer's configuration",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Keep the project sponsor and the customer's IT team updated on progress and risks",
+    "tasks": [
+     "stakeholders",
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Check each go-live against our implementation checklist and data-protection requirements",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Feed back lessons from projects to improve our standard implementation playbook",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "2+ years of implementation or consulting experience in software",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Basic understanding of APIs and JSON",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Willingness to travel up to 20 percent",
+    "kind": "unclear"
+   },
+   {
+    "text": "German (C1) and English (C1)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Experience with GDPR requirements in HR software",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v07",
+  "language": "en",
+  "company": "Orchard Analytics",
+  "title": "Reporting Analyst",
+  "locations": [
+   "Düsseldorf"
+  ],
+  "employment": "full_time",
+  "description": "Reporting Analyst at Orchard Analytics\n\nWe partner with our clients to deliver accurate numbers they can trust.\n\nYour tasks\nBuild Power BI dashboards on sales and delivery data for regional managers\nValidate source data and fix mismatches between the CRM and finance systems\nRun the monthly KPI pack and explain deviations to the business\nMaintain ETL jobs that load data into the reporting database\nDocument data definitions and reporting logic in the team wiki\nReview existing reports, retire duplicates and standardise layouts\nCheck reports against our data governance rules before publication\n\nYour profile\nDegree in a quantitative field or equivalent experience\nAdvanced SQL and Power BI\nEnglish C1; German B2 preferred\n\nBonus points\ndbt or Airflow experience",
+  "duties": [
+   {
+    "text": "Build Power BI dashboards on sales and delivery data for regional managers",
+    "tasks": [
+     "dashboard"
+    ]
+   },
+   {
+    "text": "Validate source data and fix mismatches between the CRM and finance systems",
+    "tasks": [
+     "data_quality",
+     "reconcile"
+    ]
+   },
+   {
+    "text": "Run the monthly KPI pack and explain deviations to the business",
+    "tasks": [
+     "report_kpis",
+     "data_analysis",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Maintain ETL jobs that load data into the reporting database",
+    "tasks": [
+     "pipeline"
+    ]
+   },
+   {
+    "text": "Document data definitions and reporting logic in the team wiki",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Review existing reports, retire duplicates and standardise layouts",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Check reports against our data governance rules before publication",
+    "tasks": [
+     "quality_compliance"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Degree in a quantitative field or equivalent experience",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Advanced SQL and Power BI",
+    "kind": "mandatory"
+   },
+   {
+    "text": "English C1; German B2 preferred",
+    "kind": "mandatory"
+   },
+   {
+    "text": "dbt or Airflow experience",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v08",
+  "language": "en",
+  "company": "Fieldmark Cloud",
+  "title": "Sales Operations Specialist",
+  "locations": [
+   "Munich"
+  ],
+  "employment": "full_time",
+  "description": "Sales Operations Specialist at Fieldmark Cloud\n\nFieldmark Cloud sells field-service software to utilities. Our teams work closely with partners and hold ourselves to clear standards for every deal.\n\n📌 Your day-to-day\n✅ Maintain the sales pipeline in Salesforce and keep opportunity data clean\n✅ Build the weekly forecast report for the sales director\n✅ Set up quoting rules and approval workflows in the CRM\n✅ Streamline the lead-to-contract process together with sales and legal\n✅ Answer internal questions from account executives about deal desk rules\n✅ Audit closed deals for contract and discount policy compliance\n✅ Analyse win and loss reasons to spot patterns\n\n📌 Your profile\n✅ 2+ years in sales operations, revenue operations or CRM administration\n✅ Strong Excel or Google Sheets skills\n✅ Fluent English\n✅ German is helpful but not required",
+  "duties": [
+   {
+    "text": "Maintain the sales pipeline in Salesforce and keep opportunity data clean",
+    "tasks": [
+     "sales",
+     "data_quality"
+    ]
+   },
+   {
+    "text": "Build the weekly forecast report for the sales director",
+    "tasks": [
+     "report_kpis",
+     "sales"
+    ]
+   },
+   {
+    "text": "Set up quoting rules and approval workflows in the CRM",
+    "tasks": [
+     "configuration",
+     "automate"
+    ]
+   },
+   {
+    "text": "Streamline the lead-to-contract process together with sales and legal",
+    "tasks": [
+     "process_improvement",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Answer internal questions from account executives about deal desk rules",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Audit closed deals for contract and discount policy compliance",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Analyse win and loss reasons to spot patterns",
+    "tasks": [
+     "data_analysis"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "2+ years in sales operations, revenue operations or CRM administration",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Strong Excel or Google Sheets skills",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Fluent English",
+    "kind": "mandatory"
+   },
+   {
+    "text": "German is helpful but not required",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "fluent",
+    "mandatory": true
+   },
+   {
+    "language": "de",
+    "level": null,
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v09",
+  "language": "en",
+  "company": "Carelyn Health",
+  "title": "Care Support Specialist",
+  "locations": [
+   "Hamburg"
+  ],
+  "employment": "full_time",
+  "description": "Care Support Specialist at Carelyn Health\n\nCarelyn Health makes documentation software for care homes. We take quality and data protection seriously and work in close partnership with the homes.\n\n**What you will do**\n- Support nurses and care coordinators who use our care documentation app, by phone and chat\n- Help care homes set up user accounts and templates for resident records\n- Check that documentation templates meet the data-protection and care standards of each client\n- Escalate suspected data errors in patient records to our clinical specialists\n- Run short online training sessions for new care staff\n- Work with the product team on fixes and keep care homes informed about their status\n- Suggest ways to simplify our rollout steps for new care homes\n\n**What you bring**\n- Background in nursing, care or health administration is an advantage\n- 1+ year in customer support or service\n- German at native or C2 level, English B2",
+  "duties": [
+   {
+    "text": "Support nurses and care coordinators who use our care documentation app, by phone and chat",
+    "tasks": [
+     "customer_communication",
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Help care homes set up user accounts and templates for resident records",
+    "tasks": [
+     "onboard",
+     "configuration"
+    ]
+   },
+   {
+    "text": "Check that documentation templates meet the data-protection and care standards of each client",
+    "tasks": [
+     "quality_compliance",
+     "clinical_documentation"
+    ]
+   },
+   {
+    "text": "Escalate suspected data errors in patient records to our clinical specialists",
+    "tasks": [
+     "triage",
+     "data_quality",
+     "clinical_documentation"
+    ]
+   },
+   {
+    "text": "Run short online training sessions for new care staff",
+    "tasks": [
+     "teach"
+    ]
+   },
+   {
+    "text": "Work with the product team on fixes and keep care homes informed about their status",
+    "tasks": [
+     "stakeholders",
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Suggest ways to simplify our rollout steps for new care homes",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Background in nursing, care or health administration is an advantage",
+    "kind": "preferred"
+   },
+   {
+    "text": "1+ year in customer support or service",
+    "kind": "mandatory"
+   },
+   {
+    "text": "German at native or C2 level, English B2",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C2",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v10",
+  "language": "en",
+  "company": "Rheinbogen Logistics",
+  "title": "Logistics Coordinator",
+  "locations": [
+   "Duisburg"
+  ],
+  "employment": "full_time",
+  "description": "Logistics Coordinator at Rheinbogen Logistics\n\nRheinbogen Logistics moves 2 million pallets a year. We work with carriers as partners and keep to strict safety and delivery standards.\n\nThe role — Logistics Coordinator\n\nDay to day — duties\n* Plan daily truck routes and assign orders to carriers\n* Track inbound and outbound shipments and update customers when deliveries are delayed\n* Reconcile delivery notes with invoices and clear differences with carriers\n* Check loading and transport documents against safety and customs regulations\n* Keep stock levels in the warehouse system accurate and report shortages\n* Review the dispatch workflow and propose changes that save time per order\n* Coordinate with warehouse teams and drivers on tight pick-up windows\n\nAbout you —\n* Apprenticeship or experience in logistics or freight forwarding\n* Good Excel skills\n* German (B2) and English (B1)",
+  "duties": [
+   {
+    "text": "Plan daily truck routes and assign orders to carriers",
+    "tasks": []
+   },
+   {
+    "text": "Track inbound and outbound shipments and update customers when deliveries are delayed",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Reconcile delivery notes with invoices and clear differences with carriers",
+    "tasks": [
+     "reconcile",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Check loading and transport documents against safety and customs regulations",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Keep stock levels in the warehouse system accurate and report shortages",
+    "tasks": [
+     "inventory",
+     "data_quality"
+    ]
+   },
+   {
+    "text": "Review the dispatch workflow and propose changes that save time per order",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Coordinate with warehouse teams and drivers on tight pick-up windows",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Apprenticeship or experience in logistics or freight forwarding",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Good Excel skills",
+    "kind": "mandatory"
+   },
+   {
+    "text": "German (B2) and English (B1)",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B1",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v11",
+  "language": "en",
+  "company": "Pixelhaven Games",
+  "title": "Backend Engineer",
+  "locations": [
+   "Berlin"
+  ],
+  "employment": "full_time",
+  "description": "Backend Engineer at Pixelhaven Games\n\nPixelhaven Games builds mobile puzzle games played by millions. We keep a high quality bar and communicate openly across studios.\n\nWhat you'll work on\n- Design and build REST services in Go for player profiles and matchmaking\n- Review pull requests from teammates\n- Integrate payment provider APIs into our store backend\n- Monitor production services and resolve incidents\n- Document service interfaces for other teams\n- Agree API changes with the client teams before release\n\nWhat you bring\n- 3+ years of backend development in Go, Java or similar\n- Experience with PostgreSQL and Docker\n- English C1",
+  "duties": [
+   {
+    "text": "Design and build REST services in Go for player profiles and matchmaking",
+    "tasks": []
+   },
+   {
+    "text": "Review pull requests from teammates",
+    "tasks": []
+   },
+   {
+    "text": "Integrate payment provider APIs into our store backend",
+    "tasks": [
+     "systems_integration"
+    ]
+   },
+   {
+    "text": "Monitor production services and resolve incidents",
+    "tasks": [
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Document service interfaces for other teams",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Agree API changes with the client teams before release",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "3+ years of backend development in Go, Java or similar",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Experience with PostgreSQL and Docker",
+    "kind": "mandatory"
+   },
+   {
+    "text": "English C1",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "en",
+    "level": "C1",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v12",
+  "language": "en",
+  "company": "Maison Aurel",
+  "title": "Pastry Chef",
+  "locations": [
+   "Munich"
+  ],
+  "employment": "full_time",
+  "description": "Pastry Chef at Maison Aurel\n\nMaison Aurel is a bakery and café group with five sites in Bavaria. We believe good bread comes from good partners and high standards.\n\n🥐 Your tasks\n• Prepare croissants, tarts and entremets for the daily counter\n• Follow hygiene and HACCP rules in the kitchen and record temperatures\n• Order ingredients and check stock levels\n• Brief the service team on the daily specials\n• Talk to guests about allergens and ingredients\n\n🥖 Your profile\n• Completed training as a pastry chef or baker\n• Early-shift flexibility\n• German B2",
+  "duties": [
+   {
+    "text": "Prepare croissants, tarts and entremets for the daily counter",
+    "tasks": []
+   },
+   {
+    "text": "Follow hygiene and HACCP rules in the kitchen and record temperatures",
+    "tasks": [
+     "quality_compliance",
+     "document_process"
+    ]
+   },
+   {
+    "text": "Order ingredients and check stock levels",
+    "tasks": [
+     "inventory"
+    ]
+   },
+   {
+    "text": "Brief the service team on the daily specials",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Talk to guests about allergens and ingredients",
+    "tasks": [
+     "customer_communication"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Completed training as a pastry chef or baker",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Early-shift flexibility",
+    "kind": "unclear"
+   },
+   {
+    "text": "German B2",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v13",
+  "language": "de",
+  "company": "Lindenhof Mobility GmbH",
+  "title": "Operations Specialist (m/w/d)",
+  "locations": [
+   "Stuttgart"
+  ],
+  "employment": "full_time",
+  "description": "Operations Specialist (m/w/d) bei Lindenhof Mobility GmbH\n\nBei Lindenhof Mobility gilt: Qualität ist kein Zufall, und wir kommunizieren offen mit unseren Partnern.\n\n🚀 Dein Auftrag\n• Du überwachst täglich die Auftragsdaten und klärst Abweichungen zwischen System und Lieferantenmeldung\n• Du erkennst Engpässe im Bestellprozess und gestaltest ihn schlanker\n• Du stimmst dich mit Einkauf, Lager und Kundenservice zu Prioritäten ab\n• Du pflegst Prozessbeschreibungen und Arbeitsanweisungen im Wiki\n• Du prüfst Lieferungen anhand unserer Qualitätsvorgaben und dokumentierst Abweichungen\n• Du erstellst wöchentliche Kennzahlenberichte in Excel\n• Du informierst Kund:innen proaktiv über Verzögerungen\n\n🧩 Das bringst du mit\n• Abgeschlossene Ausbildung oder Studium im kaufmännischen Bereich\n• Sicherer Umgang mit Excel\n• Sehr gute Deutschkenntnisse (C1)\n• Gute Englischkenntnisse (B2)\n• Erfahrung mit SAP ist ein Plus\n\n🎁 Das bieten wir\nFlexible Arbeitszeiten und 30 Urlaubstage\nEin Team, das Wert auf Qualität und offenen Austausch legt",
+  "duties": [
+   {
+    "text": "Du überwachst täglich die Auftragsdaten und klärst Abweichungen zwischen System und Lieferantenmeldung",
+    "tasks": [
+     "reconcile",
+     "data_quality"
+    ]
+   },
+   {
+    "text": "Du erkennst Engpässe im Bestellprozess und gestaltest ihn schlanker",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Du stimmst dich mit Einkauf, Lager und Kundenservice zu Prioritäten ab",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Du pflegst Prozessbeschreibungen und Arbeitsanweisungen im Wiki",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Du prüfst Lieferungen anhand unserer Qualitätsvorgaben und dokumentierst Abweichungen",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Du erstellst wöchentliche Kennzahlenberichte in Excel",
+    "tasks": [
+     "report_kpis",
+     "spreadsheets"
+    ]
+   },
+   {
+    "text": "Du informierst Kund:innen proaktiv über Verzögerungen",
+    "tasks": [
+     "customer_communication"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Abgeschlossene Ausbildung oder Studium im kaufmännischen Bereich",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Sicherer Umgang mit Excel",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Sehr gute Deutschkenntnisse (C1)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Gute Englischkenntnisse (B2)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Erfahrung mit SAP ist ein Plus",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v14",
+  "language": "de",
+  "company": "Kinderhaus Sonnenwiese e.V.",
+  "title": "Erzieher (m/w/d)",
+  "locations": [
+   "Leipzig"
+  ],
+  "employment": "full_time",
+  "description": "Erzieher (m/w/d) bei Kinderhaus Sonnenwiese e.V.\n\nDas Kinderhaus Sonnenwiese arbeitet partnerschaftlich mit Eltern und Trägern und folgt hohen pädagogischen Standards.\n\nIhre Aufgaben\n- Sie begleiten Kinder im Alltag und fördern ihre sprachliche Entwicklung\n- Sie führen regelmäßig Entwicklungsgespräche mit den Eltern\n- Sie halten Hygiene- und Sicherheitsvorschriften ein und dokumentieren Vorfälle\n- Sie dokumentieren Beobachtungen zur Entwicklung der Kinder\n- Sie stimmen sich im Team und mit der Leitung über Wochenpläne ab\n- Sie bestellen Bastel- und Verbrauchsmaterial und prüfen Bestände\n\nIhr Profil\n- Staatlich anerkannte Erzieherin bzw. staatlich anerkannter Erzieher\n- Erweitertes Führungszeugnis\n- Deutsch auf muttersprachlichem Niveau",
+  "duties": [
+   {
+    "text": "Sie begleiten Kinder im Alltag und fördern ihre sprachliche Entwicklung",
+    "tasks": []
+   },
+   {
+    "text": "Sie führen regelmäßig Entwicklungsgespräche mit den Eltern",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Sie halten Hygiene- und Sicherheitsvorschriften ein und dokumentieren Vorfälle",
+    "tasks": [
+     "quality_compliance",
+     "document_process"
+    ]
+   },
+   {
+    "text": "Sie dokumentieren Beobachtungen zur Entwicklung der Kinder",
+    "tasks": []
+   },
+   {
+    "text": "Sie stimmen sich im Team und mit der Leitung über Wochenpläne ab",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Sie bestellen Bastel- und Verbrauchsmaterial und prüfen Bestände",
+    "tasks": [
+     "inventory"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Staatlich anerkannte Erzieherin bzw. staatlich anerkannter Erzieher",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Erweitertes Führungszeugnis",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch auf muttersprachlichem Niveau",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "native",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v15",
+  "language": "de",
+  "company": "Nordhafen Energie Service GmbH",
+  "title": "Mitarbeiter Kundenservice (m/w/d)",
+  "locations": [
+   "Hamburg"
+  ],
+  "employment": "full_time",
+  "description": "Mitarbeiter Kundenservice (m/w/d) bei Nordhafen Energie Service GmbH\n\nDie Nordhafen Energie Service GmbH versorgt 300.000 Haushalte. Verlässlicher Service und die Einhaltung gesetzlicher Standards stehen bei uns an erster Stelle.\n\nAufgaben\nBearbeitung von Kundenanfragen zu Rechnungen und Verträgen per Telefon und E-Mail\nKlärung technischer Störungen bei Smart-Meter-Anbindungen\nPriorisierung und Weiterleitung dringender Fälle an die Fachabteilung\nPflege der Wissensdatenbank\nBearbeitung von Beschwerden und Rückmeldung an den Kunden mit Lösungsvorschlag\nEinhaltung der Datenschutzvorgaben bei der Kundenkommunikation\nMitarbeit an der Verbesserung von Serviceabläufen und Textbausteinen\n\nAnforderungen\nErfahrung im Kundenservice\nVerhandlungssichere Deutschkenntnisse (C1)\nEnglischkenntnisse von Vorteil\nKenntnisse im Energiemarkt wünschenswert",
+  "duties": [
+   {
+    "text": "Bearbeitung von Kundenanfragen zu Rechnungen und Verträgen per Telefon und E-Mail",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Klärung technischer Störungen bei Smart-Meter-Anbindungen",
+    "tasks": [
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Priorisierung und Weiterleitung dringender Fälle an die Fachabteilung",
+    "tasks": [
+     "triage",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Pflege der Wissensdatenbank",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Bearbeitung von Beschwerden und Rückmeldung an den Kunden mit Lösungsvorschlag",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Einhaltung der Datenschutzvorgaben bei der Kundenkommunikation",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Mitarbeit an der Verbesserung von Serviceabläufen und Textbausteinen",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Erfahrung im Kundenservice",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Verhandlungssichere Deutschkenntnisse (C1)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Englischkenntnisse von Vorteil",
+    "kind": "preferred"
+   },
+   {
+    "text": "Kenntnisse im Energiemarkt wünschenswert",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": null,
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v16",
+  "language": "de",
+  "company": "Rhein-Main Medizintechnik AG",
+  "title": "Qualitätskoordinator (m/w/d)",
+  "locations": [
+   "Mainz"
+  ],
+  "employment": "full_time",
+  "description": "Qualitätskoordinator (m/w/d) bei Rhein-Main Medizintechnik AG\n\nDie Rhein-Main Medizintechnik AG entwickelt Implantate. Qualität und Patientensicherheit sind unser Anspruch, und wir arbeiten eng mit Kliniken als Partnern zusammen.\n\nIhre Aufgaben\n• Sie koordinieren interne Audits nach ISO 13485 und begleiten externe Prüfungen\n• Sie verfolgen Korrekturmaßnahmen und berichten den Fachbereichen über den Stand\n• Sie pflegen die QM-Dokumentation und überarbeiten Verfahrensanweisungen\n• Sie werten Reklamationen aus und beantworten Rückfragen von Kunden\n• Sie identifizieren Schwachstellen in Prüfabläufen und führen Verbesserungen ein\n• Sie erstellen Qualitätskennzahlen für die Geschäftsleitung\n\nIhr Profil\n• Abgeschlossenes Studium oder Ausbildung mit QM-Bezug\n• Kenntnisse in ISO 13485 oder MDR\n• Sehr gute Deutschkenntnisse in Wort und Schrift\n• Gute Englischkenntnisse\n\nWir bieten\nUnbefristeter Vertrag und 30 Urlaubstage",
+  "duties": [
+   {
+    "text": "Sie koordinieren interne Audits nach ISO 13485 und begleiten externe Prüfungen",
+    "tasks": [
+     "quality_compliance",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Sie verfolgen Korrekturmaßnahmen und berichten den Fachbereichen über den Stand",
+    "tasks": [
+     "quality_compliance",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Sie pflegen die QM-Dokumentation und überarbeiten Verfahrensanweisungen",
+    "tasks": [
+     "document_process",
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Sie werten Reklamationen aus und beantworten Rückfragen von Kunden",
+    "tasks": [
+     "data_analysis",
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Sie identifizieren Schwachstellen in Prüfabläufen und führen Verbesserungen ein",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Sie erstellen Qualitätskennzahlen für die Geschäftsleitung",
+    "tasks": [
+     "report_kpis"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Abgeschlossenes Studium oder Ausbildung mit QM-Bezug",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Kenntnisse in ISO 13485 oder MDR",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Sehr gute Deutschkenntnisse in Wort und Schrift",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Gute Englischkenntnisse",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "very good",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "good",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v17",
+  "language": "de",
+  "company": "Ostwerk Versicherungen",
+  "title": "Prozessanalyst (m/w/d)",
+  "locations": [
+   "Dresden",
+   "Remote"
+  ],
+  "employment": "full_time",
+  "description": "Prozessanalyst (m/w/d) bei Ostwerk Versicherungen\n\nOstwerk Versicherungen ist ein mittelständischer Versicherer. Wir legen Wert auf klare Standards und ehrliche Kommunikation.\n\n🔧 Das machst du\n• Du analysierst Prozesse in Schadenbearbeitung und Vertrieb und deckst Medienbrüche auf\n• Du entwickelst Kennzahlen, mit denen wir Durchlaufzeiten messen\n• Du erstellst Prozessmodelle in BPMN und dokumentierst Soll-Abläufe\n• Du setzt Verbesserungen gemeinsam mit den Fachbereichen und der IT um\n• Du automatisierst wiederkehrende Auswertungen mit SQL und Python\n• Du sorgst dafür, dass Abläufe interne Richtlinien und Aufsichtsvorgaben einhalten\n• Du präsentierst Ergebnisse und hältst Führungskräfte auf dem Laufenden\n\n💡 Das bringst du mit\n• Studium der Wirtschaftsinformatik, BWL oder ähnlich\n• Erste Erfahrung in Prozessanalyse oder Beratung\n• SQL-Kenntnisse\n• Deutsch C1, Englisch B2",
+  "duties": [
+   {
+    "text": "Du analysierst Prozesse in Schadenbearbeitung und Vertrieb und deckst Medienbrüche auf",
+    "tasks": [
+     "process_improvement",
+     "data_analysis"
+    ]
+   },
+   {
+    "text": "Du entwickelst Kennzahlen, mit denen wir Durchlaufzeiten messen",
+    "tasks": [
+     "metric_design"
+    ]
+   },
+   {
+    "text": "Du erstellst Prozessmodelle in BPMN und dokumentierst Soll-Abläufe",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Du setzt Verbesserungen gemeinsam mit den Fachbereichen und der IT um",
+    "tasks": [
+     "process_improvement",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Du automatisierst wiederkehrende Auswertungen mit SQL und Python",
+    "tasks": [
+     "automate",
+     "sql"
+    ]
+   },
+   {
+    "text": "Du sorgst dafür, dass Abläufe interne Richtlinien und Aufsichtsvorgaben einhalten",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Du präsentierst Ergebnisse und hältst Führungskräfte auf dem Laufenden",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Studium der Wirtschaftsinformatik, BWL oder ähnlich",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Erste Erfahrung in Prozessanalyse oder Beratung",
+    "kind": "mandatory"
+   },
+   {
+    "text": "SQL-Kenntnisse",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch C1, Englisch B2",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v18",
+  "language": "de",
+  "company": "Kontorix Software GmbH",
+  "title": "Implementierungsberater (m/w/d)",
+  "locations": [
+   "Nürnberg"
+  ],
+  "employment": "full_time",
+  "description": "Implementierungsberater (m/w/d) bei Kontorix Software GmbH\n\nDie Kontorix Software GmbH entwickelt Buchhaltungssoftware. Wir verstehen uns als Partner unserer Kunden und stehen für verlässliche Qualität.\n\nAufgaben:\nKonfiguration der Buchhaltungssoftware nach Kundenanforderungen\nAnbindung an Bank- und ERP-Schnittstellen sowie Fehleranalyse bei Datenübertragung\nDurchführung von Schulungen und Einführungsworkshops für Anwender\nRegelmäßige Abstimmung mit Projektleitung und Fachabteilungen des Kunden\nDokumentation der Einrichtung und Erstellung von Anwenderleitfäden\nPrüfung der Einrichtung auf Einhaltung der GoBD-Anforderungen\nWeiterentwicklung der Einführungsmethodik und Checklisten\nBeantwortung von Kundenfragen nach dem Go-live\n\nQualifikation:\nErfahrung in der Softwareeinführung oder im Rechnungswesen\nVerständnis für Schnittstellen und Datenformate\nReisebereitschaft\nDeutsch (C2) sowie gute Englischkenntnisse (B2)",
+  "duties": [
+   {
+    "text": "Konfiguration der Buchhaltungssoftware nach Kundenanforderungen",
+    "tasks": [
+     "configuration"
+    ]
+   },
+   {
+    "text": "Anbindung an Bank- und ERP-Schnittstellen sowie Fehleranalyse bei Datenübertragung",
+    "tasks": [
+     "systems_integration",
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Durchführung von Schulungen und Einführungsworkshops für Anwender",
+    "tasks": [
+     "teach",
+     "onboard"
+    ]
+   },
+   {
+    "text": "Regelmäßige Abstimmung mit Projektleitung und Fachabteilungen des Kunden",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Dokumentation der Einrichtung und Erstellung von Anwenderleitfäden",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Prüfung der Einrichtung auf Einhaltung der GoBD-Anforderungen",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Weiterentwicklung der Einführungsmethodik und Checklisten",
+    "tasks": [
+     "process_improvement"
+    ]
+   },
+   {
+    "text": "Beantwortung von Kundenfragen nach dem Go-live",
+    "tasks": [
+     "customer_communication"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Erfahrung in der Softwareeinführung oder im Rechnungswesen",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Verständnis für Schnittstellen und Datenformate",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Reisebereitschaft",
+    "kind": "unclear"
+   },
+   {
+    "text": "Deutsch (C2) sowie gute Englischkenntnisse (B2)",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C2",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v19",
+  "language": "de",
+  "company": "Sternwarte Handel AG",
+  "title": "Datenanalyst Reporting (m/w/d)",
+  "locations": [
+   "Köln"
+  ],
+  "employment": "full_time",
+  "description": "Datenanalyst Reporting (m/w/d) bei Sternwarte Handel AG\n\nDie Sternwarte Handel AG betreibt 200 Märkte. Zuverlässige Zahlen und gemeinsame Standards sind für uns die Basis jeder Entscheidung.\n\nIhre Aufgaben\n- Sie entwickeln Dashboards in Tableau für Filialleiter und Category Manager\n- Sie bereinigen und prüfen Verkaufsdaten und gleichen sie mit der Warenwirtschaft ab\n- Sie analysieren Absatzdaten und leiten Handlungsempfehlungen ab\n- Sie betreuen Datenpipelines in der Cloud\n- Sie planen und werten A/B-Tests für Aktionen aus\n- Sie stimmen Anforderungen mit den Fachbereichen ab\n- Sie vereinheitlichen Berichte und beseitigen manuelle Arbeitsschritte\n\nIhr Profil\n- Studium mit quantitativem Schwerpunkt\n- Sehr gute SQL-Kenntnisse\n- Fließend Deutsch (C1) und Englisch (B2)\n- Erfahrung mit Python von Vorteil",
+  "duties": [
+   {
+    "text": "Sie entwickeln Dashboards in Tableau für Filialleiter und Category Manager",
+    "tasks": [
+     "dashboard"
+    ]
+   },
+   {
+    "text": "Sie bereinigen und prüfen Verkaufsdaten und gleichen sie mit der Warenwirtschaft ab",
+    "tasks": [
+     "data_quality",
+     "reconcile"
+    ]
+   },
+   {
+    "text": "Sie analysieren Absatzdaten und leiten Handlungsempfehlungen ab",
+    "tasks": [
+     "data_analysis"
+    ]
+   },
+   {
+    "text": "Sie betreuen Datenpipelines in der Cloud",
+    "tasks": [
+     "pipeline"
+    ]
+   },
+   {
+    "text": "Sie planen und werten A/B-Tests für Aktionen aus",
+    "tasks": [
+     "experiment"
+    ]
+   },
+   {
+    "text": "Sie stimmen Anforderungen mit den Fachbereichen ab",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Sie vereinheitlichen Berichte und beseitigen manuelle Arbeitsschritte",
+    "tasks": [
+     "process_improvement",
+     "automate"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Studium mit quantitativem Schwerpunkt",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Sehr gute SQL-Kenntnisse",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Fließend Deutsch (C1) und Englisch (B2)",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Erfahrung mit Python von Vorteil",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v20",
+  "language": "de",
+  "company": "Funkenflug Cloud GmbH",
+  "title": "Sales Operations Manager (m/w/d)",
+  "locations": [
+   "Berlin"
+  ],
+  "employment": "full_time",
+  "description": "Sales Operations Manager (m/w/d) bei Funkenflug Cloud GmbH\n\nFunkenflug Cloud verkauft Analytics-Software. Wir arbeiten mit Partnern im ganzen DACH-Raum zusammen.\n\nDeine Aufgaben\n→ Du hältst unsere Pipeline im CRM sauber und sorgst für belastbare Forecasts\n→ Du baust Berichte zu Umsatz und Abschlussquoten\n→ Du konfigurierst Angebotsprozesse und Freigaben im CRM\n→ Du verschlankst gemeinsam mit Vertrieb und Finanzen den Weg vom Lead zum Vertrag\n→ Du prüfst Verträge und Rabatte auf Einhaltung unserer Richtlinien\n→ Du beantwortest Fragen des Vertriebsteams zu Tools und Prozessen\n\nDein Profil\n→ Du hast Erfahrung in Sales Operations oder CRM-Administration\n→ Du arbeitest sicher mit Google Sheets\n→ Deutsch und Englisch sicher (jeweils mindestens B2)",
+  "duties": [
+   {
+    "text": "Du hältst unsere Pipeline im CRM sauber und sorgst für belastbare Forecasts",
+    "tasks": [
+     "sales",
+     "data_quality"
+    ]
+   },
+   {
+    "text": "Du baust Berichte zu Umsatz und Abschlussquoten",
+    "tasks": [
+     "report_kpis"
+    ]
+   },
+   {
+    "text": "Du konfigurierst Angebotsprozesse und Freigaben im CRM",
+    "tasks": [
+     "configuration"
+    ]
+   },
+   {
+    "text": "Du verschlankst gemeinsam mit Vertrieb und Finanzen den Weg vom Lead zum Vertrag",
+    "tasks": [
+     "process_improvement",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Du prüfst Verträge und Rabatte auf Einhaltung unserer Richtlinien",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Du beantwortest Fragen des Vertriebsteams zu Tools und Prozessen",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Du hast Erfahrung in Sales Operations oder CRM-Administration",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Du arbeitest sicher mit Google Sheets",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch und Englisch sicher (jeweils mindestens B2)",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v21",
+  "language": "de",
+  "company": "Pflegewerk Digital GmbH",
+  "title": "Support Health-Tech (m/w/d)",
+  "locations": [
+   "Hannover"
+  ],
+  "employment": "full_time",
+  "description": "Support Health-Tech (m/w/d) bei Pflegewerk Digital GmbH\n\nPflegewerk Digital entwickelt Software für die Pflegedokumentation. Datenschutz, Qualität und partnerschaftliche Zusammenarbeit mit Einrichtungen prägen unsere Arbeit.\n\nIhre Aufgaben\nTelefonische und schriftliche Unterstützung von Pflegekräften bei der digitalen Pflegedokumentation\nEinrichtung von Benutzerkonten und Dokumentationsvorlagen für neue Einrichtungen\nPrüfung von Vorlagen auf Datenschutz- und Pflegestandards\nErste Einschätzung und Weiterleitung von Störungsmeldungen an das Entwicklungsteam\nDurchführung von Online-Schulungen\nRückmeldung zu Fehlerbehebungen an die Einrichtungen\nVorschläge zur Vereinfachung der Einführungsschritte\n\nIhr Profil\nPflegerische oder medizinische Vorbildung wünschenswert\nKommunikationsstärke und Geduld\nDeutsch C1, Englisch Grundkenntnisse",
+  "duties": [
+   {
+    "text": "Telefonische und schriftliche Unterstützung von Pflegekräften bei der digitalen Pflegedokumentation",
+    "tasks": [
+     "customer_communication",
+     "clinical_documentation"
+    ]
+   },
+   {
+    "text": "Einrichtung von Benutzerkonten und Dokumentationsvorlagen für neue Einrichtungen",
+    "tasks": [
+     "onboard",
+     "configuration"
+    ]
+   },
+   {
+    "text": "Prüfung von Vorlagen auf Datenschutz- und Pflegestandards",
+    "tasks": [
+     "quality_compliance",
+     "clinical_documentation"
+    ]
+   },
+   {
+    "text": "Erste Einschätzung und Weiterleitung von Störungsmeldungen an das Entwicklungsteam",
+    "tasks": [
+     "triage",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Durchführung von Online-Schulungen",
+    "tasks": [
+     "teach"
+    ]
+   },
+   {
+    "text": "Rückmeldung zu Fehlerbehebungen an die Einrichtungen",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Vorschläge zur Vereinfachung der Einführungsschritte",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Pflegerische oder medizinische Vorbildung wünschenswert",
+    "kind": "preferred"
+   },
+   {
+    "text": "Kommunikationsstärke und Geduld",
+    "kind": "unclear"
+   },
+   {
+    "text": "Deutsch C1, Englisch Grundkenntnisse",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "basic",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v22",
+  "language": "de",
+  "company": "Ruhrtal Spedition GmbH",
+  "title": "Disponent Logistik (m/w/d)",
+  "locations": [
+   "Essen"
+  ],
+  "employment": "full_time",
+  "description": "Disponent Logistik (m/w/d) bei Ruhrtal Spedition GmbH\n\nDie Ruhrtal Spedition GmbH steht seit 1962 für pünktliche Lieferungen und feste Standards im Umgang mit Kunden und Partnern.\n\nIhre Aufgaben\n• Sie planen Touren und disponieren Fahrzeuge und Fahrer\n• Sie verfolgen Sendungen und informieren Kunden bei Verspätungen\n• Sie prüfen Frachtpapiere auf Vollständigkeit und gesetzliche Vorgaben\n• Sie gleichen Lieferscheine mit Rechnungen ab und klären Differenzen mit Subunternehmern\n• Sie überwachen Lagerbestände und melden Engpässe\n• Sie optimieren Ladepläne und Abläufe in der Disposition\n\nIhr Profil\n• Ausbildung zum Speditionskaufmann oder vergleichbare Erfahrung\n• Sicherer Umgang mit Excel\n• Deutsch C1, Englisch B1\n• Kenntnisse in Polnisch von Vorteil",
+  "duties": [
+   {
+    "text": "Sie planen Touren und disponieren Fahrzeuge und Fahrer",
+    "tasks": []
+   },
+   {
+    "text": "Sie verfolgen Sendungen und informieren Kunden bei Verspätungen",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Sie prüfen Frachtpapiere auf Vollständigkeit und gesetzliche Vorgaben",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Sie gleichen Lieferscheine mit Rechnungen ab und klären Differenzen mit Subunternehmern",
+    "tasks": [
+     "reconcile",
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Sie überwachen Lagerbestände und melden Engpässe",
+    "tasks": [
+     "inventory"
+    ]
+   },
+   {
+    "text": "Sie optimieren Ladepläne und Abläufe in der Disposition",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Ausbildung zum Speditionskaufmann oder vergleichbare Erfahrung",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Sicherer Umgang mit Excel",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch C1, Englisch B1",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Kenntnisse in Polnisch von Vorteil",
+    "kind": "preferred"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   },
+   {
+    "language": "en",
+    "level": "B1",
+    "mandatory": true
+   },
+   {
+    "language": "pl",
+    "level": null,
+    "mandatory": false
+   }
+  ]
+ },
+ {
+  "id": "v23",
+  "language": "de",
+  "company": "Voltwerk Anlagenbau GmbH",
+  "title": "Mechatroniker (m/w/d)",
+  "locations": [
+   "Bremen"
+  ],
+  "employment": "full_time",
+  "description": "Mechatroniker (m/w/d) bei Voltwerk Anlagenbau GmbH\n\nVoltwerk baut Förderanlagen für Lager und Flughäfen. Sicherheit und Qualität stehen vor Tempo.\n\nDas erwartet dich\n- Du montierst und verdrahtest Steuerungen für Förderanlagen\n- Du nimmst Anlagen beim Kunden in Betrieb und findest Fehler\n- Du hältst Arbeitsschutz- und Prüfvorschriften ein\n- Du dokumentierst Prüfprotokolle\n- Du erklärst Kunden die Bedienung der Anlage\n- Du stimmst dich mit Bauleitung und Elektrikern ab\n\nDas bringst du mit\n- Abgeschlossene Ausbildung als Mechatroniker oder Elektroniker\n- Führerschein Klasse B\n- Deutsch B2",
+  "duties": [
+   {
+    "text": "Du montierst und verdrahtest Steuerungen für Förderanlagen",
+    "tasks": []
+   },
+   {
+    "text": "Du nimmst Anlagen beim Kunden in Betrieb und findest Fehler",
+    "tasks": [
+     "troubleshoot"
+    ]
+   },
+   {
+    "text": "Du hältst Arbeitsschutz- und Prüfvorschriften ein",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Du dokumentierst Prüfprotokolle",
+    "tasks": [
+     "document_process",
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Du erklärst Kunden die Bedienung der Anlage",
+    "tasks": [
+     "customer_communication",
+     "teach"
+    ]
+   },
+   {
+    "text": "Du stimmst dich mit Bauleitung und Elektrikern ab",
+    "tasks": [
+     "stakeholders"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Abgeschlossene Ausbildung als Mechatroniker oder Elektroniker",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Führerschein Klasse B",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch B2",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "B2",
+    "mandatory": true
+   }
+  ]
+ },
+ {
+  "id": "v24",
+  "language": "de",
+  "company": "Atelier Kupferstich",
+  "title": "Grafikdesigner (m/w/d)",
+  "locations": [
+   "Frankfurt"
+  ],
+  "employment": "full_time",
+  "description": "Grafikdesigner (m/w/d) bei Atelier Kupferstich\n\nDas Atelier Kupferstich gestaltet Marken für Mittelständler. Wir arbeiten eng mit Partnern aus Druck und Fotografie.\n\nAufgaben:\nGestaltung von Verpackungen, Plakaten und Social-Media-Motiven\nAbstimmung von Entwürfen mit Kunden und Anpassung nach Feedback\nVorbereitung druckfertiger Daten nach Druckerei-Standards\nPflege der Markenrichtlinien\nKoordination mit Textern und Fotografen\nOptimierung des Freigabeprozesses für Entwürfe\n\nAnforderungen:\nSicherer Umgang mit der Adobe Creative Suite\nAussagekräftiges Portfolio\nDeutsch C1",
+  "duties": [
+   {
+    "text": "Gestaltung von Verpackungen, Plakaten und Social-Media-Motiven",
+    "tasks": []
+   },
+   {
+    "text": "Abstimmung von Entwürfen mit Kunden und Anpassung nach Feedback",
+    "tasks": [
+     "customer_communication"
+    ]
+   },
+   {
+    "text": "Vorbereitung druckfertiger Daten nach Druckerei-Standards",
+    "tasks": [
+     "quality_compliance"
+    ]
+   },
+   {
+    "text": "Pflege der Markenrichtlinien",
+    "tasks": [
+     "document_process"
+    ]
+   },
+   {
+    "text": "Koordination mit Textern und Fotografen",
+    "tasks": [
+     "stakeholders"
+    ]
+   },
+   {
+    "text": "Optimierung des Freigabeprozesses für Entwürfe",
+    "tasks": [
+     "process_improvement"
+    ]
+   }
+  ],
+  "qualifications": [
+   {
+    "text": "Sicherer Umgang mit der Adobe Creative Suite",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Aussagekräftiges Portfolio",
+    "kind": "mandatory"
+   },
+   {
+    "text": "Deutsch C1",
+    "kind": "mandatory"
+   }
+  ],
+  "language_requirements": [
+   {
+    "language": "de",
+    "level": "C1",
+    "mandatory": true
+   }
+  ]
+ }
+]

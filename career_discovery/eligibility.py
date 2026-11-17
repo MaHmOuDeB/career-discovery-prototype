@@ -20,6 +20,7 @@ LANGUAGE_SIGNAL = re.compile(r"\b(?:fluen\w*|native|proficien\w*|language|speaki
                              r"verhandlungssicher\w*|muttersprach\w*|fließend\w*|kenntnisse|"
                              r"mindestens|level|niveau|sprachkenntnisse|\w+kenntnisse)\b", re.I)
 SHARED_LEVEL = re.compile(r"-\s*(?:und|and|oder|or|/)\s*", re.I)
+EACH_LEVEL = re.compile(r"\b(?:jeweils|each|both|beide|beides|respectively)\b", re.I)
 YEARS = re.compile(r"\b(\d{1,2})\s*\+?\s*(?:(?:-|–|to|bis)\s*\d{1,2}\s*)?"
                    r"(?:years?|jahre[n]?)\b\s*(?:of |an )?(.{0,55}?)"
                    r"\b(?:experienc\w*|erfahrung|berufserfahrung)\b", re.I)
@@ -42,7 +43,7 @@ AUTH = re.compile(r"\b(?:work authori[sz]ation|right to work|work permit|arbeits
                   r"arbeitsgenehmigung|visa sponsorship|sponsorship)\b", re.I)
 OPEN_POOL = re.compile(r"\b(?:talent pool|talent community|spontaneous application|"
                        r"general application|initiativbewerbung)\b", re.I)
-OR = re.compile(r"\s+(?:or|oder)\s+(?!(?:higher|above|better|more|greater|höher|mehr|besser|darüber)\b)", re.I)
+OR = re.compile(r"\s+(?:or|oder)\s+(?!(?:higher|above|better|more|greater|höher|mehr|besser|darüber|[ABC][12])\b)", re.I)
 AND = re.compile(r"(?<!-)\s+(?:and|und)\s+|,\s*(?=(?:German|English|Deutsch|Englisch)\b)", re.I)
 BARE_LANGUAGE_END = re.compile(r"\b(?:" + "|".join(LANGUAGE_TERMS) + r")$", re.I)
 LANGUAGE_START = re.compile(r"^(?:" + "|".join(LANGUAGE_TERMS) + r")\b", re.I)
@@ -122,6 +123,10 @@ def language_findings(text, profile):
         if (first.start() not in assigned and second.start() in assigned
                 and SHARED_LEVEL.fullmatch(text[first.end():second.start()])):
             assigned[first.start()] = assigned[second.start()]
+    if EACH_LEVEL.search(text) and len({level.group().upper() for level in levels}) == 1:
+        # "Deutsch und Englisch (jeweils mindestens B2)": one stated level applies to every named language.
+        for language in matches:
+            assigned.setdefault(language.start(), levels[0])
     findings = []
     for language in matches:
         code = LANGUAGE_TERMS[language.group().casefold()]

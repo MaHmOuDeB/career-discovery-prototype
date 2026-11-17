@@ -29,9 +29,14 @@ the matching vocabulary lives in `career_discovery/catalog.json` and `career_dis
 | teach | Teach, train or run workshops and training sessions for customers, users, staff or students. |
 | authoring | Use e-learning authoring tools. |
 | clinical_documentation | Clinical or care documentation, patient records, EHR systems. |
-| stakeholders | Coordinate or communicate with stakeholders, partners or cross-functional teams. |
+| stakeholders | Coordinate work with stakeholders, partners or other teams: align on priorities, hand work over, keep them informed. |
+| process_improvement | Find inefficiencies in a process or workflow and change it: streamline, standardise, optimise, scale. |
+| quality_compliance | Check work, products, records or operations against quality, safety, regulatory or internal standards (audits, QA checks, GDPR, food or workplace safety). |
+| customer_communication | Communicate directly with customers or users: answer inquiries, explain solutions, keep them updated, handle complaints. |
 | sales | Sell, prospect, run sales cycles or manage pipeline and accounts for revenue. |
 | inventory | Manage stock, inventory or materials planning. |
+
+Added 17 November 2026 (catalogue version 4): process_improvement, quality_compliance, customer_communication; stakeholders reworded.
 
 A duty line can name several tasks or none. A duty describes work done in the role ("Resolve escalated tickets").
 A qualification describes what the candidate must or should bring ("2+ years of experience with SQL",

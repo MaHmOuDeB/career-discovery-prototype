@@ -9,7 +9,7 @@ import unicodedata
 
 from .models import Requirement, fingerprint
 
-ANALYSER_VERSION = 14
+ANALYSER_VERSION = 15
 
 SECTIONS = {
     "core": (
@@ -63,6 +63,8 @@ NO_LANGUAGE = re.compile(r"^(?:no |kein(?:e|er)? ).{0,45}(?:required|erforderlic
                          r"\b(?:german|english|deutsch|englisch) (?:is )?not required\b", re.I)
 NEGATION = re.compile(r"\b(?:no|not|never|without|lack(?:ed|ing|s)?|didn t|haven t|hasn t|kein(?:e|en|er)?|nicht|ohne)\b", re.I)
 BULLET = re.compile(r"^\s*(?:[•·▪*–—-]|\d{1,2}[.)])\s*")
+# "**What you bring**" or "__Aufgaben:__" is an emphasised heading, not a bullet.
+EMPHASIS = re.compile(r"^\s*(?:\*\*|__)(.+?)(?:\*\*|__)\s*:?\s*$")
 WORD = re.compile(r"[\w+/#-]+", re.UNICODE)
 
 
@@ -241,6 +243,25 @@ METRICS = (r"kpis?|key performance indicators?|(?:\w+ )?metrics?|(?:performance|
 DE_METRICS = (r"\w*kennzahl\w*|kpis?\w*|(?:kpi|performance|management|vertriebs|umsatz|monats|wochen|quartals|controlling)"
               r"[- ]?(?:reports?|reportings?|berichte?)\w*|reportings?|berichtswesen|metriken|performance[- ]?daten")
 DATA = r"(?:\w+ )?data|datasets?|data sets?|big data|patterns in (?:the )?data|trends in (?:the )?(?:\w+ )?data"
+TEAM_COUNTERPARTS = (r"(?:\w+ )?(?:teams|partners|departments)|(?:product|engineering|sales|marketing|finance|operations|legal|"
+                     r"data|design|support|business|it|hr) (?:teams?|partners?|departments?)")
+DE_TEAM_COUNTERPARTS = (r"(?:\w+ )?teams|fachbereich\w*|schnittstellen|\w*abteilung\w*|(?:\w+ )?partner\w*|stakeholder\w*|"
+                        r"(?:\w+ )?fachbereichen")
+PROCESS_NOUNS = (r"processes|process(?! (?:data|payments?|orders?|invoices?|transactions?|requests?))|workflows?|procedures?|"
+                 r"ways of working|operations(?! (?:team|manager|lead|director|analyst))|(?:process|operational|workflow) efficiency")
+DE_PROCESS_NOUNS = r"prozess\w*|\w*abläuf\w*|ablauf\w*|workflows?|verfahren|geschäftsprozess\w*"
+STANDARDS = (r"compliance(?! (?:team|manager|officer|department))|gdpr|dsgvo|haccp|iso ?\d{4,5}|"
+             r"(?:(?<!data )quality|safety|regulatory|legal|food|hygiene|workplace|health|ehs|internal|industry|compliance) "
+             r"(?:standards?|regulations?|requirements|guidelines|policies|procedures|protocols|rules|controls?)")
+QUALITY_ACTIVITIES = (r"(?:\w+ )?audits?(?! reports?)|inspections?|(?<!data )quality (?:control|assurance|checks?|inspections?|reviews?)|"
+                      r"qa checks?|compliance (?:checks?|reviews?)")
+CUSTOMER_PEOPLE = (r"customers|clients|end[- ]users|patients|guests|users(?! (?:table|data|permissions?|roles?|accounts?|"
+                   r"(?:and|&) (?:permissions|roles|groups)))|(?:customer|client|user|end[- ]user|patient) "
+                   r"(?:inquiries|enquiries|requests|questions|queries|emails|calls|messages|complaints|concerns|feedback|"
+                   r"communications?|correspondence|contacts?(?! (?:details|data|information|list))|interactions?|conversations?)")
+DE_CUSTOMER_PEOPLE = (r"kunden?|kundinnen|kundschaft|kund innen|anwender(?:n|innen)?|nutzer(?:n|innen)?|klienten|patienten|"
+                      r"gäste\w*|mandanten|kunden(?:anfrage|beschwerde|reklamation|anliegen|mail|email|rückfrage|korrespondenz|"
+                      r"kontakt|kommunikation)\w*")
 ACTION_OBJECTS = {
     "experiment": ((
         r"run|runs|running|ran|design(?:s|ed|ing)?|conduct(?:s|ed|ing)?|"
@@ -522,6 +543,16 @@ ACTION_OBJECTS = {
         r"stakeholder\w*|fachbereich\w*|\w*abteilung\w*|\w*übergreifend\w*|interne?n? (?:und externe?n? )?(?:partner\w*|teams?)|"
         r"projektbeteiligte\w*|fachabteilung\w*|geschäftsbereich\w*|entscheidungsträger\w*",
         "either",
+    ), (
+        r"(?:collaborat|coordinat|liais|align)(?:e|es|ed|ing)? with|partner(?:s|ed|ing)? with|interact(?:s|ed|ing)? with|"
+        r"work(?:s|ed|ing)? (?:closely|directly|collaboratively|cross-functionally) with|"
+        r"(?:collaboration|coordination|alignment|liaison) with",
+        TEAM_COUNTERPARTS,
+    ), (
+        r"zusammenarbeit(?: und (?:abstimmung|koordination))? mit|(?:abstimmung|koordination|austausch)(?: und \w+)? mit|"
+        r"(?:stimm\w*|koordinier\w*|tausch\w*)(?: dich| sich| uns)?(?: eng| regelmäßig| laufend)? mit|"
+        r"arbeit(?:e|est|et|en) (?:eng |direkt |partnerschaftlich |intensiv )?mit",
+        DE_TEAM_COUNTERPARTS,
     )),
     "reconcile": ((
         silent_e("reconcil", "investigat", "resolv", "analys", "analyz", "handl", "compar") + "|" + regular(
@@ -538,6 +569,77 @@ ACTION_OBJECTS = {
     ), (
         None,
         r"reconciliations?|kontenabstimmung\w*|kontoabstimmung\w*|zahlungsabgleich\w*|kontenklärung\w*|bankabstimmung\w*",
+    )),
+    "process_improvement": ((
+        silent_e("improv", "streamlin", "optimi[sz]", "standardi[sz]", "rationali[sz]", "harmoni[sz]", "digiti[sz]")
+        + r"|simplif(?:y|ies|ied|ying)|" + regular("redesign", "re-?engineer", "overhaul") + "|" + silent_e("scal"),
+        PROCESS_NOUNS,
+    ), (
+        r"identif(?:y|ies|ied|ying)|find(?:s|ing)?|found|spot(?:s|ted|ting)?|" + silent_e("eliminat", "remov", "reduc", "address"),
+        r"inefficienc\w*|bottlenecks?(?! in (?:the )?(?:database|code|system|network|performance))|process gaps?|manual steps|"
+        r"manual (?:work|effort)|redundant (?:steps|work|processes)",
+    ), (
+        None,
+        r"(?:process|workflow|operational|business process) improvements?|process (?:optimi[sz]ation|"
+        r"standardi[sz]ation|redesign|re-?engineering|streamlining)|continuous improvement (?:of|initiatives?|projects?)|"
+        r"lean (?:six sigma|management|methodology)|six sigma|kaizen|prozessoptimierung\w*|prozessverbesserung\w*|"
+        r"ablaufoptimierung\w*|prozessstandardisierung\w*",
+    ), (
+        r"(?:optimier|verbesser|standardisier|vereinfach|digitalisier|überarbeit|identifizier|reduzier|beseitig)"
+        r"(?:e|st|t|en|ung|ungen)\b|weiterentwickl\w*",
+        DE_PROCESS_NOUNS + r"|engpässe\w*|ineffizienz\w*|optimierungspotenzial\w*|optimierungspotential\w*|medienbrüche|"
+        r"doppelarbeit\w*",
+        "either",
+    ), (
+        r"optimierung|verbesserung|standardisierung|vereinfachung|weiterentwicklung|digitalisierung|überarbeitung|harmonisierung",
+        DE_PROCESS_NOUNS,
+    )),
+    "quality_compliance": ((
+        silent_e("ensur", "enforc", "maintain", "perform", "conduct", "validat", "assess")
+        + "|" + regular("check", "audit", "inspect", "review", "monitor", "uphold", "maintain", "perform", "conduct")
+        + r"|upheld|verif(?:y|ies|ied|ying)|carr(?:y|ies|ied|ying) out|adher(?:e|es|ed|ing)(?: to)?|"
+        r"compl(?:y|ies|ied|ying)(?: with)?",
+        STANDARDS,
+    ), (
+        regular("conduct", "perform", "support", "run", "lead", "manage", "coordinate", "own", "handle", "check", "inspect")
+        + r"|carr(?:y|ies|ied|ying) out|prepar(?:e|es|ed|ing) for|participat(?:e|es|ed|ing) in",
+        QUALITY_ACTIVITIES,
+    ), (
+        None,
+        r"(?:internal|quality|compliance) audits?(?! reports?)",
+    ), (
+        r"sicherstell\w*|gewährleist\w*|einhalt\w*|überwach\w*|prüf\w*|kontrollier\w*|kontrolle|durchführ\w*|"
+        r"führ(?:e|st|t|en)|auditier\w*|durchsetz\w*",
+        r"qualitäts\w*|compliance\w*|dsgvo|datenschutz\w*|hygiene\w*|haccp|arbeitssicherheit|arbeitsschutz|audits?|"
+        r"iso ?\d{4,5}|\w*vorschriften|(?:gesetzlich\w*|interne\w*|regulatorisch\w*|unternehmens\w*) "
+        r"(?:vorgaben|richtlinien|anforderungen|standards|regelungen)",
+        "either",
+    )),
+    "customer_communication": ((
+        r"answer(?:s|ed|ing)?|respond(?:s|ed|ing)? to|repl(?:y|ies|ied|ying) to|communicat(?:e|es|ed|ing) with|"
+        r"(?:speak|talk)(?:s|ing)? (?:with|to)|spoke (?:with|to)|talked (?:with|to)|advis(?:e|es|ed|ing)|"
+        + regular("assist", "inform", "consult", "contact", "call", "email") +
+        r"|engag(?:e|es|ed|ing) with|interact(?:s|ed|ing)? with|liais(?:e|es|ed|ing) with|handl(?:e|es|ed|ing)|"
+        r"explain(?:s|ed|ing)?|keep(?:s|ing)?|kept|guid(?:e|es|ed|ing)",
+        CUSTOMER_PEOPLE,
+    ), (
+        r"(?:act|serv)(?:e|es|ed|ing|s)? as (?:the |a |an )?(?:first |main |primary |single |key |direct )?"
+        r"(?:point of contact|contact person|contact|liaison|advis[eo]r|representative)(?: for| to| of)?",
+        CUSTOMER_PEOPLE,
+    ), (
+        None,
+        r"(?:customer|client) (?:communications?|correspondence)(?! (?:preferences|data|templates?|tools?|platform|software))|"
+        r"(?:direct |regular |daily )?customer contact(?! (?:details|data|information|list))|"
+        r"communication with (?:customers|clients|users)|kundenkommunikation|kundenkontakt\w*|kundenkorrespondenz",
+    ), (
+        r"beantwort\w*|ber(?:a|ä)t\w*|beratung|betreu\w*|betreuung|informier\w*|kommunizier\w*|kommunikation|kontaktier\w*|"
+        r"antwort\w*|begleit\w*|unterstütz\w*|ansprechpartner\w*",
+        DE_CUSTOMER_PEOPLE,
+        "either",
+    ), (
+        r"bearbeit\w*|beantwort\w*|klär\w*",
+        r"kunden(?:anfrage|beschwerde|reklamation|anliegen|mail|email|rückfrage|korrespondenz)\w*",
+        "either",
     )),
 }
 
@@ -566,7 +668,7 @@ JOB_RECIPIENT = re.compile(r"^(?:for you|für dich|für sie|dir)\b")
 
 
 TASK_EXCLUSION = re.compile(r"\b(?:rather than|instead of|excluding|don t|doesn t|won t|statt|anstatt|anstelle von)\b", re.I)
-POST_EXCLUSION = re.compile(r"^(?:is|are|was|were)?\s*(?:not in scope|not required|out of scope)\b", re.I)
+POST_EXCLUSION = re.compile(r"^(?:is|are|was|were)?\s*(?:not in scope|not required|out of scope|not part of)\b", re.I)
 
 
 OTHER_ACTOR = re.compile(r"\b(?:who|whose|whoever|whether|in case|so (?:that )?(?:they|others)|"
@@ -597,12 +699,31 @@ def task_is_asserted(clause, hit, *, evidence):
                                   or before == "learning")))
 
 
+TASK_VETO = {
+    "process_improvement": re.compile(r"\b(?:pipelines?|models?|queries|code|inference|products?)\b"),
+    "quality_compliance": re.compile(r"\b(?:code|pull requests?|training programs?|schulungsprogramm\w*)\b"),
+    "customer_communication": re.compile(r"\b(?:vertrag\w*|vertragsverlängerung\w*|upsell\w*|cross-sell\w*|"
+                                         r"renewals?|rückgewinnung\w*|win-back)\b"),
+}
+# A short title-case clause such as "Process Improvement & Innovation" is a subheading, not a duty.
+SUBHEADING_ONLY = re.compile(r"^\W*(?:[A-ZÄÖÜ][\w/-]*|&|and|und)(?:\s+(?:[A-ZÄÖÜ][\w/-]*|&|and|und)){0,4}\W*$")
+
+
+def is_subheading(raw):
+    return bool(SUBHEADING_ONLY.match(raw.strip()))
+
+
 def pattern_tasks(text, *, evidence):
     supported = set()
     for raw in re.split(r"[.;,\n!?]+", text):
         clause = normal(raw)
+        subheading = is_subheading(raw)
         for task, pattern in TASK_PATTERNS.items():
+            veto = TASK_VETO.get(task)
+            if subheading and task in TASK_VETO:
+                continue
             if task not in supported and any(task_is_asserted(clause, hit, evidence=evidence)
+                                             and not (veto and veto.search(hit.group()))
                                              for hit in pattern.finditer(clause)):
                 supported.add(task)
     return supported
@@ -610,11 +731,13 @@ def pattern_tasks(text, *, evidence):
 
 def task_tags(text, catalogue, evidence=False):
     spans = re.split(r"[.;!?\n]+|,\s*(?=(?:and )?then\b)", text, flags=re.I)
-    clauses = [normal(span) for span in spans]
+    clauses = [(normal(span), is_subheading(span)) for span in spans]
     matched_patterns = pattern_tasks(text, evidence=evidence)
     return tuple(task for task, aliases in catalogue.tasks.items()
                  if task in matched_patterns or any(asserted_normal_phrase(clause, alias, evidence=evidence)
-                                                    for clause in clauses for alias in aliases))
+                                                    for clause, subheading in clauses
+                                                    if not (subheading and task in TASK_VETO)
+                                                    for alias in aliases))
 
 
 AD_LANGUAGE_WORDS = {
@@ -698,7 +821,8 @@ def split_duties(text, catalogue, tags):
 
 
 def plain_language_line(text, bullet, section):
-    return (not bullet and section in {"", "unclear", "core"} and bool(LANGUAGE_TERM.search(text))
+    return ((not bullet and section in {"", "unclear", "core"} or bullet and section == "")
+            and bool(LANGUAGE_TERM.search(text))
             and bool(LANGUAGE_LEVEL.search(text) or STRONG_LANGUAGE.search(text))
             and not (section == "core" and ROLE_VERB.search(text)))
 
@@ -713,8 +837,9 @@ def qualification_shaped(text):
 def requirement_chunks(description):
     """Yield bounded lines, including headings followed by content on the same line."""
     for raw in description.splitlines():
-        bullet = bool(BULLET.match(raw))
-        line = BULLET.sub("", raw.strip()).strip()
+        emphasis = EMPHASIS.match(raw)
+        bullet = not emphasis and bool(BULLET.match(raw))
+        line = emphasis.group(1).strip() if emphasis else BULLET.sub("", raw.strip()).strip()
         if not line:
             continue
         heading, separator, remainder = line.partition(":")

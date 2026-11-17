@@ -124,3 +124,36 @@ class LanguageAsSubjectMatterTests(unittest.TestCase):
         rows = analyse_description("Responsibilities\n- Teach German to C1 learners in small groups\n"
                                    "- Translate English C1 exam material", load_catalogue())
         self.assertEqual([row.kind for row in rows], ["core", "core"])
+
+
+class LevelWordingTests(unittest.TestCase):
+    """Level wording seen in labelled fictional ads: alternatives, shared levels and markdown headings."""
+
+    @classmethod
+    def setUpClass(cls):
+        from career_discovery.demo import load_demo
+        cls.catalogue = load_catalogue()
+        cls.profile = next(p for p in load_demo()[0] if p.id == "technical-graduate")  # de B1, en C1
+
+    def states(self, text, kind="mandatory"):
+        findings = check_requirement(Requirement("r001", kind, text, ()), self.profile, self.catalogue)
+        return {(f.subject, f.state) for f in findings}
+
+    def test_level_after_or_is_a_level_alternative_not_a_path(self):
+        self.assertIn(("language (en)", "conflict"), self.states("Excellent spoken English (native or C2)"))
+        self.assertIn(("language (de)", "conflict"), self.states("German B2 or C1"))
+        self.assertIn(("language (de)", "met"), self.states("German A2 or B1"))
+
+    def test_each_or_jeweils_shares_one_level(self):
+        self.assertTrue({("language (de)", "conflict"), ("language (en)", "met")}
+                        <= self.states("Deutsch und Englisch sicher (jeweils mindestens B2)"))
+        self.assertIn(("language (de)", "conflict"), self.states("German and English, each at least B2"))
+
+    def test_markdown_bold_headings_switch_sections(self):
+        rows = analyse_description("**Your tasks**\n- Resolve customer tickets\n**What you bring**\n"
+                                   "- German at native or C2 level, English B2", self.catalogue)
+        self.assertEqual([row.kind for row in rows], ["core", "mandatory"])
+
+    def test_bulleted_language_line_before_any_heading_is_kept(self):
+        rows = analyse_description("- Deutsch auf C2-Niveau", self.catalogue)
+        self.assertEqual([row.kind for row in rows], ["mandatory"])

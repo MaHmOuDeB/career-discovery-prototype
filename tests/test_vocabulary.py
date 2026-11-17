@@ -103,6 +103,53 @@ POSITIVE = {
         "Communicate project status to key stakeholders",
         "Abstimmung mit Stakeholdern und Fachbereichen",
         "Du koordinierst interne Abteilungen",
+        "Collaborate with product and engineering teams on priorities",
+        "Work closely with partners to agree delivery plans",
+        "Liaise with finance and operations teams on month-end",
+        "Partner with other teams to align on requirements",
+        "Zusammenarbeit mit Teams und Schnittstellen im Unternehmen",
+        "Abstimmung mit den Fachbereichen und Schnittstellen",
+        "Koordination mit externen Partnern und Teams",
+        "Du arbeitest eng mit Fachbereichen zusammen",
+    ],
+    "process_improvement": [
+        "Streamline manual workflows in the finance team",
+        "Identify inefficiencies in operational processes and propose changes",
+        "Optimise our order handling process",
+        "Standardise onboarding procedures across regions",
+        "Drive continuous process improvement initiatives",
+        "Simplify reporting workflows to reduce handling time",
+        "Scale processes as the customer base grows",
+        "Du optimierst Prozesse und Arbeitsabläufe",
+        "Verbesserung und Standardisierung von Abläufen",
+        "Prozessoptimierung im Tagesgeschäft",
+        "Du identifizierst Engpässe in Prozessen und vereinfachst sie",
+    ],
+    "quality_compliance": [
+        "Ensure compliance with GDPR and internal policies",
+        "Perform quality checks on incoming shipments",
+        "Conduct internal audits against ISO standards",
+        "Verify that records meet regulatory requirements",
+        "Uphold food safety and hygiene standards",
+        "Adhere to quality standards and safety regulations",
+        "Sicherstellung der Einhaltung der DSGVO",
+        "Du führst Qualitätskontrollen und Audits durch",
+        "Prüfung der Qualitätsstandards und Hygienevorschriften",
+        "Einhaltung gesetzlicher Vorgaben überwachen",
+    ],
+    "customer_communication": [
+        "Answer customer inquiries by email and phone",
+        "Respond to client questions and explain solutions",
+        "Keep customers updated on the status of their requests",
+        "Handle customer complaints with empathy",
+        "Act as the first point of contact for users",
+        "Communicate with customers about delays and fixes",
+        "Advise clients on product options",
+        "Beantworte Kundenanfragen per E-Mail und Telefon",
+        "Du berätst Kunden telefonisch und schriftlich",
+        "Kommunikation mit Kunden und Anwendern",
+        "Bearbeitung von Kundenbeschwerden und Rückfragen",
+        "Täglicher Kundenkontakt per Telefon",
     ],
     "reconcile": [
         "Investigate discrepancies between payment records and invoices",
@@ -119,6 +166,14 @@ POSITIVE = {
 }
 
 NEGATIVE = [
+    # Catalogue version 4 look-alikes found by the second blind review (paraphrased).
+    ("process_improvement", "Process Improvement & Innovation"),
+    ("process_improvement", "Du führst standardisierte Prozesse in der Kundenbetreuung durch"),
+    ("process_improvement", "Work with customers to refine products around real workflows"),
+    ("process_improvement", "Build and optimize data pipelines and inference workflows"),
+    ("quality_compliance", "Review code and set quality standards for the frontend"),
+    ("quality_compliance", "Du koordinierst die Zusammenarbeit der Teams mit Fokus auf Qualitätssicherung"),
+    ("customer_communication", "Du identifizierst Möglichkeiten für Vertragsverlängerungen und Rückgewinnung"),
     # Look-alikes found by the blind precision review of public duty lines (paraphrased).
     ("report_kpis", "Prepare detailed internal audit reports for the board"),
     ("report_kpis", "Own the HR system reporting layer, including standard and custom reports"),
@@ -165,7 +220,62 @@ NEGATIVE = [
     ("automate", "Develop an automation roadmap for the team"),
     ("automate", "Automation is not part of this role"),
     ("automate", "Kein Interesse an Automatisierung von Prozessen"),
+    ("stakeholders", "Work with the team on daily tasks"),
+    ("stakeholders", "Work closely with the team"),
+    ("stakeholders", "Manage a team of support agents"),
+    ("stakeholders", "Zusammenarbeit im Team und mit dem Team"),
+    ("stakeholders", "Abstimmung im Team"),
+    ("stakeholders", "We partner with leading teams in the industry"),
+    ("process_improvement", "Improve customer satisfaction scores"),
+    ("process_improvement", "Optimise ad campaigns and landing pages"),
+    ("process_improvement", "Our tools improve your processes"),
+    ("process_improvement", "Process incoming payments and invoices"),
+    ("process_improvement", "Scale the team and hire new engineers"),
+    ("process_improvement", "Process improvement is not part of this role"),
+    ("process_improvement", "Verbesserung der Kundenzufriedenheit und Optimierung von Kampagnen"),
+    ("process_improvement", "Wir optimieren unsere Prozesse laufend"),
+    ("quality_compliance", "We maintain high quality standards in everything we do"),
+    ("quality_compliance", "Work in a modern office that meets the highest safety standards"),
+    ("quality_compliance", "Enjoy a company culture with high quality standards"),
+    ("quality_compliance", "Check data quality in the warehouse tables"),
+    ("quality_compliance", "Prepare detailed internal audit reports for the board"),
+    ("quality_compliance", "Our products meet strict quality standards"),
+    ("quality_compliance", "Hohe Qualitätsstandards und flache Hierarchien"),
+    ("quality_compliance", "Audit is not in scope for this role"),
+    ("quality_compliance", "Wir legen Wert auf Qualitätsstandards und Compliance"),
+    ("customer_communication", "Customers can contact us any time through the portal"),
+    ("customer_communication", "Update customer records in the CRM"),
+    ("customer_communication", "Maintain customer data protections and permission boundaries"),
+    ("customer_communication", "Build analytics tools for customers"),
+    ("customer_communication", "Our team answers customer questions so you can focus on analysis"),
+    ("customer_communication", "Update user permissions in the admin console"),
+    ("customer_communication", "Sync the users table with the billing database"),
+    ("customer_communication", "Kunden können uns jederzeit kontaktieren"),
+    ("customer_communication", "Pflege der Kundenstammdaten im CRM"),
+    ("customer_communication", "Wir bieten dir flexible Arbeitszeiten"),
+    ("customer_communication", "Zahlungen von Kunden verbuchen"),
 ]
+
+CATALOGUE_V4_TRANSFERS = {
+    "process_improvement": {"automate": "Automating a manual workflow is a concrete process improvement. "
+                                        "Check the scope of wider process change with the employer."},
+    "customer_communication": {
+        "troubleshoot": "Resolving user issues involves explaining fixes to the people affected. "
+                        "Check how much direct customer contact the role involves.",
+        "teach": "Teaching and running workshops shows clear communication with an audience. "
+                 "Check the customer-facing scope."},
+    "quality_compliance": {
+        "data_quality": "Checking data for errors shows systematic quality checking in a different setting. "
+                        "The role's standards and regulations are still to learn.",
+        "reconcile": "Investigating discrepancies against records shows careful checking against a standard "
+                     "in a different setting."},
+}
+CATALOGUE_V4_FAMILIES = {
+    "operations-analytics": {"process_improvement", "quality_compliance"},
+    "reporting-automation": {"process_improvement"},
+    "implementation": {"customer_communication"},
+    "health-tech": {"quality_compliance"},
+}
 
 
 class VocabularyTests(unittest.TestCase):
@@ -183,6 +293,27 @@ class VocabularyTests(unittest.TestCase):
         for task, line in NEGATIVE:
             with self.subTest(task=task, line=line):
                 self.assertNotIn(task, task_tags(line, self.catalogue))
+
+    def test_catalogue_version_four_tasks_transfers_and_families(self):
+        self.assertEqual(self.catalogue.data["version"], 4)
+        for task in CATALOGUE_V4_TRANSFERS:
+            self.assertIn(task, self.catalogue.tasks)
+            self.assertTrue(self.catalogue.tasks[task])
+        self.assertEqual({t: self.catalogue.transfers[t] for t in CATALOGUE_V4_TRANSFERS}, CATALOGUE_V4_TRANSFERS)
+        for family, tasks in CATALOGUE_V4_FAMILIES.items():
+            self.assertLessEqual(tasks, set(self.catalogue.families[family]["tasks"]))
+
+    def test_new_task_evidence_needs_asserted_work(self):
+        for line, task in (("Streamlined the invoicing process and cut handling time", "process_improvement"),
+                           ("Performed quality checks on incoming goods", "quality_compliance"),
+                           ("Answered customer inquiries by phone", "customer_communication")):
+            with self.subTest(line=line):
+                self.assertIn(task, task_tags(line, self.catalogue, evidence=True))
+        for line in ("Interested in process improvement", "Learning to communicate with customers",
+                     "Attended a seminar on quality audits", "Wanted to optimise workflows",
+                     "Colleagues answered customer inquiries while I observed"):
+            with self.subTest(line=line):
+                self.assertEqual(task_tags(line, self.catalogue, evidence=True), (), line)
 
     def test_intent_only_evidence_does_not_map(self):
         for line in ("I want to learn to build dashboards", "Interested in resolving support tickets",
