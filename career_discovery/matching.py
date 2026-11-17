@@ -4,7 +4,7 @@ from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timedelta, timezone
 from math import ceil
 import re
-from zoneinfo import ZoneInfo
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from .analysis import advert_language, analyse_description, contains, normal, task_tags
 from .eligibility import eligibility
@@ -133,10 +133,26 @@ def has_partial_coverage(links):
             and any(link.kind == "direct" for link in supported))
 
 
+def _last_sunday(year, month):
+    day = datetime(year, month, 31, 1, tzinfo=timezone.utc)
+    return day - timedelta(days=(day.weekday() + 1) % 7)
+
+
+def berlin_date(moment):
+    """The calendar date in Berlin. Windows ships no time-zone database, so fall back to the EU rule:
+    summer time (UTC+2) from 01:00 UTC on the last Sunday of March to 01:00 UTC on the last Sunday of October."""
+    try:
+        return moment.astimezone(ZoneInfo("Europe/Berlin")).date()
+    except ZoneInfoNotFoundError:
+        utc = moment.astimezone(timezone.utc)
+        summer = _last_sunday(utc.year, 3) <= utc < _last_sunday(utc.year, 10)
+        return (utc + timedelta(hours=2 if summer else 1)).date()
+
+
 def assess(job, profile, catalogue, now, requirements=None, tags=None, semantic=None):
     requirements = analyse_description(job.description, catalogue) if requirements is None else requirements
     tags = evidence_tags(profile, catalogue) if tags is None else tags
-    findings = list(eligibility(job, profile, requirements, catalogue, today=now.astimezone(ZoneInfo("Europe/Berlin")).date()))
+    findings = list(eligibility(job, profile, requirements, catalogue, today=berlin_date(now)))
     if not available(job, now) and job.availability != "closed":
         findings.append(Finding("unknown", "availability", job.verification_reason,
                                 "Confirm the official apply path before applying."))
