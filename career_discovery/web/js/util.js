@@ -1,4 +1,4 @@
-const store = { code: 'en', dict: {}, fallback: {} };
+const store = { code: 'en', dict: {}, fallback: {}, reasons: null };
 const token = document.querySelector('meta[name="cd-token"]')?.content || '';
 
 function lookup(key, vars) {
@@ -14,9 +14,50 @@ export async function loadLanguage(code) {
   const load = async (c) => (await fetch(`i18n/${c}.json`)).json();
   if (!Object.keys(store.fallback).length) store.fallback = await load('en');
   store.dict = code === 'en' ? store.fallback : await load(code);
+  store.reasons = code === 'de' ? await loadReasons() : null;
   store.code = code;
   document.documentElement.lang = code;
   applyStatic(document);
+}
+
+// The matcher writes its reasons in English. In German, each known sentence is swapped for its entry in
+// i18n/reasons.de.json; an unknown sentence stays English. tests/test_reasons.py mirrors this logic.
+const SENTENCE = /(?<=[.!?])\s+(?=[A-Z(])/;
+
+async function loadReasons() {
+  try {
+    const data = await (await fetch('i18n/reasons.de.json')).json();
+    const sentences = data.sentences.map(([en, de]) => {
+      const names = [];
+      const source = en.split(/(\{\w+\})/).map((part) => {
+        const slot = /^\{(\w+)\}$/.exec(part);
+        if (slot) { names.push(slot[1]); return '(.+?)'; }
+        return part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }).join('');
+      return { re: new RegExp(`^${source}$`), names, de };
+    });
+    return { sentences, values: data.values || {} };
+  } catch { return null; }
+}
+
+function reasonValue(name, raw) {
+  if (name === 'code') return langName(raw);
+  return store.reasons.values[name]?.[raw] ?? raw;
+}
+
+export function reasonText(text) {
+  if (!text || !store.reasons) return text || '';
+  return text.split(SENTENCE).map((sentence) => {
+    for (const entry of store.reasons.sentences) {
+      const found = entry.re.exec(sentence);
+      if (found) return entry.de.replace(/\{(\w+)\}/g, (_, name) => reasonValue(name, found[entry.names.indexOf(name) + 1]));
+    }
+    return sentence;
+  }).join(' ');
+}
+
+export function statusText(state) {
+  return (store.reasons && store.reasons.values.status?.[state]) || state || '';
 }
 
 export function applyStatic(root) {

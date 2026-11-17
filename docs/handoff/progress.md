@@ -2,6 +2,15 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-17 — German match reasons
+
+- The German interface now shows the matcher's reason sentences in German. `career_discovery/web/i18n/reasons.de.json`
+  maps each fixed English sentence (placeholders like `{code}`) to German; `reasonText()` in `web/js/util.js` swaps
+  them sentence by sentence and leaves an unknown sentence in English. Matcher output is unchanged.
+- `tests/test_reasons.py` reads every reason the code writes (AST scan of eligibility, matching, sources, network,
+  models) and fails when a sentence has no German entry. A new reason sentence needs a line in that file.
+- 193 offline tests. Browser check with fictional data in German and English: correct text, no console errors.
+
 ## 2026-11-17 — local web app v1 done
 
 Owner chose a local web app (spec and owner picks: `docs/web-app/spec.md`). Done and pushed:
@@ -19,7 +28,7 @@ Open
 1. A real run of the starters on a Windows laptop and a fresh Mac (Gatekeeper/SmartScreen prompts, uv install path).
 2. Analyser gap seen in the walkthrough: "Ran onboarding sessions for new customers" tags `teach`, not `onboard`.
    Fixing it changes parsing: needs `ANALYSER_VERSION` 16 and a held-out comparison.
-3. Matcher reason texts (findings) are English only; the German UI shows them in English.
+3. Done in the entry above: German match reasons.
 4. Items 1–3 of the catalogue-lane entry below (repeat supply on or after 23 November, owner decision on profiles, pilot).
 
 ## 2026-11-17 — Windows support and CI

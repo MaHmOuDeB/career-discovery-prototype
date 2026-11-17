@@ -1,4 +1,4 @@
-import { LANG_CODES, LEVELS, LEVEL_GUIDE, LEVEL_LABEL, api, busy, button, errorBox, fmtDate, h, langName, notice, say, t } from './util.js';
+import { LANG_CODES, LEVELS, LEVEL_GUIDE, LEVEL_LABEL, api, busy, button, errorBox, fmtDate, h, langName, notice, reasonText, say, t } from './util.js';
 
 const EVIDENCE_STATE = {
   cv_stated: () => t('cv.state.cv'),
@@ -231,7 +231,7 @@ function drawProgress(live, st) {
   }
   if (st.boards?.length) {
     parts.push(h('ul', { class: 'list' }, st.boards.map((b) => h('li', {}, h('b', { text: b.company || b.board }), ': ',
-      (BOARD_STATUS[b.status] || (() => b.status))(), b.count != null ? ` (${b.count})` : '', b.reason ? ` ${b.reason}` : ''))));
+      (BOARD_STATUS[b.status] || (() => b.status))(), b.count != null ? ` (${b.count})` : '', b.reason ? ` ${reasonText(b.reason)}` : ''))));
   }
   live.replaceChildren(...parts);
 }

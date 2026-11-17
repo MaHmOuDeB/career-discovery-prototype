@@ -12,7 +12,7 @@ The owner approved the isolated CLI after the Phase 0 assessment. The implementa
 
 | Check | Reviewed baseline |
 | --- | --- |
-| Offline suite | 63 passing tests at tag `baseline-2026-11-17`; 188 after the coverage-gap, catalogue and web-app lanes (see below) |
+| Offline suite | 63 passing tests at tag `baseline-2026-11-17`; 193 after the coverage-gap, catalogue and web-app lanes (see below) |
 | Fictional comparison | 96 profile–vacancy pairs. Task ranking found 12 relevant jobs in 18 filled actionable slots. Title ranking found 5 in 10. Treat these as designed checks with different denominators. |
 | Frozen public challenge set | 26 cases. Five of 24 application paths corroborated at the time of the final check. Nineteen stayed unverified. Two expired controls stayed closed. |
 | Private replay using provisional Berlin settings | Zero actionable in either mode on both samples. Task review first returned 0 in both. Title review first returned 6 among 26 cases and 129 among 1,298 listings. |

@@ -1,4 +1,4 @@
-import { api, busy, button, download, emptyState, errorBox, fmtDate, h, icon, langName, notice, safeUrl, say, t, textOf } from './util.js';
+import { api, busy, button, download, emptyState, errorBox, fmtDate, h, icon, langName, notice, safeUrl, reasonText, say, statusText, t, textOf } from './util.js';
 
 const FIT = {
   actionable: () => t('fit.good'),
@@ -103,7 +103,7 @@ const RECHECKABLE = new Set(['greenhouse', 'ashby']);
 function findingText(f) {
   const quote = f.excerpt ? `“${f.excerpt}”` : '';
   if (f.state === 'preferred') return quote ? t('card.niceToHave', { text: quote }) : '';
-  return [quote, textOf(f)].filter(Boolean).join(' — ');
+  return [quote, reasonText(textOf(f))].filter(Boolean).join(' — ');
 }
 
 function availability(card, redo) {
@@ -111,8 +111,8 @@ function availability(card, redo) {
   const ok = card.checked_at && /^(open|available|active|live|verified)/i.test(card.availability || '');
   if (!card.checked_at) box.append(h('span', { class: 'badge plain', text: t('card.notChecked') }));
   else if (ok) box.append(h('span', { class: 'badge', text: t('card.confirmedOpen', { date: fmtDate(card.checked_at) }) }));
-  else box.append(h('span', { class: 'badge warn', text: t('card.checkedOn', { date: fmtDate(card.checked_at), state: card.availability || '' }) }));
-  if (card.verification_reason) box.append(' ', h('span', { class: 'muted', text: card.verification_reason }));
+  else box.append(h('span', { class: 'badge warn', text: t('card.checkedOn', { date: fmtDate(card.checked_at), state: statusText(card.availability) }) }));
+  if (card.verification_reason) box.append(' ', h('span', { class: 'muted', text: reasonText(card.verification_reason) }));
   if (RECHECKABLE.has(card.source)) box.append(' ', button([icon('refresh'), t('card.recheck')], redo, 'quiet'));
   return box;
 }
