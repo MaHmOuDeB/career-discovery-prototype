@@ -14,11 +14,17 @@ MAX_BOARDS = 20
 MAX_VERIFY = 10
 
 
-def refresh_boards(store, boards, *, client=None, max_boards=MAX_BOARDS, clock=utcnow):
+def refresh_boards(store, boards, *, client=None, max_boards=MAX_BOARDS, clock=utcnow, progress=None):
     client = client or PublicHTTP()
     if not boards:
         raise ValueError("No boards are enabled. Review the sources and use the local-use field in your board list.")
     results = []
+
+    def add_result(entry):
+        results.append(entry)
+        if progress:
+            progress(list(results), len(boards))
+
     # Consider all boards so additional batches can skip recently refreshed entries.
     attempted = 0
     for board in boards:
@@ -26,10 +32,10 @@ def refresh_boards(store, boards, *, client=None, max_boards=MAX_BOARDS, clock=u
         previous = store.board_last_success(board)
         name = {"ats": board.ats, "board": board.slug, "company": board.company}
         if previous and timedelta(0) <= started - previous < CACHE_WINDOW:
-            results.append({**name, "status": "cached"})
+            add_result({**name, "status": "cached"})
             continue
         if attempted >= max_boards:
-            results.append({**name, "status": "budget"})
+            add_result({**name, "status": "budget"})
             continue
         attempted += 1
         try:
@@ -40,10 +46,10 @@ def refresh_boards(store, boards, *, client=None, max_boards=MAX_BOARDS, clock=u
         except (ValueError, TypeError, KeyError, AttributeError) as exc:
             note = str(exc)[:300]
             store.record_board(board, started, note=note)
-            results.append({**name, "status": "unavailable", "reason": note})
+            add_result({**name, "status": "unavailable", "reason": note})
         else:
             updated = store.record_board(board, started, jobs, "Complete public feed response.")
-            results.append({**name, "status": "refreshed" if updated else "superseded", "count": len(jobs)})
+            add_result({**name, "status": "refreshed" if updated else "superseded", "count": len(jobs)})
     report = {"boards": results, "public_gets": client.calls, "paid_api_spend": 0}
     store.record_run(None, {**report, "command": "refresh"})
     return report

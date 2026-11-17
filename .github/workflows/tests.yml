@@ -26,3 +26,5 @@ jobs:
         run: python -B -m career_discovery demo
       - name: Help
         run: python -B -m career_discovery --help
+      - name: Web app smoke
+        run: python -B -m career_discovery app --smoke --port 0

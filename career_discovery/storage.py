@@ -112,6 +112,18 @@ class Storage:
                     created_at TEXT NOT NULL,
                     payload TEXT NOT NULL
                 );
+                CREATE TABLE IF NOT EXISTS application (
+                    job_key TEXT PRIMARY KEY,
+                    status TEXT NOT NULL,
+                    applied_on TEXT,
+                    follow_up_on TEXT,
+                    notes TEXT NOT NULL DEFAULT '',
+                    updated_at TEXT NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS meta (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL
+                );
                 CREATE TABLE IF NOT EXISTS supply (
                     id TEXT PRIMARY KEY,
                     created_at TEXT NOT NULL,
@@ -305,3 +317,57 @@ class Storage:
         rows = self.connection().execute("SELECT * FROM supply ORDER BY created_at")
         return [{**json.loads(row["payload"]), "id": row["id"], "created_at": row["created_at"]}
                 for row in rows]
+
+    def applications(self):
+        rows = self.connection().execute(
+            "SELECT a.*, j.payload FROM application a LEFT JOIN job j ON j.key = a.job_key "
+            "ORDER BY a.updated_at DESC, a.job_key")
+        result = []
+        for row in rows:
+            job = json.loads(row["payload"]) if row["payload"] else {}
+            result.append({"job_key": row["job_key"], "company": job.get("company", ""), "title": job.get("title", ""),
+                           "url": job.get("url", ""), "status": row["status"], "applied_on": row["applied_on"],
+                           "follow_up_on": row["follow_up_on"], "notes": row["notes"],
+                           "updated_at": row["updated_at"]})
+        return result
+
+    def put_application(self, row, updated_at):
+        db = self.connection()
+        self.job(row["job_key"])
+        with db:
+            db.execute(
+                "INSERT INTO application VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(job_key) DO UPDATE SET "
+                "status=excluded.status, applied_on=excluded.applied_on, follow_up_on=excluded.follow_up_on, "
+                "notes=excluded.notes, updated_at=excluded.updated_at",
+                (row["job_key"], row["status"], row["applied_on"], row["follow_up_on"], row["notes"], updated_at))
+
+    def delete_application(self, key):
+        db = self.connection()
+        with db:
+            return db.execute("DELETE FROM application WHERE job_key=?", (key,)).rowcount > 0
+
+    def meta(self, key, default=None):
+        row = self.connection().execute("SELECT value FROM meta WHERE key=?", (key,)).fetchone()
+        return json.loads(row["value"]) if row else default
+
+    def set_meta(self, key, value):
+        db = self.connection()
+        with db:
+            db.execute("INSERT INTO meta VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+                       (key, encoded(value)))
+
+    def last_board_success(self):
+        row = self.connection().execute("SELECT MAX(observed_at) AS latest FROM board_run WHERE success=1").fetchone()
+        return row["latest"]
+
+    def all_feedback(self):
+        rows = self.connection().execute("SELECT profile, job, created_at, payload FROM feedback ORDER BY created_at")
+        return [{**json.loads(row["payload"]), "job_key": row["job"], "recorded_at": row["created_at"]}
+                for row in rows]
+
+    def delete_user_data(self):
+        """Remove feedback, applications, search logs and visit markers. Cached vacancies stay."""
+        db = self.connection()
+        with db:
+            for table in ("feedback", "application", "run", "meta"):
+                db.execute(f"DELETE FROM {table}")

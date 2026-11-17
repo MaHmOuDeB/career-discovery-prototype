@@ -283,6 +283,11 @@ def main_parser():
     pack.add_argument("--output-dir", required=True)
     pack.add_argument("--limit", type=int, choices=range(1, 6), default=5)
     pack.add_argument("--full-corpus", action="store_true", help="Include every vacancy in a small frozen corpus.")
+    app = commands.add_parser("app", help="Run the local web app on 127.0.0.1.")
+    app.add_argument("--port", type=int, default=8765, help="First port to try. 0 lets the system choose.")
+    app.add_argument("--no-browser", action="store_true", help="Do not open the browser.")
+    app.add_argument("--state", dest="app_state", help="Data folder. Defaults to the per-user application folder.")
+    app.add_argument("--smoke", action="store_true", help="Start, request the page once, print OK and exit.")
     evaluate = commands.add_parser("evaluate", help="Summarise locally collected, blind pilot judgements.")
     evaluate.add_argument("judgements")
     return parser
@@ -369,6 +374,9 @@ def main(arguments=None):
             value = semantic_command(args, catalogue)
         elif args.command in {"coverage", "heldout"}:
             value = diagnostics_command(args, catalogue)
+        elif args.command == "app":
+            from .webapp import run_app
+            return run_app(args, args.catalogue)
         elif args.command == "evaluate":
             value = pilot_metrics(read_json(args.judgements))
         else:
