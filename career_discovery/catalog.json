@@ -1,0 +1,57 @@
+{
+  "version": 3,
+  "tasks": {
+    "troubleshoot": ["troubleshoot", "resolve support tickets", "resolve user issues", "resolve customer issues", "diagnose customer issues", "diagnose incidents", "resolve platform issues", "fehlerdiagnose", "probleme beheben", "troubleshooting", "troubleshot", "diagnosed incidents", "debugged workflows", "triage support issues"],
+    "onboard": ["onboard", "user onboarding", "client onboarding", "customer onboarding", "roll out to users", "rollout begleiten", "kundeneinführung"],
+    "document_process": ["document processes", "process documentation", "documented a workflow", "write runbooks", "wrote runbooks", "write playbooks", "write guides", "wrote guides", "sops", "prozessdokumentation", "abläufe dokumentieren", "document workflows", "documented workflows", "documented processes", "maintain process documentation", "document procedures", "wrote documentation", "create operational documentation", "technical documentation"],
+    "reconcile": ["reconcile", "reconciling", "reconciliation", "resolving discrepancies", "investigate discrepancies", "shipment exceptions", "abgleich", "abweichungen untersuchen"],
+    "spreadsheets": ["spreadsheet", "excel", "pivot tables", "tabellenkalkulation", "spreadsheets", "google sheets"],
+    "report_kpis": ["report kpis", "reported kpis", "kpi report", "report operational metrics", "tracking operational kpis", "kpi-berichte", "kennzahlen auswerten", "track kpis", "tracked kpis", "monitor kpis", "kpi reporting", "reported on kpis", "report performance metrics", "weekly performance reports", "analyse key performance indicators"],
+    "dashboard": ["build dashboards", "built dashboards", "maintain dashboards", "tableau", "power bi", "dashboards erstellen", "building dashboards", "created dashboards", "design dashboards", "develop dashboards", "developed dashboards", "built interactive dashboards", "dashboard development", "dashboard creation"],
+    "sql": ["sql", "postgresql", "join tables", "write sql queries", "wrote sql queries"],
+    "pipeline": ["etl", "data pipeline", "orchestrate data pipelines", "datenpipelines"],
+    "automate": ["automate workflows", "automated workflows", "workflow automation", "automatisierte prozesse", "prozesse automatisieren", "automating workflows", "process automation", "automated processes", "automate manual processes", "automate routine tasks", "built automations", "designed automation workflows"],
+    "experiment": ["a/b test", "ab test", "analyse experiments", "designed experiments", "experiment design", "experimente auswerten", "a/b tests", "a/b testing", "ab tests", "ab testing", "analyse experiment results", "analyze experiment results", "ran experiments", "run experiments", "hypothesis testing"],
+    "develop_learning": ["design learning modules", "designed learning modules", "curriculum design", "design curricula", "designed curricula", "lesson design", "design assessments", "designed assessments", "lerninhalte entwickeln"],
+    "lms": ["lms", "learning management system", "moodle", "lernplattform"],
+    "teach": ["teach", "taught", "delivered workshops", "facilitate training", "train customers", "train staff", "educate patients", "patient education", "schulungen durchführen"],
+    "clinical_documentation": ["clinical documentation", "patient records", "ehr", "clinical workflows", "patientendokumentation"],
+    "triage": ["triage", "prioritise incidents", "prioritize incidents", "escalate incidents", "triagieren"],
+    "stakeholders": ["coordinate stakeholders", "coordinated stakeholders", "stakeholder communication", "cross-functional coordination", "stakeholder abstimmen", "coordinate with stakeholders", "coordinated with stakeholders", "partner with stakeholders", "worked with stakeholders", "collaborated with stakeholders", "share insights with stakeholders"],
+    "sales": ["quota", "prospect accounts", "cold outreach", "close sales", "neukundenakquise", "vertriebsziele"],
+    "inventory": ["inventory planning", "forecast stock", "replenishment planning", "bestandsplanung"],
+    "authoring": ["articulate storyline", "adapt authoring tool", "captivate"],
+    "configuration": ["configure enterprise software", "salesforce administration", "sap administration", "plattform konfigurieren"],
+    "data_analysis": ["data analysis", "analyze data", "analyse data", "analyzed data", "analysed data", "analyzing data", "analysing data", "exploratory data analysis", "ad hoc analysis", "ad-hoc analysis", "quantitative analysis", "analyze datasets", "analyse datasets", "datensätze analysieren", "datenanalysen durchführen"],
+    "data_quality": ["data quality checks", "check data quality", "monitor data quality", "data validation", "validated data", "validate datasets", "data cleaning", "cleaned data", "datenqualität prüfen", "datenvalidierung"],
+    "systems_integration": ["integrate systems", "system integration", "systems integration", "api integration", "integrate apis", "integrated apis", "connect systems", "connected systems", "systeme integrieren", "schnittstellenintegration"],
+    "evaluate_systems": ["evaluate model outputs", "evaluated model outputs", "benchmark models", "benchmarked models", "evaluate system performance", "evaluated system performance", "model evaluation", "evaluate workflow output", "messung der modellleistung"],
+    "metric_design": ["define success metrics", "defined success metrics", "select performance measures", "kennzahlen definieren"]
+  },
+  "transfers": {
+    "onboard": {"teach": "Facilitating training transfers to guiding new users through a workflow.", "document_process": "Writing process guidance supports the documentation part of user onboarding."},
+    "teach": {"develop_learning": "Designing learning material supports planning training, with delivery experience still to check."},
+    "document_process": {"clinical_documentation": "Structured clinical records demonstrate accurate documentation in a different setting."},
+    "troubleshoot": {"reconcile": "Investigating record discrepancies demonstrates systematic diagnosis in a different context.", "triage": "Triage supports initial issue assessment and escalation."},
+    "report_kpis": {"dashboard": "Building dashboards can support communicating operational measures, with recurring reporting scope to check."},
+    "triage": {"troubleshoot": "Diagnosing and escalating issues supports incident assessment in a different context."}
+  },
+  "families": {
+    "implementation": {"label": "Implementation and onboarding", "tasks": ["troubleshoot", "onboard", "document_process", "configuration", "systems_integration"], "aliases": ["implementation consultant", "customer onboarding", "integration associate", "einführung"]},
+    "operations-analytics": {"label": "Operations analytics", "tasks": ["reconcile", "spreadsheets", "report_kpis", "dashboard", "inventory", "data_analysis", "data_quality"], "aliases": ["operations analyst", "operations associate", "supply chain analyst", "bestandsplanung"]},
+    "reporting-automation": {"label": "Reporting and workflow automation", "tasks": ["report_kpis", "dashboard", "sql", "automate", "pipeline", "data_analysis", "data_quality", "systems_integration"], "aliases": ["reporting analyst", "automation specialist", "data analyst"]},
+    "learning-design": {"label": "Learning design and customer education", "tasks": ["develop_learning", "lms", "teach", "authoring"], "aliases": ["instructional designer", "learning technology", "customer education specialist", "enablement"]},
+    "health-tech": {"label": "Clinical technology and health operations", "tasks": ["clinical_documentation", "triage", "onboard", "configuration"], "aliases": ["clinical application specialist", "health technology", "clinical coordinator"]},
+    "experimentation": {"label": "Experimentation and optimisation", "tasks": ["experiment", "dashboard", "sql", "data_analysis", "evaluate_systems", "metric_design"], "aliases": ["product analyst", "growth analyst", "experimentation specialist"]}
+  },
+  "tools": {
+    "sql": ["sql", "postgresql"],
+    "articulate storyline": ["articulate storyline", "articulate"],
+    "salesforce": ["salesforce"],
+    "sap": ["sap"],
+    "power bi": ["power bi"],
+    "tableau": ["tableau"],
+    "python": ["python"],
+    "excel": ["excel"]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "scenario": "technical-graduate",
+  "policy_version": 6,
+  "observed_at": "2026-11-16T22:52:55.174550+00:00",
+  "settings": "5a731377c5b7bbb374716b11cb70fd3f75e3fdec670e86f877afee53ee0bb415",
+  "employer_boards": [
+    [
+      "ashby",
+      "Clera"
+    ],
+    [
+      "ashby",
+      "Voize"
+    ],
+    [
+      "ashby",
+      "doctolib"
+    ],
+    [
+      "ashby",
+      "enpal"
+    ],
+    [
+      "ashby",
+      "kuro"
+    ],
+    [
+      "ashby",
+      "moss"
+    ],
+    [
+      "ashby",
+      "n8n"
+    ],
+    [
+      "ashby",
+      "pennylane-de"
+    ],
+    [
+      "greenhouse",
+      "commercetools"
+    ],
+    [
+      "greenhouse",
+      "getyourguide"
+    ],
+    [
+      "greenhouse",
+      "hellofresh"
+    ],
+    [
+      "greenhouse",
+      "n26"
+    ]
+  ],
+  "corpus_jobs": 1181,
+  "plausible": 1,
+  "actionable_count": 0,
+  "review_reason_counts": {
+    "insufficient task evidence": 1149,
+    "conflict — location": 775,
+    "needs review — responsibility coverage": 392,
+    "senior title signal": 362,
+    "English working language unconfirmed": 284,
+    "conflict — employment": 90,
+    "conflict — language (de)": 59,
+    "needs review — language (en)": 52,
+    "needs review — location": 48,
+    "needs review — language (de)": 37,
+    "conflict — listing": 20,
+    "conflict — enrolment": 14,
+    "conflict — experience": 6,
+    "conflict — known gap": 3
+  },
+  "companies": [
+    "n8n"
+  ],
+  "families": [
+    "implementation"
+  ],
+  "keys": [
+    "[\"ashby\",\"n8n\",\"d16d63fa-2198-4bde-8b00-b8bf30f19644\"]"
+  ],
+  "gate_met_this_snapshot": false,
+  "rows": [
+    {
+      "job_key": "[\"ashby\",\"n8n\",\"d16d63fa-2198-4bde-8b00-b8bf30f19644\"]",
+      "title": "Internal Context Engineer",
+      "company": "n8n",
+      "url": "https://jobs.ashbyhq.com/n8n/d16d63fa-2198-4bde-8b00-b8bf30f19644",
+      "families": [
+        "implementation"
+      ],
+      "lane": "verify first"
+    }
+  ],
+  "comparison_ready": false
+}

@@ -1,0 +1,32 @@
+{
+  "participants": [
+    {
+      "id": "fictional-example",
+      "would_reuse": null,
+      "ran_again": null,
+      "onboarding_minutes": null,
+      "methods": {
+        "baseline": {"actionable_ids": ["j1"], "completed_searches": 1, "minutes_to_three": null},
+        "task": {
+          "actionable_ids": ["j1", "j2"],
+          "completed_searches": 1,
+          "paid_spend_usd_micros": 0,
+          "minutes_to_three": null,
+          "claims_audited": 6,
+          "claims_supported": 5,
+          "fabricated_claims": 0
+        }
+      },
+      "judgements": [
+        {
+          "job_id": "j1", "relevant": false, "realistic": false, "hard_conflict": null,
+          "open": true, "adjacent": false, "previously_known": true, "would_consider": false
+        },
+        {
+          "job_id": "j2", "relevant": true, "realistic": true, "hard_conflict": false,
+          "open": true, "adjacent": true, "previously_known": false, "would_consider": true
+        }
+      ]
+    }
+  ]
+}

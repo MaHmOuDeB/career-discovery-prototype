@@ -1,0 +1,297 @@
+{
+  "participants": [
+    {
+      "id": "rater-01",
+      "corpus_ids": [
+        "r01",
+        "r02",
+        "r03",
+        "r04",
+        "r05",
+        "r06",
+        "r07",
+        "r08",
+        "r09",
+        "r10",
+        "r11",
+        "r12",
+        "r13",
+        "r14",
+        "r15",
+        "r16",
+        "r17",
+        "r18",
+        "r19",
+        "r20",
+        "r21",
+        "r22",
+        "r23",
+        "r24",
+        "r25",
+        "r26"
+      ],
+      "judgements": [
+        {
+          "job_id": "r01",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r02",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r03",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r04",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r05",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r06",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r07",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r08",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r09",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r10",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r11",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r12",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r13",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r14",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r15",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r16",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r17",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r18",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r19",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r20",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r21",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r22",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r23",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r24",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r25",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        },
+        {
+          "job_id": "r26",
+          "relevant": null,
+          "realistic": null,
+          "hard_conflict": null,
+          "open": null,
+          "adjacent": null,
+          "previously_known": null,
+          "would_consider": null
+        }
+      ]
+    }
+  ]
+}

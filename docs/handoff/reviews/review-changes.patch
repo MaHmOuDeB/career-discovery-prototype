@@ -1,0 +1,1179 @@
+--- a/career_discovery/__main__.py
++++ b/career_discovery/__main__.py
+@@ -12,7 +12,7 @@
+ from .documents import document_data, extract_profile
+ from .evaluation import demo_comparison, pilot_metrics
+ from .matching import as_record, discover_families, run_match, split_ranked
+-from .models import Profile, canonical_url, clean_text, identifier
++from .models import MANUAL_VERIFICATION_PREFIX, Profile, canonical_url, clean_text, identifier
+ from .rendering import demo_text, json_output, safe_text, short_list
+ from .semantic import accepted_by_profile, brief, save_review, validated_proposals
+ from .sourcing import MAX_BOARDS, capture_supply, recheck_shortlist, refresh_boards
+@@ -234,6 +234,7 @@
+     pack.add_argument("--participant", required=True)
+     pack.add_argument("--output-dir", required=True)
+     pack.add_argument("--limit", type=int, choices=range(1, 6), default=5)
++    pack.add_argument("--full-corpus", action="store_true", help="Include every vacancy in a small frozen corpus.")
+     evaluate = commands.add_parser("evaluate", help="Summarise locally collected, blind pilot judgements.")
+     evaluate.add_argument("judgements")
+     return parser
+@@ -258,7 +259,7 @@
+         job = find_job(store, args.job)
+         status = "verified" if args.status == "open" else args.status
+         updated = replace(job, availability=status, checked_at=utcnow().isoformat(),
+-                          verification_reason=f"User recorded a manual check as {args.status}.")
++                          verification_reason=f"{MANUAL_VERIFICATION_PREFIX}{args.status}.")
+         if not store.update_status(job, updated):
+             raise ValueError("The listing changed during verification. Recheck the current listing.")
+         return {"job_key": job.key, "availability": status, "checked_at": updated.checked_at}
+@@ -294,7 +295,7 @@
+         rows = run_match(store.jobs(), profile, catalogue, analyser=lambda job: store.analyse(job, catalogue))
+         if not rows:
+             raise ValueError("Add a vacancy corpus before preparing a review deck.")
+-        deck, key = prepare_review(rows, args.participant, limit=args.limit)
++        deck, key = prepare_review(rows, args.participant, limit=args.limit, full_corpus=args.full_corpus)
+         target = Path(args.output_dir)
+         target.mkdir(parents=True, mode=0o700, exist_ok=False)
+         write_private_json(target / "review-deck.json", deck)
+--- a/career_discovery/analysis.py
++++ b/career_discovery/analysis.py
+@@ -9,7 +9,7 @@
+ 
+ from .models import Requirement, fingerprint
+ 
+-ANALYSER_VERSION = 9
++ANALYSER_VERSION = 11
+ 
+ SECTIONS = {
+     "core": (
+@@ -36,11 +36,12 @@
+     "preferred": ("preferred qualifications", "nice to have", "nice-to-have", "nice-to-haves",
+                   "bonus points", "bonus", "wünschenswert", "von vorteil", "pluspunkte", "wäre von vorteil",
+                   "damit punktest du zusätzlich"),
++    "additional": ("additional information", "weitere informationen", "zusätzliche informationen"),
+     "skip": (
+         "benefits", "what we offer", "about us", "compensation", "how to apply", "why join us",
+         "why us", "what's in it for you", "equal opportunity", "interview process",
+         "was wir bieten", "das bieten wir", "das bieten wir dir", "über uns", "unsere benefits",
+-        "bewerbungsprozess", "so geht es für dich weiter", "where you belong", "additional information",
++        "bewerbungsprozess", "so geht es für dich weiter", "where you belong",
+     ),
+ }
+ OPTIONAL = re.compile(r"\b(?:preferred|nice to have|a (?:(?:strong|big|significant) )?(?:plus|bonus|advantage)|"
+@@ -201,12 +202,24 @@
+ POST_EXCLUSION = re.compile(r"^(?:is|are|was|were)?\s*(?:not in scope|not required|out of scope)\b", re.I)
+ 
+ 
++OTHER_ACTOR = re.compile(r"\b(?:who|whose|whoever|whether|in case|so (?:that )?(?:they|others)|"
++                         r"as (?:they|others)|(?:vendors?|suppliers?|agencies|contractors?|teams?|teammates?|colleagues?) "
++                         r"(?:that|which)|(?:they|others|colleagues|teammates|clients|students|staff|vendors) "
++                         r"(?:can|could|would|to|will))\b")
++EVIDENCE_SCOPE = re.compile(r"\b(?:if|would|could|aimed to|hop(?:e|ed) to|"
++                            r"tasked with|asked to|responsible for learning|"
++                            r"(?:proposals?|options?|requests?|plans?|recommendations?|ideas?) (?:to|for))\b")
++
++
+ def task_is_asserted(clause, hit, *, evidence):
+-    before = " ".join(clause[:hit.start()].split()[-5:])
++    prefix = clause[:hit.start()].rstrip()
++    before = " ".join(prefix.split()[-5:])
+     context = f"{before} {hit.group()}"
+     after = " ".join(clause[hit.end():].split()[:5])
+-    return not (NEGATION.search(context) or TASK_EXCLUSION.search(context) or POST_EXCLUSION.search(after)
+-                or (evidence and (INTENT_ONLY.search(context) or before.endswith(" learning")
++    actor_context = f"{prefix} {hit.group()}"
++    return not (OTHER_ACTOR.search(actor_context) or NEGATION.search(context) or TASK_EXCLUSION.search(context) or POST_EXCLUSION.search(after)
++                or (evidence and (INTENT_ONLY.search(actor_context) or EVIDENCE_SCOPE.search(actor_context)
++                                  or before.endswith(" learning")
+                                   or before == "learning")))
+ 
+ 
+@@ -222,11 +235,12 @@
+ 
+ 
+ def task_tags(text, catalogue, evidence=False):
+-    normalized = normal(text)
++    spans = re.split(r"[.;!?\n]+|,\s*(?=(?:and )?then\b)", text, flags=re.I)
++    clauses = [normal(span) for span in spans]
+     matched_patterns = pattern_tasks(text, evidence=evidence)
+     return tuple(task for task, aliases in catalogue.tasks.items()
+-                 if task in matched_patterns or any(asserted_normal_phrase(normalized, alias, evidence=evidence)
+-                                                    for alias in aliases))
++                 if task in matched_patterns or any(asserted_normal_phrase(clause, alias, evidence=evidence)
++                                                    for clause in clauses for alias in aliases))
+ 
+ 
+ AD_LANGUAGE_WORDS = {
+@@ -243,6 +257,71 @@
+     return primary if scores[primary] >= 5 and scores[primary] - scores[second] >= 3 else ""
+ 
+ 
++LANGUAGE_TERM = re.compile(r"\b(?:german|english|french|spanish|deutsch\w*|englisch\w*|"
++                           r"französisch\w*|spanisch\w*)\b", re.I)
++LANGUAGE_LEVEL = re.compile(r"\b[ABC][12]\b", re.I)
++PERSONAL_CONDITION = re.compile(r"\b(?:work authori[sz]ation|right to work|visa sponsorship|arbeitserlaubnis|"
++                                r"immatrikulier\w*|enroll(?:ed|ment)|current student|"
++                                r"security clearance|background check|sicherheitsüberprüfung|"
++                                r"credentials?|certifications?|licen[cs]es?|degree|travel|reisebereitschaft|"
++                                r"years? of .*experience|jahre\w* .*erfahrung)\b", re.I)
++CANDIDATE_CONDITION = re.compile(r"^(?:applicants?|candidates?|you|bewerber\w*)\b.{0,50}"
++                                 r"\b(?:must|müssen|required)\b|"
++                                 r"\b(?:is|are) (?:required|mandatory)\s*[.!]?$", re.I)
++LANGUAGE_QUALIFIER = re.compile(r"\b(?:fluency|fluent|proficien\w*|native|language skills|"
++                                r"sprachkenntnisse|verhandlungssicher\w*|fließend\w*)\b", re.I)
++# The second, comma-separated level is optional in phrases such as "German B2, C1 preferred".
++LANGUAGE_ASIDE = re.compile(
++    r"(?:,\s*(?:with\s+)?|\s+\(\s*|\s+(?:but|however|aber|jedoch)\s+)"
++    r"(?=(?:(?:English|German|French|Spanish|Englisch\w*|Deutsch\w*)\s+)?"
++    r"(?:[ABC][12](?:\s+is)?\s+(?:preferred|desirable|optional|wünschenswert|von Vorteil|"
++    r"(?:is\s+)?a (?:plus|bonus)|not required)|(?:ideally|idealerweise)\b))", re.I,
++)
++
++
++def split_preferences(text):
++    language = LANGUAGE_TERM.search(text)
++    if language:
++        parts = LANGUAGE_ASIDE.split(text)
++        if len(parts) > 1:
++            return parts
++    parts = re.split(r",\s*|\s+(?:and|but|und|aber)\s+", text, maxsplit=1, flags=re.I)
++    if len(parts) == 2 and MANDATORY.search(parts[0]):
++        left, right = parts
++        # Each side has its own explicit wording. Keep general comma lists intact.
++        if ((not OPTIONAL.search(left) and OPTIONAL.search(right))
++                or (NO_LANGUAGE.search(left) and MANDATORY.search(right))):
++            return [left, right]
++    return [text]
++
++
++def ambiguous_language_preference(text):
++    languages = list(LANGUAGE_TERM.finditer(text))
++    if not languages or not OPTIONAL.search(text):
++        return False
++    levels = list(LANGUAGE_LEVEL.finditer(text))
++    if len(levels) > 1:
++        separator = text[levels[0].end():levels[1].start()].strip()
++        if separator not in {"/", "-", "–"}:
++            return True
++    return len(languages) > 1 and bool(LANGUAGE_LEVEL.search(text[:languages[-1].start()])
++                                      or LANGUAGE_QUALIFIER.search(text[:languages[-1].start()]))
++
++
++def split_duties(text, catalogue, tags):
++    # Split coordinated, recognised actions. Leave alternatives, subordinate clauses
++    # and shared qualification or ownership wording attached to the original line.
++    if (NEGATION.search(normal(text)) or OTHER_ACTOR.search(normal(text))
++            or re.search(r"\b(?:or|oder|own|lead|manage|independently|eigenverantwortlich)\b", text, re.I)):
++        return [(text, tags)]
++    parts = re.split(r"\s+(?:and|und)\s+", text, flags=re.I)
++    if len(parts) > 1 and all(ROLE_VERB.search(part) for part in parts):
++        mapped = [(part, task_tags(part, catalogue)) for part in parts]
++        if all(tags for _, tags in mapped):
++            return mapped
++    return [(text, tags)]
++
++
+ def requirement_chunks(description):
+     """Yield bounded lines, including headings followed by content on the same line."""
+     for raw in description.splitlines():
+@@ -263,9 +342,10 @@
+                 r",\s*(?i:as well as|sowie)\s+(?=(?i:English|German|Englisch|Deutsch)\w*)",
+                 line,
+             )
+-            for part in spans:
+-                for offset in range(0, len(part), 800):
+-                    yield None, part[offset:offset + 800].strip(), bullet
++            for span in spans:
++                for part in split_preferences(span):
++                    for offset in range(0, len(part), 800):
++                        yield None, part[offset:offset + 800].strip(), bullet
+ 
+ 
+ def analyse_description(description, catalogue):
+@@ -278,6 +358,12 @@
+             continue
+         if section == "skip" or not text or BOILERPLATE.search(text):
+             continue
++        explicit_language = LANGUAGE_TERM.search(text) and (LANGUAGE_LEVEL.search(text)
++                                                           or LANGUAGE_QUALIFIER.search(text))
++        if section == "additional" and not (CANDIDATE_CONDITION.search(text)
++                or ((explicit_language or PERSONAL_CONDITION.search(text))
++                    and (MANDATORY.search(text) or OPTIONAL.search(text)))):
++            continue
+         if (not bullet and len(text.split()) < 3 and section not in {"mandatory", "preferred"}
+                 and not (MANDATORY.search(text) or OPTIONAL.search(text))):
+             continue
+@@ -288,9 +374,13 @@
+             r"\b(?:not required|nicht erforderlich)\b", text, re.I
+         ):
+             kind = "unclear"
++        elif section != "preferred" and ambiguous_language_preference(text):
++            kind = "unclear"
+         elif OPTIONAL.search(text) or section == "preferred":
+             kind = "preferred"
+-        elif MANDATORY.search(text) or section == "mandatory" or (section == "unclear" and REQUIRED_QUALIFICATION.search(text)):
++        elif (MANDATORY.search(text) or section == "mandatory"
++              or section == "additional" and CANDIDATE_CONDITION.search(text)
++              or section == "unclear" and REQUIRED_QUALIFICATION.search(text)):
+             kind = "mandatory"
+         elif section == "unclear" and (bullet or re.match(r"^(?:experience|proficien|strong|knowledge|you have)", text, re.I)):
+             kind = "unclear"
+@@ -298,11 +388,13 @@
+             kind = "core"
+         else:
+             continue
+-        key = (kind, normal(text))
+-        if key in seen:
+-            continue
+-        seen.add(key)
+-        rows.append(Requirement(f"r{len(rows) + 1:03}", kind, text, tags))
+-        if len(rows) >= 100:
+-            break
++        duties = split_duties(text, catalogue, tags) if kind == "core" else [(text, tags)]
++        for span, span_tags in duties:
++            key = (kind, normal(span))
++            if key in seen:
++                continue
++            seen.add(key)
++            rows.append(Requirement(f"r{len(rows) + 1:03}", kind, span, span_tags))
++            if len(rows) >= 100:
++                return tuple(rows)
+     return tuple(rows)
+--- a/career_discovery/eligibility.py
++++ b/career_discovery/eligibility.py
+@@ -21,6 +21,15 @@
+ YEARS = re.compile(r"\b(\d{1,2})\s*\+?\s*(?:(?:-|–|to|bis)\s*\d{1,2}\s*)?"
+                    r"(?:years?|jahre[n]?)\b\s*(?:of |an )?(.{0,55}?)"
+                    r"\b(?:experienc\w*|erfahrung|berufserfahrung)\b", re.I)
++POST_TENURE_SCOPE = re.compile(r"^\s*(?:(?:[,:(]\s*)?(?:with|using|in|working with|working in|mit|im|in der)\s+"
++                               r"|\s*\(\s*)(.+?)\s*$", re.I)
++UNSCOPED_TENURE = {"", "relevant", "professional", "work", "relevant professional", "berufs"}
++UPPER_TENURE = re.compile(r"\b(?:up to|at most|no more than|maximum(?: of)?|bis zu|höchstens)$", re.I)
++TENURE_QUALIFIER = re.compile(r"\s+(?:(?:is|are)\s+)?(?:required|preferred|mandatory|"
++                              r"(?:a\s+)?minimum|erforderlich|vorausgesetzt)\s*[.!]?$", re.I)
++REQUIRED_JOIN = re.compile(r"(?<=\brequired)\s+with\s+|(?<=\bmandatory)\s+with\s+", re.I)
++CLEARANCE = re.compile(r"\b(?:security clearance|background (?:check|screening)|"
++                       r"sicherheitsüberprüfung|zuverlässigkeitsüberprüfung)\b", re.I)
+ ENROLMENT = re.compile(r"\b(?:enroll(?:ed|ment)|ein(?:ge)?schrieben|immatrikulier\w*|"
+                        r"current student|student status)\b", re.I)
+ GRADUATE = re.compile(r"\b(?:recent graduate|new graduate|kürzlich.{0,15}abschluss|"
+@@ -41,10 +50,8 @@
+ }
+ 
+ 
+-def group_matchings(state_values, *, alternative):
+-    states = {finding.state for finding in state_values}
+-    if alternative:
+-        return "met" if "met" in states else "unknown" if "unknown" in states else "conflict"
++def conjunction_state(findings):
++    states = {finding.state for finding in findings}
+     return "conflict" if "conflict" in states else "unknown" if "unknown" in states else "met"
+ 
+ 
+@@ -133,9 +140,6 @@
+ 
+ 
+ def clause_findings(text, profile, catalogue):
+-    check = normal(text)
+-    if any(check == normal(item) for item in profile.verified_requirements):
+-        return [Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line.")]
+     # An unnegated mention in the clause is needed before imposing a known gap.
+     if any(asserted_phrase(text, gap) for gap in profile.known_gaps):
+         return [Finding("conflict", "known gap", text, "The candidate records this as a known gap.")]
+@@ -143,12 +147,22 @@
+     years = list(YEARS.finditer(text))
+     for match in years:
+         scope = normal(match.group(2))
++        raw_tail = text[match.end():]
++        post_scope = POST_TENURE_SCOPE.match(TENURE_QUALIFIER.sub("", raw_tail).strip())
++        if post_scope:
++            post = normal(post_scope.group(1))
++            scope = post if scope in UNSCOPED_TENURE else f"{scope} with {post}"
++        tail = normal(TENURE_QUALIFIER.sub("", raw_tail))
++        if scope in UNSCOPED_TENURE and tail:
++            scope = "unspecified scope"
+         before = text[:match.start()].casefold().rstrip()
+-        if re.search(r"\b(?:up to|at most|no more than|maximum(?: of)?|bis zu|höchstens)$", before):
++        if UPPER_TENURE.search(before):
+             findings.append(Finding("unknown", "experience", text, "The stated duration is an upper bound. "
+                                     "Verify how the employer interprets it."))
+             continue
+-        key = scope or "relevant"
++        key = "relevant" if scope in UNSCOPED_TENURE else next(
++            (tool for tool, aliases in catalogue.tools.items() if scope in map(normal, aliases)), scope,
++        )
+         supplied = {normal(k): v for k, v in profile.experience_months.items()}
+         months = supplied.get(key)
+         required = int(match.group(1)) * 12
+@@ -168,32 +182,68 @@
+                                        text, re.I)
+             state = "met" if (explicit or evidence) and not scope_required else "unknown"
+             findings.append(Finding(state, tool, text, "Tool evidence and any stated depth were checked."))
++    if CLEARANCE.search(text):
++        findings.append(Finding("unknown", "clearance", text, "Check the exact clearance or screening condition."))
+     if re.search(r"\b(?:degree|bachelor|master'?s|abschluss|certification|licen[cs]e|approbation)\b", text, re.I):
+         findings.append(Finding("unknown", "credential", text, "Confirm the exact credential and any equivalency."))
++    if (any(normal(item) == normal(text) for item in profile.verified_requirements)
++            and all(finding.state != "conflict" for finding in findings)):
++        return [Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line.")]
+     return findings or [Finding("unknown", "requirement", text, "The available evidence does not resolve this condition.")]
++
++
++def tenure_parts(text, catalogue):
++    """Carry a shared duration only to a clearly named tool or candidate tenure scope."""
++    scopes = {normal(alias) for values in catalogue.tools.values() for alias in values}
++    found = YEARS.search(text)
++    if found and not YEARS.search(text, found.end()):
++        before = text[:found.start()]
++        upper = UPPER_TENURE.search(before.rstrip())
++        duration = text[found.start():found.start(2)]
++        shared_duration = f"{upper.group()} {duration}" if upper else duration
++        prefix_scope = found.group(2).strip()
++        chunks = re.split(r"(\s+(?:and|or|und|oder)\s+)", prefix_scope, flags=re.I)
++        if len(chunks) > 1 and all(normal(chunk) in scopes for chunk in chunks[::2]):
++            expanded = [f"{duration if index == 0 else shared_duration}{chunk} experience"
++                        for index, chunk in enumerate(chunks[::2])]
++            return text[:found.start()] + "".join(
++                part for pair in zip(expanded, [*chunks[1::2], ""]) for part in pair
++            ) + text[found.end():]
++        if POST_TENURE_SCOPE.match(text[found.end():]):
++            suffix = re.split(r"(\s+(?:and|or|und|oder)\s+)", text[found.end():], flags=re.I)
++            for index in range(2, len(suffix), 2):
++                if normal(TENURE_QUALIFIER.sub("", suffix[index])) in scopes:
++                    suffix[index] = f"{shared_duration}experience with {suffix[index]}"
++            return text[:found.end()] + "".join(suffix)
++    return text
+ 
+ 
+ def check_requirement(requirement, profile, catalogue):
+     text = requirement.text
+     if requirement.kind == "preferred":
+         return (Finding("preferred", "preference", text, "Treated as preferred by the wording or section."),)
++    confirmed = any(normal(item) == normal(text) for item in profile.verified_requirements)
+     if requirement.kind == "unclear":
+-        return (Finding("unknown", "requirement intent", text, "Check whether this is a mandatory condition."),)
+-    if any(normal(item) == normal(text) for item in profile.verified_requirements):
++        if confirmed:
++            return (Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line."),)
++        return (Finding("unknown", "requirement intent", text,
++                        "Check the employer's intent. Record this clause in verified_requirements once resolved."),)
++    alternatives = OR.split(tenure_parts(text, catalogue))
++    groups = [tuple(found for part in AND.split(clause) for condition in REQUIRED_JOIN.split(part)
++                    for found in clause_findings(condition, profile, catalogue))
++              for clause in alternatives]
++    if len(groups) > 1:
++        ratings = [conjunction_state(group) for group in groups]
++        state = ("met" if "met" in ratings else "unknown" if "unknown" in ratings else "conflict")
++        if confirmed and state != "conflict":
++            return (Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line."),)
++        return (Finding(state, "alternative paths", text, " ".join(
++            f"Path {index}: {rating}. " + " ".join(item.reason for item in group)
++            for index, (rating, group) in enumerate(zip(ratings, groups), 1)
++        )),)
++    if confirmed and all(finding.state != "conflict" for finding in groups[0]):
+         return (Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line."),)
+-    alternatives = OR.split(text)
+-    if len(alternatives) > 1:
+-        ratings = []
+-        for clause in alternatives:
+-            findings = [found for part in AND.split(clause)
+-                        for found in clause_findings(part, profile, catalogue)]
+-            ratings.append(Finding(group_matchings(findings, alternative=False), "alternative", clause,
+-                                   " ".join(item.reason for item in findings)))
+-        state = group_matchings(ratings, alternative=True)
+-        return (Finding(state, "alternative paths", text,
+-                        " ".join(f"Path {index}: {rating.state}. {rating.reason}"
+-                                 for index, rating in enumerate(ratings, 1))),)
+-    return tuple(found for part in AND.split(text) for found in clause_findings(part, profile, catalogue))
++    return groups[0]
+ 
+ 
+ def eligibility(job, profile, requirements, catalogue, today=None):
+--- a/career_discovery/evaluation.py
++++ b/career_discovery/evaluation.py
+@@ -79,6 +79,37 @@
+         raise ValueError("Judgement flags must be true, false or null.")
+ 
+ 
++def lane_metrics(rows):
++    relevant = sum(_is_relevant(row) for row in rows)
++    relevance_labelled = sum(_is_relevant(row) or _is_negative(row) for row in rows)
++    conflict_labelled = sum(row.get("hard_conflict") is not None for row in rows)
++    open_labelled = sum(row.get("open") is not None for row in rows)
++    slots = len(rows)
++    return {
++        "filled_slots": slots,
++        "label_status": ("empty" if not slots else "complete"
++                         if relevance_labelled == conflict_labelled == open_labelled == slots else "incomplete"),
++        "label_coverage": {
++            "relevance": ratio(relevance_labelled, slots),
++            "eligibility": ratio(conflict_labelled, slots),
++            "links": ratio(open_labelled, slots),
++        },
++        "precision": ratio(relevant, relevance_labelled),
++        "hard_conflict_rate": ratio(sum(row.get("hard_conflict") is True for row in rows), conflict_labelled),
++        "verified_link_rate": ratio(sum(row.get("open") is True for row in rows), open_labelled),
++    }
++
++
++def ranked_ids(method, field, judgements):
++    ids = method.get(field, [])
++    if (not isinstance(ids, list) or len(ids) > 5 or any(not isinstance(key, str) for key in ids)
++            or len(ids) != len(set(ids))):
++        raise ValueError(f"Use up to five distinct vacancy IDs in {field}.")
++    if not set(ids).issubset(judgements):
++        raise ValueError("Every displayed vacancy requires a judgement record.")
++    return ids
++
++
+ def pilot_metrics(data):
+     """Read anonymous human judgements. Empty metrics remain undefined."""
+     participants = data.get("participants")
+@@ -115,27 +146,40 @@
+         if not {"baseline", "task"}.issubset(methods):
+             raise ValueError("Each participant requires baseline and task results.")
+         negative_count = sum(_is_negative(row) for row in judgements.values())
++        corpus_ids = participant.get("corpus_ids")
++        if corpus_ids is not None and (not isinstance(corpus_ids, list)
++                or any(not isinstance(key, str) for key in corpus_ids)
++                or len(corpus_ids) != len(judgements) or set(corpus_ids) != judgements.keys()):
++            raise ValueError("Full-corpus IDs must correspond one-to-one with judgement rows.")
++        complete_corpus = corpus_ids is not None and all(
++            _is_relevant(row) or _is_negative(row) for row in judgements.values()
++        )
++        positives = {key for key, row in judgements.items() if _is_relevant(row)}
+         discovery = []
+-        participant_report = {"id": ident, "labelled_negatives": negative_count, "methods": {}}
++        participant_report = {
++            "id": ident, "labelled_negatives": negative_count, "methods": {},
++            "complete_corpus_relevance_labels": complete_corpus,
++            "relevance_label_coverage": ratio(len(positives) + negative_count, len(judgements)),
++        }
+         for method_name, method in methods.items():
+             if method_name not in {"baseline", "task", "hybrid", "manual", "competitor"}:
+                 raise ValueError("Unknown pilot method.")
+-            shown = method.get("actionable_ids", [])
+-            if not isinstance(shown, list) or len(shown) > 5 or len(shown) != len(set(shown)):
+-                raise ValueError("Use up to five distinct actionable IDs per method.")
+-            if not set(shown).issubset(judgements):
+-                raise ValueError("Every displayed actionable vacancy requires a judgement record.")
++            shown = ranked_ids(method, "actionable_ids", judgements)
++            verify_first = ranked_ids(method, "review_first_ids", judgements)
++            if set(shown).intersection(verify_first):
++                raise ValueError("A vacancy can enter only one lane per method.")
+             reviewed = [judgements[key] for key in shown]
++            review_stats = lane_metrics([judgements[key] for key in verify_first])
++            if complete_corpus:
++                review_stats["relevant_coverage"] = ratio(len(positives.intersection(verify_first)), len(positives))
+             claims = _count("claims_audited", method)
+             supported = _count("claims_supported", method)
+             fabricated = _count("fabricated_claims", method)
+             if supported + fabricated > claims:
+                 raise ValueError("Claim counts exceed the number of audited claims.")
+             memberships = {
+-                "precision": ratio(sum(_is_relevant(row) for row in reviewed), len(reviewed)),
+-                "hard_conflict_rate": ratio(sum(row.get("hard_conflict") is True for row in reviewed), len(reviewed)),
++                **lane_metrics(reviewed),
+                 "false_positive_rate": ratio(sum(_is_negative(row) for row in reviewed), negative_count),
+-                "verified_link_rate": ratio(sum(row.get("open") is True for row in reviewed), len(reviewed)),
+                 "explanation_accuracy": ratio(supported, claims),
+             }
+             candidates = [
+@@ -149,7 +193,10 @@
+             if method_name == "task":
+                 discovery = candidates
+             participant_report["methods"][method_name] = {
+-                **memberships, "filled_slots": len(shown), "useful_discoveries": candidates,
++                **memberships, "verify_first": review_stats, "useful_discoveries": candidates,
++                "actionable_relevant_coverage": ratio(len(positives.intersection(shown)), len(positives))
++                if complete_corpus else None,
++                "missed_relevant_ids": sorted(positives.difference(shown, verify_first)) if complete_corpus else None,
+                 "unresolved_eligibility": sum(row.get("hard_conflict") is None for row in reviewed),
+                 "unverified_links": sum(row.get("open") is None for row in reviewed),
+                 "fabricated_claims": fabricated, "paid_spend_usd_micros": _count("paid_spend_usd_micros", method),
+@@ -173,6 +220,12 @@
+         completed = sum(row["completed_searches"] for row in rows)
+         joined[name] = {
+             **metrics, "spend_usd_micros": spend, "completed_searches": completed,
++            "actionable_label_coverage": {
++                label: ratio(sum(row["label_coverage"][label]["numerator"] for row in rows),
++                             sum(row["label_coverage"][label]["denominator"] for row in rows))
++                for label in ("relevance", "eligibility", "links")
++            },
++            "verify_first_filled_slots": sum(row["verify_first"]["filled_slots"] for row in rows),
+             "usd_per_search": round(spend / 1_000_000 / completed, 6) if completed else None,
+             "fabricated_claims": sum(row["fabricated_claims"] for row in rows),
+             "unresolved_eligibility": sum(row["unresolved_eligibility"] for row in rows),
+--- a/career_discovery/matching.py
++++ b/career_discovery/matching.py
+@@ -8,8 +8,13 @@
+ 
+ from .analysis import advert_language, analyse_description, contains, normal, task_tags
+ from .eligibility import eligibility
+-from .models import EvidenceLink, Finding, Job, Profile, Requirement
+-
++from .models import SUPERSEDED_AUTO_VERIFICATIONS, EvidenceLink, Finding, Job, Profile, Requirement
++
++SENIOR_TITLE = re.compile(
++    r"\b(?:senior|sr\.?|staff (?:engineer|analyst)|principal|director|head of|vice president|"
++    r"lead (?:data|engineer|analyst)|engineering manager|team lead|founding engineer|teamleitung)\b", re.I,
++)
++EARLY_STAGE = re.compile(r"\b(?:early[- ]career|entry[- ]level|junior|graduate)\b", re.I)
+ VERIFICATION_TTL = timedelta(hours=24)
+ PARTIAL_FIT = "partial task evidence"
+ LEADERSHIP = re.compile(r"\b(?:own independently|own the|lead a team|manage direct reports|"
+@@ -35,7 +40,8 @@
+ def available(job, now):
+     if job.availability == "fixture_open":
+         return job.source == "fictional"
+-    if job.availability != "verified" or not job.checked_at:
++    if (job.availability != "verified" or not job.checked_at
++            or job.verification_reason in SUPERSEDED_AUTO_VERIFICATIONS):
+         return False
+     checked = datetime.fromisoformat(job.checked_at.replace("Z", "+00:00"))
+     return timedelta(0) <= now - checked <= VERIFICATION_TTL
+@@ -159,9 +165,20 @@
+     transferred = units.count("transferable")
+     partial = units.count("partial")
+     matched = direct + transferred
++    direct_capabilities = {link.task_id for link in links if link.task_id and link.kind == "direct"}
++    supported_capabilities = {link.task_id for link in links if link.task_id
++                              and link.kind in {"direct", "transferable"}}
++    scope_confirmation = f"Seniority and ownership: {job.url}"
++    if (EARLY_STAGE.search(profile.stage) and SENIOR_TITLE.search(job.title)
++            and scope_confirmation not in profile.verified_requirements):
++        findings.append(Finding("unknown", "seniority and ownership", job.title,
++                                "Check the expected seniority and ownership with the employer."))
++    if len(core) > 1 and matched > 1 and supported_capabilities and len(supported_capabilities) < 2:
++        findings.append(Finding("unknown", "responsibility coverage", "",
++                                "Several duties point to the same supported capability. Check the remaining scope."))
+     if not core:
+         fit = "insufficient evidence"
+-    elif direct >= 2 and direct >= len(core) - 1 and matched == len(core):
++    elif len(direct_capabilities) >= 2 and direct >= len(core) - 1 and matched == len(core):
+         fit = "strong fit"
+     elif transferred and matched >= max(2, ceil(len(core) / 2)):
+         fit = "transferable opportunity"
+--- a/career_discovery/models.py
++++ b/career_discovery/models.py
+@@ -11,6 +11,11 @@
+ CEFR = ("A1", "A2", "B1", "B2", "C1", "C2")
+ EVIDENCE_STATES = {"cv_stated", "user_confirmed", "inferred", "missing"}
+ AVAILABILITY = {"fixture_open", "listed", "verified", "closed", "unverified"}
++LEGACY_AUTO_VERIFICATION = "Present in a recent employer feed and the specific application URL responded."
++HEADING_ONLY_VERIFICATION = "Recent employer listing and matching job page with an application action."
++SUPERSEDED_AUTO_VERIFICATIONS = {LEGACY_AUTO_VERIFICATION, HEADING_ONLY_VERIFICATION}
++MANUAL_VERIFICATION_PREFIX = "User recorded a manual check as "
++FEED_REMOVAL = "No longer present in the last complete successful employer snapshot."
+ EMPLOYMENT = {
+     "full_time", "part_time", "internship", "working_student", "freelance",
+     "contract", "temporary", "trainee",
+@@ -195,6 +200,9 @@
+         attrs["description"] = clean_text(attrs.get("description", ""), "Description", 100_000)
+         for label in ("locations", "remote_regions"):
+             attrs[label] = tuple(string_list(attrs.get(label, []), label))
++        if attrs.get("availability") == "verified" and attrs.get("verification_reason") in SUPERSEDED_AUTO_VERIFICATIONS:
++            attrs["availability"] = "unverified"
++            attrs["verification_reason"] = "Earlier automatic verification lacks a current application-control check. Recheck the apply path."
+         if attrs.get("availability", "unverified") not in AVAILABILITY:
+             raise ValueError("Invalid vacancy availability.")
+         if attrs.get("workplace", "") not in {"", "remote", "hybrid", "onsite"}:
+@@ -222,6 +230,10 @@
+         return cls(**attrs)
+ 
+     @property
++    def manually_checked(self):
++        return self.verification_reason.startswith(MANUAL_VERIFICATION_PREFIX)
++
++    @property
+     def key(self):
+         return json.dumps([self.source, self.board, self.external_id], ensure_ascii=False, separators=(",", ":"))
+ 
+--- a/career_discovery/pilot.py
++++ b/career_discovery/pilot.py
+@@ -6,24 +6,27 @@
+ REVIEW_FIELDS = (
+     "relevant", "realistic", "hard_conflict", "open", "adjacent", "previously_known", "would_consider",
+ )
++REVIEW_LANES = {"actionable_ids": "actionable", "review_first_ids": "verify first"}
++FULL_CORPUS_LIMIT = 100
+ 
+ 
+-def prepare_review(rows, participant, *, limit=5, audit_sample=3):
++def prepare_review(rows, participant, *, limit=5, audit_sample=3, full_corpus=False):
+     participant = identifier(participant)
++    if full_corpus and len(rows) > FULL_CORPUS_LIMIT:
++        raise ValueError(f"Use at most {FULL_CORPUS_LIMIT} vacancies for a full-corpus review.")
+     rankings = {mode: split_ranked(rows, mode) for mode in ("baseline", "task")}
+-    selected = {mode: ranking["actionable"][:limit] for mode, ranking in rankings.items()}
+-    union = {row.job.key: row.job for results in selected.values() for row in results}
++    selected = {mode: {key: ranking[lane][:limit] for key, lane in REVIEW_LANES.items()}
++                for mode, ranking in rankings.items()}
++    union = {row.job.key: row.job for lanes in selected.values() for results in lanes.values() for row in results}
+     remaining = [row for row in rows if row.job.key not in union]
+     seed = fingerprint([participant, sorted((row.job.key, fingerprint(row.job.description),
+                                              row.job.availability, row.job.checked_at) for row in rows)])
+     remaining.sort(key=lambda row: fingerprint([seed, row.job.key]))
+-    pending = sorted(rankings["task"]["verify first"], key=lambda row: (-row.rank, row.job.key))
+-    for row in pending[:audit_sample] + remaining[:audit_sample]:
++    for row in remaining if full_corpus else remaining[:audit_sample]:
+         union[row.job.key] = row.job
+     ordered = sorted(union.values(), key=lambda job: fingerprint([seed, job.key]))
+     ids = {job.key: f"j{index:03}" for index, job in enumerate(ordered, 1)}
+ 
+-    # The deck intentionally carries only vacancy metadata and blank ratings.
+     vacancies = [{"job_id": ids[job.key], "title": job.title, "company": job.company,
+                   "locations": list(job.locations), "link": job.url, "apply_link": job.apply_url or job.url}
+                  for job in ordered]
+@@ -31,12 +34,14 @@
+     private_key = {
+         "fixture": bool(rows and all(row.job.source == "fictional" for row in rows)),
+         "corpus_size": len(rows), "snapshot": seed,
+-        "method_counts": {mode: len(ranks["actionable"]) for mode, ranks in rankings.items()},
++        "method_counts": {mode: {lane: len(ranks[lane]) for lane in REVIEW_LANES.values()}
++                          for mode, ranks in rankings.items()},
+         "participants": [{
+             "id": participant, "would_reuse": None, "ran_again": None, "onboarding_minutes": None,
+-            "methods": {mode: {"actionable_ids": [ids[row.job.key] for row in results],
++            "corpus_ids": list(ids.values()) if len(ids) == len(rows) else None,
++            "methods": {mode: {**{key: [ids[row.job.key] for row in results] for key, results in lanes.items()},
+                                "completed_searches": 1, "minutes_to_three": None}
+-                        for mode, results in selected.items()},
++                        for mode, lanes in selected.items()},
+             "judgements": judgements,
+         }],
+     }
+--- a/career_discovery/sources.py
++++ b/career_discovery/sources.py
+@@ -2,26 +2,32 @@
+ 
+ import csv
+ from dataclasses import dataclass, replace
+-from datetime import datetime
++from datetime import datetime, timedelta
+ from html import unescape
+ from html.parser import HTMLParser
+ from io import StringIO
+ import json
+ import re
+ from pathlib import Path
+-from urllib.parse import parse_qs, urlsplit
+-
++from urllib.parse import parse_qs, urljoin, urlsplit
++
++from .analysis import normal
+ from .models import Job, canonical_url, employer_position_type, fingerprint
+ from .network import ATS_HOSTS, API_HOSTS, NetworkUnavailable
++from .storage import CACHE_WINDOW
+ from .storage_limits import read_bytes
+ 
+ ATS = {"greenhouse", "ashby"}
+ CSV_MAX_ROWS = 2000
+ CLOSED = re.compile(r"\b(?:no longer accepting applications|this (?:position|job|posting) "
+                     r"(?:has been filled|is closed|is no longer available|was not found)|"
+-                    r"(?:this (?:vacancy|listing) has (?:now )?expired)|"
++                    r"applications (?:are|have been) (?:now )?closed|"
++                    r"applications are no longer being accepted|"
++                    r"this (?:vacancy|listing|posting) has (?:now )?(?:expired|closed)|"
+                     r"(?:diese (?:stelle|position) ist|dieses stellenangebot ist) nicht mehr verfügbar)\b", re.I)
+ BLOCKED = re.compile(r"\b(?:verify you are human|access denied|enable javascript and cookies to continue)\b", re.I)
++APPLY_ACTION = re.compile(r"\b(?:apply for this (?:job|role|position)|apply now|submit application|"
++                          r"bewerbung einreichen|jetzt bewerben|für diese stelle bewerben)\b", re.I)
+ REMOTE_PATTERNS = {
+     "de": r"\b(?:Germany|Deutschland|DE)\b",
+     "eu": r"\bEU\b|\bEuropean Union\b",
+@@ -238,23 +244,129 @@
+     return list(result.values())
+ 
+ 
+-def verify_job(job, client, now: datetime, listed_at=None):
++def automatic_apply_url(job):
+     target = job.apply_url or job.url
++    if job.source not in ATS:
++        return None
+     parts = urlsplit(target)
+     id_present = job.external_id in parts.path.split("/") or job.external_id in parse_qs(parts.query).get("gh_jid", [])
+-    if job.source not in ATS or parts.hostname not in ATS_HOSTS - API_HOSTS or not id_present:
+-        return replace(job, availability="unverified", checked_at=None,
+-                       verification_reason="Open the employer link manually and record its status.")
++    if parts.hostname in ATS_HOSTS - API_HOSTS and id_present:
++        return target
++    return None
++
++
++class ApplicationPage(VisibleText):
++    HEADINGS = {"h1", "h2", "h3"}
++    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link",
++            "meta", "param", "source", "track", "wbr"}
++    FORM_ANCHORS = {"application", "application-form", "app"}
++    HIDDEN_STYLE = re.compile(r"\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b", re.I)
++
++    def __init__(self, job, target):
++        super().__init__()
++        self.job = job
++        self.target = target
++        self.hidden_tags = []
++        self.heading = None
++        self.control = None
++        self.title_matches = False
++        self.enabled_button = False
++        self.apply_link = False
++        self.named_forms = set()
++        self.linked_forms = set()
++
++    @property
++    def enabled_action(self):
++        return self.enabled_button or self.apply_link or bool(self.named_forms & self.linked_forms)
++
++    def handle_starttag(self, tag, attrs):
++        fields = dict(attrs)
++        hidden = (tag in self.EXCLUDED or "hidden" in fields or fields.get("aria-hidden") == "true"
++                  or self.HIDDEN_STYLE.search(fields.get("style") or ""))
++        if self.hidden_tags or hidden or (tag == "fieldset" and "disabled" in fields):
++            if tag not in self.VOID:
++                self.hidden_tags.append(tag)
++            return
++        super().handle_starttag(tag, attrs)
++        if tag in self.HEADINGS:
++            self.heading = (tag, [])
++        if tag == "form" and fields.get("id") in self.FORM_ANCHORS:
++            self.named_forms.add(fields["id"])
++        if (tag in {"a", "button"} and "disabled" not in fields
++                and fields.get("aria-disabled") != "true"):
++            self.control = (tag, fields.get("href"), [])
++
++    def handle_data(self, data):
++        if self.hidden_tags:
++            return
++        super().handle_data(data)
++        if self.heading is not None:
++            self.heading[1].append(data)
++        if self.control is not None:
++            self.control[2].append(data)
++
++    def handle_endtag(self, tag):
++        if self.hidden_tags:
++            if tag in self.hidden_tags:
++                while self.hidden_tags.pop() != tag:
++                    pass
++            return
++        super().handle_endtag(tag)
++        if self.heading is not None and self.heading[0] == tag:
++            self.title_matches |= normal(" ".join(self.heading[1])) == normal(self.job.title)
++            self.heading = None
++        if self.control is not None and self.control[0] == tag:
++            _, href, parts = self.control
++            label = " ".join(parts).strip()
++            if APPLY_ACTION.search(label) or label.casefold() == "apply":
++                if tag == "button":
++                    self.enabled_button = True
++                elif href and href.startswith("#"):
++                    self.linked_forms.add(href[1:])
++                else:
++                    self.apply_link |= self.same_application_link(href)
++            self.control = None
++
++    def same_application_link(self, href):
++        if not href:
++            return False
++        try:
++            resolved = urljoin(self.target, href)
++            address = canonical_url(resolved)
++        except ValueError:
++            return False
++        listing = canonical_url(self.job.url)
++        ashby_application = self.job.source == "ashby" and address == listing + "/application"
++        return address != self.target and (ashby_application or address == self.job.apply_url)
++
++
++def verify_job(job, client, now: datetime, listed_at=None):
++    if job.manually_checked and (job.availability == "closed" or (
++        job.availability == "verified" and job.checked_at
++        and timedelta(0) <= now - datetime.fromisoformat(job.checked_at) <= CACHE_WINDOW
++    )):
++        return job
++    target = automatic_apply_url(job)
++    if not target:
++        return job if job.manually_checked else replace(
++            job, availability="unverified", checked_at=None,
++            verification_reason="Open the employer link manually and record its status.",
++        )
+     try:
+         response = client.get(target, max_bytes=2 * 1024 * 1024)
+     except (NetworkUnavailable, ValueError) as exc:
+         return replace(job, availability="unverified", checked_at=now.isoformat(), verification_reason=str(exc))
+-    text = html_text(response.body.decode("utf-8", errors="replace"))
+-    if response.status in {404, 410} or (response.status == 200 and CLOSED.search(text)):
++    page = ApplicationPage(job, target)
++    page.feed(response.body.decode("utf-8", errors="replace"))
++    page.close()
++    visible = re.sub(r"\s+", " ", "".join(page.parts))
++    current_feed = listed_at is not None and timedelta(0) <= now - listed_at <= CACHE_WINDOW
++    exact_url = response.url == canonical_url(target)
++    corroborated = page.title_matches and page.enabled_action and not BLOCKED.search(visible)
++    if exact_url and (response.status in {404, 410} or (response.status == 200 and CLOSED.search(visible))):
+         status, reason = "closed", "The official page returned an explicit closure signal."
+-    elif (response.status == 200 and not BLOCKED.search(text)
+-          and response.url == canonical_url(target) and listed_at):
+-        status, reason = "verified", "Present in a recent employer feed and the specific application URL responded."
++    elif exact_url and response.status == 200 and current_feed and corroborated:
++        status, reason = "verified", "Recent employer listing and matching job page with an enabled application control."
+     else:
+         status, reason = "unverified", f"Could not corroborate a current apply path (HTTP {response.status})."
+     return replace(job, availability=status, checked_at=now.isoformat(), verification_reason=reason)
+--- a/career_discovery/sourcing.py
++++ b/career_discovery/sourcing.py
+@@ -2,13 +2,12 @@
+ 
+ from collections import Counter
+ from datetime import datetime, timedelta
+-import re
+ 
+ from .analysis import ANALYSER_VERSION, advert_language
+-from .matching import PARTIAL_FIT, possible_duplicates, run_match
++from .matching import PARTIAL_FIT, SENIOR_TITLE, possible_duplicates, run_match
+ from .models import fingerprint
+ from .network import PublicHTTP
+-from .sources import parse_board, verify_job
++from .sources import automatic_apply_url, parse_board, verify_job
+ from .storage import CACHE_WINDOW, profile_data, utcnow
+ 
+ MAX_BOARDS = 20
+@@ -58,21 +57,19 @@
+         if len(seen) >= max_checks:
+             break
+         job = row.job
+-        if job.source not in {"greenhouse", "ashby"} or job.key in seen or job.availability == "closed":
++        if job.key in seen or job.availability == "closed" or not automatic_apply_url(job):
+             continue
+         now = clock()
++        updated = verify_job(job, client, now, store.recent_listing(job, now))
++        if updated == job:
++            continue
+         seen.add(job.key)
+-        updated = verify_job(job, client, now, store.recent_listing(job, now))
+         if store.update_status(job, updated):
+             changed.append({"job_key": job.key, "availability": updated.availability,
+                             "reason": updated.verification_reason})
+     return {"vacancies": changed, "public_gets": client.calls, "paid_api_spend": 0}
+ 
+ 
+-SENIOR_TITLE = re.compile(
+-    r"\b(?:senior|sr\.?|staff (?:engineer|analyst)|principal|director|head of|vice president|"
+-    r"lead (?:data|engineer|analyst)|engineering manager|team lead|founding engineer|teamleitung)\b", re.I,
+-)
+ SUPPLY_POLICY_VERSION = 6
+ 
+ 
+--- a/career_discovery/storage.py
++++ b/career_discovery/storage.py
+@@ -10,7 +10,7 @@
+ from uuid import uuid4
+ 
+ from .analysis import ANALYSER_VERSION, analyse_description
+-from .models import Job, Profile, Requirement, fingerprint, identifier
++from .models import FEED_REMOVAL, Job, Profile, Requirement, fingerprint, identifier
+ from .storage_limits import read_bytes
+ 
+ CACHE_WINDOW = timedelta(hours=24)
+@@ -219,14 +219,19 @@
+                 old = Job.load(json.loads(row["payload"]))
+                 if row["key"] in current:
+                     fresh = current[row["key"]]
+-                    if (old.availability == "verified" and old.checked_at and same_listing(old, fresh)
+-                            and now - datetime.fromisoformat(old.checked_at) <= CACHE_WINDOW):
+-                        current[row["key"]] = replace(fresh, availability="verified", checked_at=old.checked_at,
++                    closed_page = (old.availability == "closed" and old.verification_reason != FEED_REMOVAL
++                                   and (old.url, old.apply_url) == (fresh.url, fresh.apply_url))
++                    verified_recently = (old.availability == "verified" and old.checked_at
++                                         and timedelta(0) <= now - datetime.fromisoformat(old.checked_at) <= CACHE_WINDOW
++                                         and same_listing(old, fresh))
++                    if closed_page or verified_recently:
++                        current[row["key"]] = replace(fresh, availability=old.availability, checked_at=old.checked_at,
+                                                       verification_reason=old.verification_reason)
++                elif old.availability == "closed" and old.verification_reason != FEED_REMOVAL:
++                    self._put_job(db, old)
+                 else:
+                     self._put_job(db, replace(
+-                        old, availability="closed", checked_at=observed_at,
+-                        verification_reason="No longer present in the last complete successful employer snapshot.",
++                        old, availability="closed", checked_at=observed_at, verification_reason=FEED_REMOVAL,
+                     ))
+             for job in current.values():
+                 self._put_job(db, job, listed_at=observed_at)
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -64,6 +64,15 @@
+         self.assertTrue(any(item["evidence"]["locator"].startswith("DOCX paragraph")
+                             for item in result["evidence_links"]))
+         self.assertFalse(output["jobs"]["baseline"]["actionable"])
++        packet = self.tmp / "packet"
++        self.cli("pilot-pack", "--profile", "alexa", "--participant", "p01",
++                 "--output-dir", str(packet), "--full-corpus")
++        review = json.loads((packet / "review-deck.json").read_bytes())
++        key = packet / "scoring-key.json"
++        self.assertEqual(review["vacancies"][0]["link"], url)
++        metrics = json.loads(self.cli("evaluate", str(key)))
++        self.assertFalse(metrics["participants"][0]["complete_corpus_relevance_labels"])
++        self.assertIsNone(metrics["methods"]["task"]["precision"]["rate"])
+         self.cli("feedback", "--profile", "alexa", "--job", url, "--relevance", "yes",
+                  "--would-consider", "yes", "--new-to-me", "yes")
+         export = self.tmp / "export.json"
+--- a/tests/test_evaluation.py
++++ b/tests/test_evaluation.py
+@@ -60,6 +60,33 @@
+         for result in key["participants"][0]["methods"].values():
+             self.assertTrue(set(result["actionable_ids"]).issubset(ids))
+ 
++    def test_deck_selects_baseline_review_results_even_without_actionable_jobs(self):
++        profiles, jobs, _ = load_demo()
++        catalogue = load_catalogue()
++        listing = replace(jobs[0], title="Data Analyst", availability="unverified",
++                          description="Responsibilities:\n- Develop a contact strategy.\n- Review inventory.")
++        row, = run_match([listing], profiles[0], catalogue)
++        self.assertGreater(row.baseline, 0)
++        self.assertEqual(row.fit, "insufficient evidence")
++        deck, key = prepare_review([row], "participant-01", audit_sample=0, full_corpus=True)
++        judgement, = deck["judgements"]
++        methods = key["participants"][0]["methods"]
++        self.assertEqual(methods["baseline"]["review_first_ids"], [judgement["job_id"]])
++        self.assertEqual(methods["task"]["review_first_ids"], [])
++        self.assertFalse(methods["baseline"]["actionable_ids"] or methods["task"]["actionable_ids"])
++        incomplete = pilot_metrics(key)["participants"][0]
++        baseline = incomplete["methods"]["baseline"]["verify_first"]
++        self.assertEqual(baseline["label_status"], "incomplete")
++        self.assertEqual(baseline["label_coverage"]["relevance"]["rate"], 0)
++        self.assertIsNone(baseline["precision"]["rate"])
++        self.assertIsNone(baseline["verified_link_rate"]["rate"])
++        self.assertIsNone(incomplete["methods"]["task"]["missed_relevant_ids"])
++        judgement.update(relevant=True, realistic=True, open=True, hard_conflict=False)
++        complete = pilot_metrics(key)["participants"][0]
++        self.assertTrue(complete["complete_corpus_relevance_labels"])
++        self.assertEqual(complete["methods"]["baseline"]["verify_first"]["relevant_coverage"]["rate"], 1)
++        self.assertEqual(complete["methods"]["task"]["missed_relevant_ids"], [judgement["job_id"]])
++
+     def test_human_evaluation_reports_numerators_and_uncompleted_sessions(self):
+         input_data = {"participants": [{
+             "id": "sample-01", "would_reuse": True, "ran_again": False, "onboarding_minutes": 7,
+--- a/tests/test_matching.py
++++ b/tests/test_matching.py
+@@ -220,6 +220,115 @@
+         similar = text.replace("Report progress using KPIs.", "Build weekly dashboards.")
+         self.assertEqual(self.assess("01", description=similar).fit, "insufficient evidence")
+ 
++    def test_mixed_language_conditions_and_additional_information(self):
++        duties = "Responsibilities:\n- Report KPIs.\n- Automate workflows.\n"
++        b2 = replace(self.graduate, languages={**self.graduate.languages, "de": "B2"})
++        for conditions in ("Requirements: German B2, C1 preferred.",
++                           "Requirements: German B2 (C1 preferred).",
++                           "Requirements: German B2 but C1 preferred.",
++                           "Requirements: German at least B2, with C1 preferred.",
++                           "Requirements: German B2 required, English fluency is a plus.",
++                           "Additional information:\nGerman B2 is required."):
++            text = duties + conditions
++            with self.subTest(conditions=conditions):
++                self.assertEqual(self.assess("01", description=text).lane, "excluded")
++                self.assertEqual(self.assess("01", b2, description=text).lane, "actionable")
++        preferred = self.assess("01", b2, description=duties + "Requirements: German B2, C1 preferred.")
++        self.assertIn(("C1 preferred.", "preferred"), [(item.text, item.kind) for item in preferred.requirements])
++        benefits = self.assess("01", description=duties + "Benefits:\nGerman B2 is required.")
++        self.assertEqual(benefits.lane, "actionable")
++        ambiguous = self.assess("01", description=duties + "Requirements: German B2 and English C1 preferred.")
++        self.assertEqual(ambiguous.lane, "verify first")
++
++    def test_scope_specific_tenure_and_shared_tool_duration(self):
++        months = {"relevant": 36, "sql": 0, "python": 26}
++        profile = replace(self.graduate, experience_months=months)
++        unknown = replace(profile, experience_months={"relevant": 36})
++        for statement in ("Minimum 2 years of experience with SQL.", "Minimum 2 years of SQL experience.",
++                          "2 years experience with SQL required"):
++            self.assertEqual(self.findings(statement, profile), [("experience", "conflict")])
++            self.assertEqual(self.findings(statement, unknown), [("experience", "unknown")])
++        self.assertEqual(self.findings("2 years of experience required.", profile), [("experience", "met")])
++        self.assertEqual(self.findings("2 years of work experience is a minimum.", profile), [("experience", "met")])
++        for cap in ("Up to", "At most", "A maximum of"):
++            for form in ("2 years of experience with SQL or Python", "2 years of SQL or Python experience"):
++                self.assertEqual(self.findings(f"{cap} {form}", profile), [("alternative paths", "unknown")])
++        self.assertEqual(self.findings("2 years of experience in payments.", profile), [("experience", "unknown")])
++        for statement in ("2 years of SQL or Python experience", "2 years of experience with SQL or Python"):
++            self.assertEqual(self.findings(statement, profile), [("alternative paths", "met")])
++            self.assertEqual(self.findings(statement, unknown), [("alternative paths", "unknown")])
++        self.assertEqual(self.findings("2 years of experience with SQL and Python", profile),
++                         [("experience", "conflict"), ("experience", "met")])
++
++    def test_clearance_and_other_residual_conditions_stay_in_review(self):
++        duties = "Responsibilities:\n- Build dashboards.\n- Automate workflows.\n"
++        conditions = ("Requirements: SQL required with active security clearance.",
++                      "Additional information:\nA security clearance is required.",
++                      "Additional information:\nA hydrogen handling certificate is required.")
++        for condition in conditions:
++            row = self.assess("01", description=duties + condition)
++            self.assertEqual(row.lane, "verify first")
++            requirement, = [req for req in row.requirements if req.kind == "mandatory"]
++            confirmed = replace(self.graduate, verified_requirements=[requirement.text])
++            self.assertEqual(self.assess("01", confirmed, description=duties + condition).lane, "actionable")
++        gap = replace(self.graduate, known_gaps=["security clearance"])
++        self.assertEqual(self.assess("01", gap, description=duties + conditions[0]).lane, "excluded")
++        self.assertEqual(self.assess("01", description=duties + "Requirements: SQL required.").lane, "actionable")
++        other = self.assess("01", description=duties + "Requirements: SQL required with weekend availability.")
++        self.assertEqual(other.lane, "verify first")
++
++    def test_direct_evidence_distinguishes_actor_and_hypothesis(self):
++        for statement in ("Supported colleagues who built dashboards and analyzed data.",
++                          "Observed several team members who then regularly ran controlled experiments.",
++                          "Reviewed QA results to decide whether to run experiments.",
++                          "I was asked to run experiments."):
++            self.assertFalse({"dashboard", "data_analysis", "experiment"} &
++                             set(task_tags(statement, self.catalogue, evidence=True)))
++        self.assertIn("dashboard", task_tags("Built dashboards with colleagues.", self.catalogue, evidence=True))
++        self.assertIn("experiment", task_tags("Ran experiments to test QA changes.", self.catalogue, evidence=True))
++        self.assertIn("troubleshoot", task_tags("Helped troubleshoot errors.", self.catalogue, evidence=True))
++        description = "Responsibilities:\n- Build dashboards.\n- Automate workflows."
++        for statement in ("Managed a vendor that built dashboards and automated workflows.",
++                          "Reviewed proposals to build dashboards and automate workflows."):
++            profile = replace(self.graduate, evidence=(Evidence("case", statement, "test", "cv_stated"),))
++            row = self.assess("01", profile, description=description)
++            self.assertEqual(row.fit, "insufficient evidence")
++            self.assertFalse(any(link.kind == "direct" for link in row.links))
++        for statement, tasks in [
++            ("Built dashboards with a vendor.", {"dashboard"}),
++            ("Reviewed proposals, then built dashboards and automated workflows.", {"dashboard", "automate"}),
++        ]:
++            self.assertEqual(set(task_tags(statement, self.catalogue, evidence=True)), tasks)
++
++    def test_coordinated_duties_and_repeated_task_coverage(self):
++        evidence = Evidence("data", "Analysed sales data.", "test", "cv_stated")
++        profile = replace(self.graduate, evidence=(*self.graduate.evidence, evidence))
++        other = "\n- Publish press releases.\n- Manage a calendar.\n- Lead recruiting.\n- Prepare travel."
++        combined = "Responsibilities:\n- Analyze sales data and build dashboards." + other
++        separate = combined.replace(" and build", ".\n- Build")
++        results = [self.assess("01", profile, description=text) for text in (combined, separate)]
++        self.assertEqual([row.fit for row in results], ["partial task evidence"] * 2)
++        self.assertEqual(results[0].rank, results[1].rank)
++        self.assertTrue(all(split_ranked([row], "task")["verify first"] for row in results))
++        repeated = self.assess("01", profile, description="Responsibilities:\n- Analyze sales data.\n- Analyze customer data.")
++        self.assertNotEqual(repeated.fit, "strong fit")
++        self.assertEqual(repeated.lane, "verify first")
++
++    def test_requirement_and_seniority_review_exits_in_both_modes(self):
++        text = "Responsibilities:\n- Build dashboards.\n- Automate workflows.\nYour profile:\nStrong communication skills."
++        title = "Lead Analyst"
++        profile = replace(self.graduate, search_titles=[title])
++        initial = self.assess("01", profile, title=title, description=text)
++        self.assertEqual(initial.lane, "verify first")
++        self.assertEqual({item.subject for item in initial.findings if item.state == "unknown"},
++                         {"requirement intent", "seniority and ownership"})
++        confirmed = replace(profile, verified_requirements=["Strong communication skills.",
++                            f"Seniority and ownership: {initial.job.url}"])
++        complete = self.assess("01", confirmed, title=title, description=text)
++        for mode in ("task", "baseline"):
++            self.assertEqual(split_ranked([initial], mode)["verify first"], [initial])
++            self.assertEqual(split_ranked([complete], mode)["actionable"], [complete])
++
+     def test_demo_compares_all_pairs(self):
+         result = demo_comparison(self.profiles, self.jobs.values(), self.labels, self.catalogue)
+         self.assertEqual(sum(row["judged_pairs"] for row in result["profiles"]), 96)
+--- a/tests/test_sourcing.py
++++ b/tests/test_sourcing.py
+@@ -2,15 +2,16 @@
+ from datetime import datetime, timedelta, timezone
+ import json
+ from pathlib import Path
++from types import SimpleNamespace
+ import tempfile
+ import unittest
+ 
+ from career_discovery.analysis import load_catalogue
+ from career_discovery.demo import load_demo
+-from career_discovery.models import Job
++from career_discovery.models import MANUAL_VERIFICATION_PREFIX, SUPERSEDED_AUTO_VERIFICATIONS, Job
+ from career_discovery.network import NetworkUnavailable, PublicHTTP, Response
+ from career_discovery.sources import Board, load_boards, load_csv, parse_board, verify_job
+-from career_discovery.sourcing import capture_supply, refresh_boards
++from career_discovery.sourcing import capture_supply, recheck_shortlist, refresh_boards
+ from career_discovery.storage import Storage
+ 
+ 
+@@ -18,6 +19,7 @@
+ ASHBY = Board("ashby", "fictional", "Fictional Works")
+ GH_LINK = "https://job-boards.greenhouse.io/fictional/jobs/42"
+ ASHBY_LINK = "https://jobs.ashbyhq.com/fictional/e427/"
++APPLICATION_HTML = b"<h1>Workflow Specialist</h1><button>Apply for this job</button>"
+ CENTRAL_TIME = datetime(2026, 11, 16, 12, tzinfo=timezone.utc)
+ 
+ 
+@@ -124,8 +126,25 @@
+             stub = Stub(Response(status, url, body))
+             return verify_job(job, stub, CENTRAL_TIME, listed).availability
+ 
+-        self.assertEqual(check(200, b"<h1>Apply for this job</h1>"), "verified")
+-        self.assertEqual(check(200, listed=None), "unverified")
++        self.assertEqual(check(200, APPLICATION_HTML), "verified")
++        self.assertEqual(check(200, APPLICATION_HTML, listed=None), "unverified")
++        self.assertEqual(check(200, APPLICATION_HTML, listed=CENTRAL_TIME - timedelta(days=2)), "unverified")
++        self.assertEqual(check(200, b"<h1>Employer home</h1>"), "unverified")
++        self.assertEqual(check(200, b"<h1>Employer home</h1><p>Workflow Specialist. Apply now.</p>"), "unverified")
++        self.assertEqual(check(200, b"<h1>Workflow Specialist</h1>"), "unverified")
++        for soft_failure in (
++            b"<p>Apply now</p>", b"<button disabled>Apply now</button>",
++            b'<button aria-disabled="true">Apply now</button>',
++            b'<div hidden><button>Apply now</button></div>',
++            b'<div style="display: none"><button>Apply now</button></div>',
++            b"<script><button>Apply now</button></script>",
++        ):
++            self.assertEqual(check(200, b"<h1>Workflow Specialist</h1>" + soft_failure), "unverified")
++        self.assertEqual(check(200, b"<template><h1>Workflow Specialist</h1></template>"
++                               b"<button>Apply now</button>"), "unverified")
++        self.assertEqual(check(200, b"<h1>Workflow Specialist</h1><p>Applications are closed.</p>"
++                               b"<button disabled>Apply now</button>"), "closed")
++        self.assertEqual(check(200, APPLICATION_HTML + b"<p>Applications are now closed.</p>"), "closed")
+         self.assertEqual(check(200, url="https://job-boards.greenhouse.io/fictional"), "unverified")
+         self.assertEqual(check(200, b"Verify you are human"), "unverified")
+         self.assertEqual(check(200, b"This job is no longer available"), "closed")
+@@ -137,7 +156,7 @@
+         job, = parse_board(json.dumps(greenhouse_payload()), GH)
+         path = "https://job-boards.eu.greenhouse.io/fictional/jobs/42"
+         regional = replace(job, url=path, apply_url=path)
+-        client = Stub(Response(200, path, b"<h1>Apply for this job</h1>"))
++        client = Stub(Response(200, path, APPLICATION_HTML))
+         self.assertEqual(verify_job(regional, client, CENTRAL_TIME, CENTRAL_TIME).availability, "verified")
+ 
+     def test_non_ats_import_is_never_auto_fetched(self):
+@@ -201,6 +220,37 @@
+         opened = replace(self.job, availability="verified", checked_at=self.now.isoformat())
+         self.assertFalse(self.store.update_status(self.job, opened))
+ 
++    def test_unsupported_links_do_not_erase_manual_checks_or_consume_cap(self):
++        custom = replace(self.job, external_id="new", url="https://employer.example/jobs/new",
++                         apply_url="https://employer.example/jobs/new")
++        self.store.record_board(GH, self.now, [custom, self.job])
++        manual = replace(custom, availability="verified", checked_at=self.now.isoformat(),
++                         verification_reason=f"{MANUAL_VERIFICATION_PREFIX}open.")
++        self.assertTrue(self.store.update_status(custom, manual))
++        client = Stub(Response(200, GH_LINK, APPLICATION_HTML))
++        rows = [SimpleNamespace(job=manual), SimpleNamespace(job=self.job)]
++        report = recheck_shortlist(self.store, rows, client=client, max_checks=1, clock=lambda: self.now)
++        self.assertEqual([row["job_key"] for row in report["vacancies"]], [self.job.key])
++        self.assertEqual(self.store.job(custom.key), manual)
++        self.assertEqual(self.store.job(self.job.key).availability, "verified")
++        self.assertEqual(verify_job(manual, client, self.now, self.now), manual)
++        self.assertEqual(client.calls, 1)
++
++    def test_manual_closure_survives_refresh_and_feed_reappearance(self):
++        self.store.record_board(GH, self.now, [self.job])
++        closed = replace(self.job, availability="closed", checked_at=self.now.isoformat(),
++                         verification_reason=f"{MANUAL_VERIFICATION_PREFIX}closed.")
++        self.assertTrue(self.store.update_status(self.job, closed))
++        for hours, jobs in ((1, [self.job]), (2, []), (25, [self.job])):
++            self.store.record_board(GH, self.now + timedelta(hours=hours), jobs)
++            self.assertEqual(self.store.job(self.job.key), closed)
++
++    def test_legacy_url_only_check_is_downgraded_when_loading(self):
++        for reason in SUPERSEDED_AUTO_VERIFICATIONS:
++            older = replace(self.job, availability="verified", checked_at=self.now.isoformat(),
++                            verification_reason=reason)
++            self.assertEqual(Job.load(json.loads(json.dumps(asdict(older)))).availability, "unverified")
++
+     def test_supply_requires_elapsed_time_and_comparable_boards_and_profiles(self):
+         profile = load_demo()[0][0]
+         catalogue = load_catalogue()

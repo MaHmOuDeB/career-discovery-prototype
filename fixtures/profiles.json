@@ -1,0 +1,52 @@
+[
+  {
+    "schema_version": 1, "id": "technical-graduate", "fictional": true, "confirmed": true,
+    "stage": "early career", "search_titles": ["Data Analyst", "Business Analyst"],
+    "keywords": ["sql", "python", "data analysis"], "locations": ["Berlin"], "remote_regions": ["DE"],
+    "employment": ["full_time", "trainee"], "languages": {"en": "C1", "de": "B1"},
+    "enrolled": false, "recent_graduate": true, "needs_sponsorship": null,
+    "experience_months": {"relevant": 12, "sql": 8},
+    "known_gaps": ["salesforce", "data pipeline"],
+    "interests": ["implementation", "reporting-automation"],
+    "evidence": [
+      {"id": "capstone-1", "text": "I helped troubleshoot student users' import errors and documented a workflow for submitting data.", "locator": "Fictional CV, page 1, project 1", "state": "cv_stated", "context": "capstone", "scope": "Supported a student project"},
+      {"id": "internship-1", "text": "Built dashboards and reported KPIs on ticket backlogs during an internship.", "locator": "Fictional CV, page 1, internship", "state": "cv_stated", "context": "internship"},
+      {"id": "internship-2", "text": "Used SQL to join tables and automated workflows to refresh a weekly spreadsheet.", "locator": "Fictional CV, page 1, internship", "state": "cv_stated", "context": "internship"},
+      {"id": "question-1", "text": "Enterprise systems administration", "locator": "Fictional profile review", "state": "inferred"}
+    ]
+  },
+  {
+    "schema_version": 1, "id": "teacher", "fictional": true, "confirmed": true,
+    "stage": "career change", "search_titles": ["Teacher", "Learning Specialist"],
+    "keywords": ["teaching", "curriculum", "Moodle"], "locations": ["Berlin"], "remote_regions": ["DE"],
+    "employment": ["full_time"], "languages": {"en": "C1", "de": "B2"},
+    "known_gaps": ["articulate storyline"], "interests": ["learning-design"],
+    "evidence": [
+      {"id": "school-1", "text": "Designed learning modules and designed assessments in Moodle, an LMS used by two classes.", "locator": "Fictional CV, page 1, teaching", "state": "cv_stated", "context": "paid work"},
+      {"id": "school-2", "text": "Delivered workshops to teachers and wrote guides for using the school's LMS.", "locator": "Fictional CV, page 1, project", "state": "cv_stated", "context": "paid work"}
+    ]
+  },
+  {
+    "schema_version": 1, "id": "logistics-professional", "fictional": true, "confirmed": true,
+    "stage": "career change", "search_titles": ["Logistics Coordinator", "Operations Analyst"],
+    "keywords": ["shipment", "inventory", "Excel"], "locations": ["Berlin", "Hamburg"], "remote_regions": ["DE"],
+    "employment": ["full_time"], "languages": {"en": "B2", "de": "B2"},
+    "known_gaps": ["sql"], "experience_months": {"relevant": 42}, "interests": ["operations-analytics"],
+    "evidence": [
+      {"id": "dispatch-1", "text": "Reconcile shipment exceptions by investigating discrepancies in an Excel spreadsheet.", "locator": "Fictional CV, page 1, dispatch", "state": "cv_stated", "context": "paid work"},
+      {"id": "dispatch-2", "text": "Reported KPIs to carriers and wrote runbooks for shipment exception handling.", "locator": "Fictional CV, page 1, dispatch", "state": "cv_stated", "context": "paid work"}
+    ]
+  },
+  {
+    "schema_version": 1, "id": "healthcare-professional", "fictional": true, "confirmed": true,
+    "stage": "career change", "search_titles": ["Nurse", "Clinical Assistant"],
+    "keywords": ["patient", "clinical", "EHR"], "locations": ["Berlin"], "remote_regions": ["DE"],
+    "employment": ["full_time"], "languages": {"en": "C1", "de": "B2"},
+    "known_gaps": ["german nursing licence"], "verified_requirements": ["EHR experience"],
+    "interests": ["health-tech"],
+    "evidence": [
+      {"id": "ward-1", "text": "Performed triage, recorded clinical documentation in an EHR, and delivered patient education.", "locator": "Fictional CV, page 1, ward", "state": "cv_stated", "context": "paid work", "scope": "Patient-facing"},
+      {"id": "ward-2", "text": "Delivered workshops for new staff on maintaining patient records.", "locator": "Fictional CV, page 2, ward", "state": "cv_stated", "context": "paid work"}
+    ]
+  }
+]

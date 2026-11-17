@@ -1,0 +1,74 @@
+[
+  {
+    "ats": "greenhouse",
+    "slug": "getyourguide",
+    "company": "GetYourGuide",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "n8n",
+    "company": "n8n",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "moss",
+    "company": "Moss",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "enpal",
+    "company": "Enpal",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "doctolib",
+    "company": "Doctolib",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "Clera",
+    "company": "Clera",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "Voize",
+    "company": "voize",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "kuro",
+    "company": "Kuro Technology",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "ashby",
+    "slug": "pennylane-de",
+    "company": "Pennylane",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "hellofresh",
+    "company": "HelloFresh",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "n26",
+    "company": "N26",
+    "local_use_reviewed": true
+  },
+  {
+    "ats": "greenhouse",
+    "slug": "commercetools",
+    "company": "commercetools",
+    "local_use_reviewed": true
+  }
+]
