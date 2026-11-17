@@ -119,3 +119,23 @@ class ParsingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SectionDutyTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.catalogue = load_catalogue()
+
+    def kinds(self, description):
+        return [row.kind for row in analyse_description(description, self.catalogue)]
+
+    def test_plain_german_and_english_duty_lines_under_a_duties_heading(self):
+        text = ("Deine Aufgaben\n"
+                "Du analysierst Kennzahlen im Vertrieb und leitest Maßnahmen ab\n"
+                "Sie erstellen wöchentliche Auswertungen für das Management\n"
+                "Erstellung von Reports für die Geschäftsführung\n"
+                "Pflege der Kundendaten im CRM\n"
+                "Produce the weekly pipeline overview for the sales lead\n"
+                "Du bist ein Organisationstalent\n"
+                "Sie verfügen über gute Excel-Kenntnisse")
+        self.assertEqual(self.kinds(text), ["core"] * 5)
