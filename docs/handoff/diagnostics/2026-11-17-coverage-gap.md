@@ -138,8 +138,8 @@ without any conflict finding; the 176 above used the earlier screen's definition
 
 Next step: a vocabulary lane for duty recognition on analyst, operations and support titles, plus CV-side wording
 for the three newer tasks. Use held-out labels written before any tuning, then re-run `scripts/profile-yield.py`.
-Whether the English-working-language and senior-title rules should stay strict for the plausible count is an owner
-decision on the supply policy (a policy change needs a new `SUPPLY_POLICY_VERSION` and a comparability check).
+The owner kept the English-working-language and senior-title rules strict: dropping both would give 4 (scenario) or
+8 (rich profile) plausible listings, still below the gate, and the regained ones are the risky cases.
 
 ## `ANALYSER_VERSION` 16 (17 November 2026)
 

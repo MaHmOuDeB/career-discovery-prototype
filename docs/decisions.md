@@ -85,3 +85,12 @@ regression. Richer fictional profiles (`fixtures/supply-profiles.json`, `scripts
 times the evidence leaves plausible listings at 2. Location supply, out-of-profile titles, duty recognition on
 relevant titles and the strict plausible rule limit yield, not profile evidence. The diagnosis has the table.
 
+## Plausible-count rules stay strict (owner, 17 November 2026)
+
+The owner chose to keep "English working language unconfirmed" and the senior-title signal in the plausible count:
+"Keep them strict". Measured on the frozen pool and clock, dropping both raised plausible listings from 2 to 4 for the
+scenario graduate and to 8 for the rich fictional profile, still below the gate of 10 listings from 3 employers. The
+regained listings were German-written ads with no stated language level and "Senior" titles. `SUPPLY_POLICY_VERSION`
+stays unchanged, so the 23 November repeat stays comparable. The rules affect only the supply count; the app still
+shows such jobs for review.
+

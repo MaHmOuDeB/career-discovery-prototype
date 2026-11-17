@@ -15,7 +15,7 @@ Newest entry first. Each entry: date, what is done, what is open, the exact next
 Open
 1. Vocabulary lane: duty recognition on analyst, operations and support titles; CV-side wording for `stakeholders`,
    `customer_communication`, `process_improvement`. New held-out labels before tuning.
-2. Owner decision: keep the strict "English working language unconfirmed" and senior-title rules in the plausible count?
+2. Decided by the owner: both plausible-count rules stay strict (see `docs/decisions.md`).
 3. Repeat supply observation on or after 23 November (`scripts/repeat-supply.sh`, from the baseline tag).
 4. Real starter runs on Windows and a fresh Mac; consented profiles and the human pilot.
 
