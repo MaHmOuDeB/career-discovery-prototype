@@ -58,6 +58,14 @@ search --verify adds up to ten bounded rechecks on supported ATS-hosted applicat
 
 Feedback records the candidate’s judgement and can include a correction. Export includes the profile and saved feedback. Deletion removes the local profile, its feedback and its search logs. Originals and any exports are controlled by the user. New files are private to the local account by file permissions. Put the state directory on local storage outside cloud sync. The prototype does not encrypt files itself.
 
+## Coverage diagnostics
+
+    python3 -B -m career_discovery --state .state/pilot coverage --at 2026-11-16T22:52:55+00:00
+    python3 -B -m career_discovery --state .state/pilot coverage --titles "analyst|operations|support"
+    python3 -B -m career_discovery heldout fixtures/heldout/vacancies.json
+
+coverage reports how many duty lines in the stored vacancies map to a catalogue task, how many listings yield no duties, and the fit, lane and review-reason counts for the fictional scenario. It prints aggregate counts only and writes nothing. heldout scores the analyser against 24 labelled fictional vacancies written independently of the matching vocabulary: duty detection, task precision and recall, qualification lines mistaken for duties, and mandatory language conflicts. Use the same pool and clock when you compare two versions of the analyser. Keep the held-out file out of any tuning work, otherwise its scores stop being an independent check.
+
 ## Optional semantic comparison
 
 A provider-independent proposal exchange works on the built-in fictional material. It prepares a bounded brief, checks exact excerpts and stable IDs, and requires human acceptance before a transfer link affects ranking. It does not call an API. See [Semantic experiment](docs/semantic.md).

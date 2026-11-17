@@ -9,7 +9,7 @@ import unicodedata
 
 from .models import Requirement, fingerprint
 
-ANALYSER_VERSION = 12
+ANALYSER_VERSION = 13
 
 SECTIONS = {
     "core": (
@@ -616,7 +616,7 @@ def advert_language(description):
     return primary if scores[primary] >= 5 and scores[primary] - scores[second] >= 3 else ""
 
 
-LANGUAGE_TERM = re.compile(r"\b(?:german|english|french|spanish|deutsch\w*|englisch\w*|"
+LANGUAGE_TERM = re.compile(r"\b(?:german|english|french|spanish|deutsch(?!land)\w*|englisch\w*|"
                            r"französisch\w*|spanisch\w*)\b", re.I)
 LANGUAGE_LEVEL = re.compile(r"\b[ABC][12]\b", re.I)
 PERSONAL_CONDITION = re.compile(r"\b(?:work authori[sz]ation|right to work|visa sponsorship|arbeitserlaubnis|"
@@ -628,7 +628,8 @@ CANDIDATE_CONDITION = re.compile(r"^(?:applicants?|candidates?|you|bewerber\w*)\
                                  r"\b(?:must|müssen|required)\b|"
                                  r"\b(?:is|are) (?:required|mandatory)\s*[.!]?$", re.I)
 LANGUAGE_QUALIFIER = re.compile(r"\b(?:fluency|fluent|proficien\w*|native|language skills|"
-                                r"sprachkenntnisse|verhandlungssicher\w*|fließend\w*)\b", re.I)
+                                r"sprachkenntnisse|verhandlungssicher\w*|fließend\w*|muttersprach\w*)\b", re.I)
+STRONG_LANGUAGE = re.compile(r"\b(?:fluen\w*|native|verhandlungssicher\w*|fließend\w*|muttersprach\w*)\b", re.I)
 # The second, comma-separated level is optional in phrases such as "German B2, C1 preferred".
 LANGUAGE_ASIDE = re.compile(
     r"(?:,\s*(?:with\s+)?|\s+\(\s*|\s+(?:but|however|aber|jedoch)\s+)"
@@ -681,6 +682,11 @@ def split_duties(text, catalogue, tags):
     return [(text, tags)]
 
 
+def plain_language_line(text, bullet, section):
+    return (not bullet and section in {"", "unclear"} and bool(LANGUAGE_TERM.search(text))
+            and bool(LANGUAGE_LEVEL.search(text) or STRONG_LANGUAGE.search(text)))
+
+
 def qualification_shaped(text):
     if QUALIFICATION_SHAPE.match(text):
         return True
@@ -730,8 +736,9 @@ def analyse_description(description, catalogue):
                 or ((explicit_language or PERSONAL_CONDITION.search(text))
                     and (MANDATORY.search(text) or OPTIONAL.search(text)))):
             continue
+        language_line = plain_language_line(text, bullet, section)
         if (not bullet and len(text.split()) < 3 and section not in {"mandatory", "preferred"}
-                and not (MANDATORY.search(text) or OPTIONAL.search(text))):
+                and not (MANDATORY.search(text) or OPTIONAL.search(text) or language_line)):
             continue
         tags = task_tags(text, catalogue)
         qualification = section == "core" and qualification_shaped(text)
@@ -749,6 +756,8 @@ def analyse_description(description, catalogue):
         elif (MANDATORY.search(text) or kind_section == "mandatory"
               or kind_section == "additional" and CANDIDATE_CONDITION.search(text)
               or kind_section == "unclear" and REQUIRED_QUALIFICATION.search(text)):
+            kind = "mandatory"
+        elif language_line:
             kind = "mandatory"
         elif kind_section == "unclear" and (qualification or bullet or re.match(r"^(?:experience|proficien|strong|knowledge|you have)", text, re.I)):
             kind = "unclear"

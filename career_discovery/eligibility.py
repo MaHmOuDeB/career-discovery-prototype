@@ -1,9 +1,10 @@
 """Resolve only explicit conditions against information supplied by the candidate."""
 
 from datetime import date
+from dataclasses import replace
 import re
 
-from .analysis import asserted_phrase, contains, normal
+from .analysis import OPTIONAL, asserted_phrase, contains, normal
 from .models import CEFR, Finding
 
 LANGUAGES = {
@@ -17,7 +18,8 @@ LANGUAGE_RE = re.compile(r"\b(?:" + "|".join(LANGUAGE_TERMS) + r")\b", re.I)
 LEVEL = re.compile(r"\b(?:[ABC][12])\b", re.I)
 LANGUAGE_SIGNAL = re.compile(r"\b(?:fluen\w*|native|proficien\w*|language|speaking|"
                              r"verhandlungssicher\w*|muttersprach\w*|fließend\w*|kenntnisse|"
-                             r"mindestens|level|niveau|sprachkenntnisse)\b", re.I)
+                             r"mindestens|level|niveau|sprachkenntnisse|\w+kenntnisse)\b", re.I)
+SHARED_LEVEL = re.compile(r"-\s*(?:und|and|oder|or|/)\s*", re.I)
 YEARS = re.compile(r"\b(\d{1,2})\s*\+?\s*(?:(?:-|–|to|bis)\s*\d{1,2}\s*)?"
                    r"(?:years?|jahre[n]?)\b\s*(?:of |an )?(.{0,55}?)"
                    r"\b(?:experienc\w*|erfahrung|berufserfahrung)\b", re.I)
@@ -40,8 +42,8 @@ AUTH = re.compile(r"\b(?:work authori[sz]ation|right to work|work permit|arbeits
                   r"arbeitsgenehmigung|visa sponsorship|sponsorship)\b", re.I)
 OPEN_POOL = re.compile(r"\b(?:talent pool|talent community|spontaneous application|"
                        r"general application|initiativbewerbung)\b", re.I)
-OR = re.compile(r"\s+(?:or|oder)\s+(?!(?:higher|above|better|more|greater|höher|mehr)\b)", re.I)
-AND = re.compile(r"\s+(?:and|und)\s+|,\s*(?=(?:German|English|Deutsch|Englisch)\b)", re.I)
+OR = re.compile(r"\s+(?:or|oder)\s+(?!(?:higher|above|better|more|greater|höher|mehr|besser|darüber)\b)", re.I)
+AND = re.compile(r"(?<!-)\s+(?:and|und)\s+|,\s*(?=(?:German|English|Deutsch|Englisch)\b)", re.I)
 COUNTRY_ALIASES = {
     "germany": "de", "deutschland": "de", "de": "de", "european union": "eu", "eu": "eu",
     "usa": "us", "united states": "us", "us": "us", "united kingdom": "gb", "uk": "gb",
@@ -101,6 +103,11 @@ def language_findings(text, profile):
             assigned[key] = min((earlier, level), key=lambda value: CEFR.index(value.group().upper()))
         else:
             assigned[key] = level
+    for first, second in zip(matches, matches[1:]):
+        # "Deutsch- und Englischkenntnisse C1": a shared level covers both coordinated languages.
+        if (first.start() not in assigned and second.start() in assigned
+                and SHARED_LEVEL.fullmatch(text[first.end():second.start()])):
+            assigned[first.start()] = assigned[second.start()]
     findings = []
     for language in matches:
         code = LANGUAGE_TERMS[language.group().casefold()]
@@ -218,6 +225,15 @@ def tenure_parts(text, catalogue):
     return text
 
 
+def unclear_language_findings(text, profile):
+    """An unclear line can still state a level. Optional wording keeps a mismatch open rather than excluding."""
+    findings = language_findings(text, profile)
+    if not OPTIONAL.search(text):
+        return findings
+    return [replace(item, state="unknown", reason=item.reason + " Optional wording makes the requirement unclear.")
+            if item.state == "conflict" else item for item in findings]
+
+
 def check_requirement(requirement, profile, catalogue):
     text = requirement.text
     if requirement.kind == "preferred":
@@ -227,7 +243,8 @@ def check_requirement(requirement, profile, catalogue):
         if confirmed:
             return (Finding("met", "confirmed requirement", text, "The candidate explicitly confirmed this line."),)
         return (Finding("unknown", "requirement intent", text,
-                        "Check the employer's intent. Record this clause in verified_requirements once resolved."),)
+                        "Check the employer's intent. Record this clause in verified_requirements once resolved."),
+                *unclear_language_findings(text, profile))
     alternatives = OR.split(tenure_parts(text, catalogue))
     groups = [tuple(found for part in AND.split(clause) for condition in REQUIRED_JOIN.split(part)
                     for found in clause_findings(condition, profile, catalogue))

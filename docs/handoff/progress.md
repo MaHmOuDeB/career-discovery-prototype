@@ -25,4 +25,9 @@ Step 2 and 3 done. Held-out baseline (tag `baseline-2026-11-17`, technical-gradu
 detected, task precision 0.857 (6 of 7), recall 0.054, 6 of 111 qualifications leak into duties, 9 of 17 mandatory
 language conflicts detected. Keep the held-out file out of every tuning brief; score it only at step 5.
 
-Next step: finish step 1, run `scripts/gates.sh`, commit, then start step 4.
+Step 1 done and committed (b0e4c77): 80 tests pass; zero-duty listings in the cached corpus fell from 333 to 253.
+Step 4 in progress: vocabulary in `analysis.py`/`catalog.json`, tests in `tests/test_vocabulary.py`, report in
+`diagnostics/lane4-vocabulary-report.md`, precision sample in `.state/vocab/sample.json` for a blind check. If this
+step was interrupted, check `git status`; uncommitted vocabulary edits are the work in progress.
+
+Next step (old note): finish step 1, run `scripts/gates.sh`, commit, then start step 4.
