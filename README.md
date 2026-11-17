@@ -4,6 +4,26 @@ A local CLI that compares a traditional title and keyword search with matching b
 
 Status: research prototype. It runs offline on your own machine, uses fictional profiles and vacancies for its tests and demo, and has no hosted service. Results and open questions are in the [project handoff](docs/handoff/README.md).
 
+## Use the app (no terminal needed)
+
+The app runs on your own computer and opens in your web browser. It never uploads your CV. The only internet use is when you press the button to read the public job boards.
+
+1. Open the project page on GitHub, click the green **Code** button, then **Download ZIP**.
+2. Unzip the file (double-click it on a Mac; right-click and **Extract All** on Windows).
+3. Open the unzipped folder and double-click the starter: `Start Career Discovery.command` on a Mac, `Start Career Discovery.bat` on Windows, `start.sh` on Linux.
+4. If your computer warns you the first time:
+   - Mac, "cannot be opened": right-click the starter, choose **Open**, then **Open** again. Or go to System Settings, Privacy & Security, and click **Open Anyway**.
+   - Windows, SmartScreen: click **More info**, then **Run anyway**.
+5. Wait a moment. Your browser opens with the app.
+
+What happens the first time: if your computer has no Python 3.12 or newer, the starter explains what it will install and waits for you to press Enter. It installs the free uv tool from astral.sh, which downloads Python into your own user folder. It needs no admin rights. Later starts take a few seconds.
+
+To stop: click the app's Close button, or close the starter window.
+
+Where your data lives: macOS `~/Library/Application Support/Career Discovery`, Windows `%LOCALAPPDATA%\Career Discovery`, Linux `~/.local/share/career-discovery`. The app's Your data page can export or delete it.
+
+To remove everything: delete the unzipped folder and the data folder above. If the starter installed uv, also delete the `uv` and `uvx` files in `~/.local/bin` (Windows: `%USERPROFILE%\.local\bin`) and uv's Python downloads (run `uv cache clean` first; they are in `~/.local/share/uv` on Mac and Linux, `%APPDATA%\uv` on Windows).
+
 For Claude Code, see [CLAUDE.md](CLAUDE.md); for Codex and other agents, [AGENTS.md](AGENTS.md).
 
 ## Quick start
