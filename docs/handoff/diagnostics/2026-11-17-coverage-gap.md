@@ -72,7 +72,7 @@ are now recognised and unmatched, so the lower fit is the honest one.
 
 The owner chose to add catalogue tasks. New: `process_improvement`, `quality_compliance`, `customer_communication`,
 with five transfers; `stakeholders` reworded and given wider wording. Definitions: `docs/task-definitions.md`.
-Same pool, clock and profile. "v14" is commit 1daba14.
+Same pool, clock and profile. "v14" is commit b31bf4f.
 
 | Measure | v14 | v15 |
 | --- | --- | --- |

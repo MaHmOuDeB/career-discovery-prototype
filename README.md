@@ -2,13 +2,16 @@
 
 A local CLI that compares a traditional title and keyword search with matching based on evidence for the work. It is configured for an initial Germany pilot.
 
-For Claude Code, see [CLAUDE.md](CLAUDE.md) and the [project handoff](docs/handoff/README.md).
+Status: research prototype. It runs offline on your own machine, uses fictional profiles and vacancies for its tests and demo, and has no hosted service. Results and open questions are in the [project handoff](docs/handoff/README.md).
+
+For Claude Code, see [CLAUDE.md](CLAUDE.md); for Codex and other agents, [AGENTS.md](AGENTS.md).
 
 ## Quick start
 
 Use Python 3.14 on macOS or Linux. The standard library handles the matcher, storage, CSV and DOCX. A local Poppler installation with pdftotext is needed for PDF imports. The demo and offline tests require no network or credentials.
 
-    cd "/path/to/Career Discovery Prototype"
+    git clone https://github.com/MaHmOuDeB/career-discovery-prototype.git
+    cd career-discovery-prototype
     python3 -B -m career_discovery demo
     python3 -B -m career_discovery demo --profile technical-graduate --details
     python3 -B -m unittest discover -s tests -v
@@ -75,3 +78,7 @@ A provider-independent proposal exchange works on the built-in fictional materia
 - [Pilot protocol](docs/pilot.md) covers the frozen-corpus comparison, anonymous reviewer deck, vacancy supply gate, ratings and volunteer sessions.
 - [Decision log](docs/decisions.md) records reuse, implementation choices and limitations.
 - career_discovery/catalog.json contains a small editable task map and directional transfer rules. Pass the --catalogue option before your command to try a separate version.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

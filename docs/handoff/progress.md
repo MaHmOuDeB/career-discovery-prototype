@@ -2,6 +2,17 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-17 — published as a public GitHub repo (owner's decision)
+
+- Public at https://github.com/MaHmOuDeB/career-discovery-prototype, branch `master` and tag `baseline-2026-11-17`.
+- Before the first push the author email was rewritten to the GitHub noreply address, so every commit hash changed.
+  Old to new: b3520ec→d42206b (baseline tag), a55047a→a1f6f2e, b0e4c77→f7185a1, 8aa8a20→5e8e210, ff13b96→9e23968,
+  1daba14→b31bf4f (v14), 8dde75e→fe95b2b (v15). A local backup bundle of the old history is in `.state/backup/`.
+- MIT licence added. A pre-publication scan found no CV content, contact data, secrets or copied ad text in tracked files.
+- Agents still do not push; the owner pushes or authorises each push.
+
+Next step: unchanged (repeat supply on or after 23 November; owner decision on richer profiles).
+
 ## 2026-11-17 — catalogue lane complete (owner chose "add catalogue tasks")
 
 Done
