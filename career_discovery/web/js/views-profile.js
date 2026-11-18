@@ -211,14 +211,18 @@ export async function jobsView(root, ctx) {
     poll().catch((err) => { live.replaceChildren(errorBox(err)); expanded.disabled = go.disabled = false; });
   };
   const csv = h('input', { type: 'file', accept: '.csv', id: 'f-csv', class: 'sr' });
+  const keep = h('input', { type: 'checkbox', id: 'csv-keep-description' });
   csv.addEventListener('change', async () => {
     if (!csv.files[0]) return;
     const form = new FormData();
     form.append('file', csv.files[0]);
+    if (keep.checked) form.append('keep_description', 'true');
+    csv.value = '';
     try { const r = await api('POST', '/api/jobs/import', form); importBox.replaceChildren(notice('info', t('jobs.imported', { n: r.imported }))); await stats(); } catch (err) { importBox.replaceChildren(errorBox(err)); }
   });
   root.append(summary, h('div', { class: 'row' }, go, expanded), live,
     h('details', {}, h('summary', { text: t('jobs.csvTitle') }), h('p', { class: 'hint', text: t('jobs.csvHint') }),
+      h('label', { class: 'check' }, keep, t('jobs.csvKeep')),
       button(t('jobs.csvChoose'), () => csv.click()), csv, importBox),
     h('div', { class: 'row' }, next));
   if (ctx.state.refresh?.status === 'running') { expanded.disabled = go.disabled = true; poll().catch(() => { expanded.disabled = go.disabled = false; }); }

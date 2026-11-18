@@ -2,6 +2,10 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-18 — local Chrome walkthrough
+
+Used a disposable Chrome profile and temporary app state with a fictional candidate and 24 demo jobs. Reproduced a keyboard skip link changing the current page, misleading literal-match wording for translated searches, and a missing CSV option for retaining vacancy descriptions. Fixed all three and clarified the two employer-board choices in English and German. Re-tested Find jobs keyboard focus, description retention off by default, opt-in CSV import, German duty search finding the imported English listing, saving a match to Applications, and switching the interface to German. All four gates passed (198 tests).
+
 ## 2026-11-18 — expanded web search and bilingual duty filter
 
 - Find jobs offers an optional 15-board search. The extra Ashby boards are Trading 212, bunch and Upvest, selected for Berlin operations roles. Complete refreshes with a confirmed profile report fresh additional employer vacancy URLs and plausible matches. Incomplete comparisons are indicated.

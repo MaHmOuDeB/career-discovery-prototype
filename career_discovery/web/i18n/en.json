@@ -173,7 +173,7 @@
   "jobs.csvTitle": "Add jobs from a CSV file (optional)",
   "jobs.done": "Done. Your matches use these jobs.",
   "jobs.imported": "{n} jobs were added.",
-  "jobs.intro": "One button reads the job boards of 12 reviewed employers. Only the boards are contacted, nothing about you is sent.",
+  "jobs.intro": "Choose the standard 12 employer boards or include three more employers with operations roles in Berlin. Your profile stays on this computer.",
   "jobs.lastFetched": "Last read on {date}.",
   "jobs.next": "Continue to your matches",
   "jobs.none": "No jobs yet. Read the job boards to get started.",
@@ -216,10 +216,10 @@
   "matches.familiesHint": "Backed by what you have done.",
   "matches.familiesTitle": "Roles you might not have searched for",
   "matches.filterClear": "Clear the filter",
-  "matches.filterCount": "{n} jobs mention “{q}”.",
+  "matches.filterCount": "{n} jobs match your search for “{q}”.",
   "matches.filterLabel": "Search title, company, place or duties in English or German",
-  "matches.filterNone": "No job mentions “{q}”. Try another word or clear the filter.",
-  "matches.filterOne": "1 job mentions “{q}”.",
+  "matches.filterNone": "No displayed jobs match “{q}”. Try another term or clear the filter.",
+  "matches.filterOne": "1 job matches your search for “{q}”.",
   "matches.filterPlaceholder": "For example analyst or Berlin",
   "matches.hideLang": "Hide jobs my languages rule out",
   "matches.intro": "Jobs whose work matches what you have done, with the reasons. Check the ad before you apply.",
@@ -263,5 +263,6 @@
   "jobs.expanded": "Search 12 boards plus 3 Berlin operations employers",
   "jobs.trialYield": "Additional distinct listings: {unique}. Plausible for your profile: {plausible}.",
   "jobs.trialIncomplete": "Some boards were unavailable. A complete comparison needs all boards.",
-  "jobs.trialProfile": "Confirm your profile and repeat the search to compare suitability."
+  "jobs.trialProfile": "Confirm your profile and repeat the search to compare suitability.",
+  "jobs.csvKeep": "Keep job descriptions from this file for duty matching. Only select this for text you may store locally."
 }

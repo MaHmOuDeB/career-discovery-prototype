@@ -92,6 +92,10 @@ async function start() {
   applyStatic(document);
   markLanguage();
   setupLanguageSwitch();
+  document.querySelector('.skip').addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('main').focus();
+  });
   window.addEventListener('hashchange', render);
   window.addEventListener('unhandledrejection', () => say(t('error.generic')));
   render();

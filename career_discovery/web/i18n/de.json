@@ -173,7 +173,7 @@
   "jobs.csvTitle": "Jobs aus einer CSV-Datei hinzufügen (optional)",
   "jobs.done": "Fertig. Deine Treffer nutzen diese Jobs.",
   "jobs.imported": "{n} Jobs wurden hinzugefügt.",
-  "jobs.intro": "Ein Klick liest die Jobseiten von 12 geprüften Arbeitgebern. Es werden nur diese Seiten abgerufen, nichts über dich wird gesendet.",
+  "jobs.intro": "Wähle die 12 regulären Arbeitgeber oder suche zusätzlich bei drei Arbeitgebern mit Operations-Stellen in Berlin. Dein Profil bleibt auf diesem Computer.",
   "jobs.lastFetched": "Zuletzt gelesen am {date}.",
   "jobs.next": "Weiter zu deinen Treffern",
   "jobs.none": "Noch keine Jobs. Lies die Jobseiten, um zu beginnen.",
@@ -216,10 +216,10 @@
   "matches.familiesHint": "Gestützt auf das, was du gemacht hast.",
   "matches.familiesTitle": "Rollen, nach denen du vielleicht noch nicht gesucht hast",
   "matches.filterClear": "Filter löschen",
-  "matches.filterCount": "{n} Jobs enthalten „{q}“.",
+  "matches.filterCount": "{n} Stellen passen zu deiner Suche nach „{q}“.",
   "matches.filterLabel": "Titel, Firma, Ort oder Aufgaben auf Deutsch oder Englisch suchen",
-  "matches.filterNone": "Kein Job enthält „{q}“. Versuch ein anderes Wort oder lösch den Filter.",
-  "matches.filterOne": "1 Job enthält „{q}“.",
+  "matches.filterNone": "Keine der angezeigten Stellen passt zu „{q}“. Versuche einen anderen Suchbegriff oder lösche den Filter.",
+  "matches.filterOne": "Eine Stelle passt zu deiner Suche nach „{q}“.",
   "matches.filterPlaceholder": "Zum Beispiel Analyst oder Berlin",
   "matches.hideLang": "Jobs ausblenden, die meine Sprachen ausschließen",
   "matches.intro": "Jobs, deren Aufgaben zu dem passen, was du gemacht hast, mit Begründung. Prüfe die Anzeige, bevor du dich bewirbst.",
@@ -263,5 +263,6 @@
   "jobs.expanded": "12 Jobbörsen und 3 weitere Arbeitgeber mit Operations-Stellen in Berlin durchsuchen",
   "jobs.trialYield": "Zusätzliche unterschiedliche Stellen: {unique}. Für dein Profil plausibel: {plausible}.",
   "jobs.trialIncomplete": "Einige Jobbörsen waren nicht verfügbar. Für den Vergleich werden alle benötigt.",
-  "jobs.trialProfile": "Bestätige dein Profil und wiederhole die Suche für den Vergleich."
+  "jobs.trialProfile": "Bestätige dein Profil und wiederhole die Suche für den Vergleich.",
+  "jobs.csvKeep": "Stellenbeschreibungen aus dieser Datei für den Aufgabenabgleich speichern. Nur auswählen, wenn du die Texte lokal speichern darfst."
 }
