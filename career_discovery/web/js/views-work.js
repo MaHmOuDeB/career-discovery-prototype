@@ -42,18 +42,21 @@ export async function matchesView(root, ctx) {
   root.append(lookingFor(ctx), h('div', { class: 'card' },
     h('div', { class: 'field' }, h('label', { for: 'f-filter', text: t('matches.filterLabel') }), filter),
     toggle('hide', t('matches.hideLang')), toggle('title', t('matches.compareTitle')), toggle('excluded', t('matches.showExcluded'))), results);
+  let request = 0;
   const load = async () => {
+    const sequence = ++request;
     results.replaceChildren(h('p', { role: 'status', text: t('matches.loading') }), h('progress', { 'aria-label': t('matches.loading') }));
     const words = filter.value.trim();
     opts.q = words;
-    const query = `mode=${opts.title ? 'both' : 'task'}&limit=50&excluded=${opts.excluded ? 1 : 0}&hide_language_conflicts=${opts.hide ? 1 : 0}`
+    const query = `mode=${opts.title ? 'both' : 'task'}&limit=50&duties=1&excluded=${opts.excluded ? 1 : 0}&hide_language_conflicts=${opts.hide ? 1 : 0}`
       + (words ? `&q=${encodeURIComponent(words)}` : '');
     try {
       const data = await api('GET', `/api/matches?${query}`);
-      if (!ctx.alive()) return;
+      if (!ctx.alive() || sequence !== request) return;
       results.replaceChildren(...drawResults(data, ctx, opts));
       api('POST', '/api/summary/seen', {}).catch(() => {});
     } catch (err) {
+      if (!ctx.alive() || sequence !== request) return;
       results.replaceChildren(err.code === 'profile_not_ready'
         ? emptyState(t('matches.needProfileTitle'), err.message, button(t('matches.toDetails'), () => ctx.go('details'), 'primary'))
         : errorBox(err));
@@ -182,6 +185,7 @@ function cardView(card, lane, ctx, titleOnly = false) {
     const children = [
       h('p', {}, h('span', { class: `badge ${FIT_KIND[lane] ?? 'warn'}`, text: (FIT[lane] || FIT['verify first'])() })),
       h('h3', { text: card.title }),
+      ...(card.search_excerpt ? [h('blockquote', { text: card.search_excerpt })] : []),
       h('p', { class: 'muted', text: [card.company, where].filter(Boolean).join(' · ') }),
       h('ul', { class: 'facts' }, h('li', { text: card.salary || t('card.payNotStated') }),
         h('li', { text: card.deadline ? t('card.deadline', { date: fmtDate(card.deadline) }) : t('card.noDeadline') }), h('li', { text: ageText(card.age_days) })),

@@ -193,21 +193,22 @@ export async function jobsView(root, ctx) {
     next.hidden = !jobs.stored;
     go.className = jobs.stored ? 'btn' : 'btn primary';
   };
-  const go = button(t('jobs.refresh'), (e) => start(e.currentTarget), 'primary');
+  const go = button(t('jobs.refresh'), () => start(), 'primary');
+  const expanded = button(t('jobs.expanded'), () => start('expanded'));
   const next = button(t('jobs.next'), () => ctx.go('matches'), 'primary', { hidden: true });
   await stats();
   const poll = async () => {
     while (ctx.alive()) {
       const st = await api('GET', '/api/jobs/refresh');
       drawProgress(live, st);
-      if (st.status !== 'running') { go.disabled = false; await stats(); return; }
+      if (st.status !== 'running') { expanded.disabled = go.disabled = false; await stats(); return; }
       await new Promise((r) => setTimeout(r, 1000));
     }
   };
-  const start = async (btn) => {
-    try { await api('POST', '/api/jobs/refresh', {}); } catch (err) { if (err.code !== 'refresh_running') { live.replaceChildren(errorBox(err)); return; } }
-    btn.disabled = true;
-    poll().catch((err) => { live.replaceChildren(errorBox(err)); go.disabled = false; });
+  const start = async (group = 'standard') => {
+    try { await api('POST', '/api/jobs/refresh', { group }); } catch (err) { if (err.code !== 'refresh_running') { live.replaceChildren(errorBox(err)); return; } }
+    expanded.disabled = go.disabled = true;
+    poll().catch((err) => { live.replaceChildren(errorBox(err)); expanded.disabled = go.disabled = false; });
   };
   const csv = h('input', { type: 'file', accept: '.csv', id: 'f-csv', class: 'sr' });
   csv.addEventListener('change', async () => {
@@ -216,11 +217,11 @@ export async function jobsView(root, ctx) {
     form.append('file', csv.files[0]);
     try { const r = await api('POST', '/api/jobs/import', form); importBox.replaceChildren(notice('info', t('jobs.imported', { n: r.imported }))); await stats(); } catch (err) { importBox.replaceChildren(errorBox(err)); }
   });
-  root.append(summary, h('div', { class: 'row' }, go), live,
+  root.append(summary, h('div', { class: 'row' }, go, expanded), live,
     h('details', {}, h('summary', { text: t('jobs.csvTitle') }), h('p', { class: 'hint', text: t('jobs.csvHint') }),
       button(t('jobs.csvChoose'), () => csv.click()), csv, importBox),
     h('div', { class: 'row' }, next));
-  if (ctx.state.refresh?.status === 'running') { go.disabled = true; poll().catch(() => { go.disabled = false; }); }
+  if (ctx.state.refresh?.status === 'running') { expanded.disabled = go.disabled = true; poll().catch(() => { expanded.disabled = go.disabled = false; }); }
   else if (ctx.state.refresh?.status === 'done') drawProgress(live, ctx.state.refresh);
 }
 
@@ -233,6 +234,9 @@ function drawProgress(live, st) {
     parts.push(notice('danger', st.error || t('error.generic')));
   } else if (st.status === 'done') {
     parts.push(notice('info', t('jobs.done')));
+    if (st.trial) parts.push(notice('info', t('jobs.trialYield', st.trial)));
+    else if (st.comparison_complete === false) parts.push(notice('warn', t('jobs.trialIncomplete')));
+    else if (st.comparison_complete) parts.push(notice('info', t('jobs.trialProfile')));
   }
   if (st.boards?.length) {
     parts.push(h('ul', { class: 'list' }, st.boards.map((b) => h('li', {}, h('b', { text: b.company || b.board }), ': ',

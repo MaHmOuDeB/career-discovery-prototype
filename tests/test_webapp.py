@@ -323,6 +323,14 @@ class MatchTests(AppTestCase):
         self.assertEqual(everything["counts"], found["counts"])
         self.assertEqual(self.call("GET", "/api/matches?q=" + "x" * 101)[0], 422)
 
+    def test_german_duty_query_quotes_english_vacancy(self):
+        self.seed([Job.load(SALARY_JOB)])
+        self.make_profile()
+        result = self.ok("GET", "/api/matches?duties=1&excluded=1&q=Dashboards%20erstellen")
+        records = [card for lane in result["results"]["task"].values() for card in lane]
+        self.assertEqual(len(records), 1)
+        self.assertIn("Build dashboards", records[0]["search_excerpt"])
+
     def test_extra_fields_pay_age_deadline_languages_and_wording(self):
         self.seed([Job.load(SALARY_JOB)])
         self.make_profile()

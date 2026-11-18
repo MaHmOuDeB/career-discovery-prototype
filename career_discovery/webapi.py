@@ -13,7 +13,7 @@ import tempfile
 import threading
 
 from . import __version__
-from .analysis import ANALYSER_VERSION, load_catalogue
+from .analysis import ANALYSER_VERSION, load_catalogue, task_tags
 from .documents import EXTRACTOR_VERSION, MAX_DOCUMENT, extract_profile, remove_stale_temp_copies
 from .eligibility import language_findings
 from .matching import as_record, berlin_date, discover_families, run_match, split_ranked
@@ -21,7 +21,7 @@ from .models import Evidence, Profile, clean_text
 from .network import PublicHTTP
 from .rendering import safe_text
 from .salary import extract_salary
-from .sourcing import refresh_boards
+from .sourcing import refresh_boards, supply_review_reasons
 from .sources import load_boards, load_csv, verify_job
 from .storage import Storage, profile_data, utcnow
 from .tracker import FieldErrors, applications_csv, normalise_application
@@ -48,6 +48,32 @@ def mentions(job, terms):
     """Every filter word appears in the title, company or places (case-insensitive)."""
     text = " ".join([job.title, job.company, *job.locations, *job.remote_regions]).casefold()
     return all(term in text for term in terms)
+
+def duty_excerpt(requirements, terms, tasks):
+    if terms:
+        for req in requirements:
+            if req.kind == "core" and (all(word in req.text.casefold() for word in terms)
+                                       or tasks and tasks.issubset(req.tasks)):
+                return req.text
+    return None
+
+
+def trial_yield(rows, trial_boards, base_boards):
+    baseline = set()
+    extra = {}
+    for row in rows:
+        job = row.job
+        if job.availability == "closed":
+            continue
+        board = (job.source, job.board)
+        key = job.url
+        if board in base_boards:
+            baseline.add(key)
+        elif board in trial_boards:
+            extra[key] = extra.get(key, False) or not supply_review_reasons(row)
+    unique = extra.keys() - baseline
+    return {"unique": len(unique), "plausible": sum(extra[key] for key in unique)}
+
 
 class ApiError(Exception):
     def __init__(self, status, code, message, fields=None):
@@ -212,15 +238,19 @@ class AppService:
 
     # jobs --------------------------------------------------------------------------------------
 
-    def start_refresh(self):
+    def start_refresh(self, group="standard"):
         boards = load_boards(self.boards_path)
+        if group not in ("standard", "expanded"):
+            raise ValueError("Unknown board group.")
+        if group == "expanded":
+            boards += load_boards(Path(__file__).with_name("trial-boards.json"))
         with self.refresh_lock:
             if self.refresh["status"] == "running":
                 raise ApiError(409, "refresh_running", "The job boards are already being read.")
             self.refresh = {"status": "running", "total": len(boards), "done": 0, "boards": [],
                             "started_at": self.clock().isoformat(), "finished_at": None, "public_gets": 0,
                             "error": None}
-            self.refresh_thread = threading.Thread(target=self._refresh_worker, args=(boards,), daemon=True)
+            self.refresh_thread = threading.Thread(target=self._refresh_worker, args=(boards, group), daemon=True)
             self.refresh_thread.start()
             return self.refresh_status()
 
@@ -228,13 +258,34 @@ class AppService:
         with self.refresh_lock:
             self.refresh.update(boards=results, done=len(results), total=total)
 
-    def _refresh_worker(self, boards):
+    def _refresh_worker(self, boards, group):
         outcome = {}
         try:
             with self.open_store() as store:
                 client = self.client_factory()
                 report = refresh_boards(store, boards, client=client, clock=self.clock, progress=self._progress)
-            outcome = {"status": "done", "boards": report["boards"], "public_gets": report["public_gets"]}
+                measurement = {}
+                if group == "expanded":
+                    complete = all(b["status"] in {"refreshed", "cached"} for b in report["boards"])
+                    measurement["comparison_complete"] = complete
+                    if complete:
+                        try:
+                            profile = self._profile(store, confirmed=True)
+                        except ApiError:
+                            profile = None
+                        if profile:
+                            base = {(b.ats, b.slug) for b in load_boards(self.boards_path)}
+                            trial = {(b.ats, b.slug) for b in boards} - base
+                            now = self.clock()
+                            jobs = [j for j in store.jobs() if j.availability != "closed"
+                                    and (j.source, j.board) in base | trial and store.recent_listing(j, now)]
+                            # Compare sources before the matcher collapses identical employer URLs.
+                            base_urls = {j.url for j in jobs if (j.source, j.board) in base}
+                            additional = [j for j in jobs if j.url not in base_urls]
+                            rows = run_match(additional, profile, self.catalogue, now,
+                                             analyser=lambda job: store.analyse(job, self.catalogue))
+                            measurement["trial"] = trial_yield(rows, trial, base)
+            outcome = {"status": "done", "boards": report["boards"], "public_gets": report["public_gets"], **measurement}
         except ValueError as exc:
             outcome = {"status": "error", "error": safe_text(str(exc))}
         except Exception:
@@ -282,7 +333,7 @@ class AppService:
         )
         return record
 
-    def matches(self, mode="task", limit=50, excluded=False, hide_language_conflicts=False, query=""):
+    def matches(self, mode="task", limit=50, excluded=False, hide_language_conflicts=False, query="", duties=False):
         if mode not in MODES:
             raise ApiError(422, "invalid", "The mode must be task, title or both.")
         if not 1 <= limit <= 200:
@@ -291,6 +342,9 @@ class AppService:
         if len(query) > 100:
             raise ApiError(422, "invalid", "Use at most 100 characters in the filter.")
         terms = query.casefold().split()
+        tasks = set(task_tags(query, self.catalogue)) if duties and terms else set()
+        if query.casefold() == "kundenprobleme lösen":
+            tasks.add("troubleshoot")
         now = self.clock()
         with self.open_store() as store:
             profile = self._profile(store, confirmed=True)
@@ -304,8 +358,15 @@ class AppService:
                 for lane in LANES:
                     if lane == "excluded" and not excluded:
                         continue
-                    records = [self._decorate(row, profile, name == "title", berlin_date(now), applications)
-                               for row in ranked[lane] if mentions(row.job, terms)]
+                    records = []
+                    for row in ranked[lane]:
+                        excerpt = duty_excerpt(row.requirements, terms, tasks) if duties else None
+                        if excerpt is None and not mentions(row.job, terms):
+                            continue
+                        record = self._decorate(row, profile, name == "title", berlin_date(now), applications)
+                        if excerpt:
+                            record["search_excerpt"] = excerpt
+                        records.append(record)
                     if hide_language_conflicts:
                         records = [r for r in records if not r["language_summary"]["conflict"]]
                     shown[name][lane] = len(records)

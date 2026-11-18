@@ -2,6 +2,13 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-18 — expanded web search and bilingual duty filter
+
+- Find jobs offers an optional 15-board search. The extra Ashby boards are Trading 212, bunch and Upvest, selected for Berlin operations roles. Complete refreshes with a confirmed profile report fresh additional employer vacancy URLs and plausible matches. Incomplete comparisons are indicated.
+- Trial-only public feed check against a temporary copy of the original fictional pool: 67 + 28 + 26 = 121 additional vacancy URLs. Zero passed the existing plausible screen for the fictional scenario graduate. This used the earlier baseline snapshot and is separate from the 23 November observation.
+- Matches searches title, company, location and recognised core duties, with English/German task recognition and a quoted duty. Search operates within the existing fit lanes. All four gates passed (198 tests).
+- Proposed follow-up: compare shortlisted roles by confirmed CV evidence, unresolved mandatory requirements and closing date.
+
 ## 2026-11-18 — B1 complete at the v16 stop point
 
 - Reproduced all four offline gates on `837167f` (194 tests). After B1 all four passed with 195 tests on Python 3.14.7. Web-app tests required local loopback access.

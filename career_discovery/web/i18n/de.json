@@ -217,7 +217,7 @@
   "matches.familiesTitle": "Rollen, nach denen du vielleicht noch nicht gesucht hast",
   "matches.filterClear": "Filter löschen",
   "matches.filterCount": "{n} Jobs enthalten „{q}“.",
-  "matches.filterLabel": "Nach Wörtern in Jobtitel, Firma oder Ort filtern",
+  "matches.filterLabel": "Titel, Firma, Ort oder Aufgaben auf Deutsch oder Englisch suchen",
   "matches.filterNone": "Kein Job enthält „{q}“. Versuch ein anderes Wort oder lösch den Filter.",
   "matches.filterOne": "1 Job enthält „{q}“.",
   "matches.filterPlaceholder": "Zum Beispiel Analyst oder Berlin",
@@ -259,5 +259,9 @@
   "step.matches": "Deine Treffer",
   "work.hybrid": "Hybrid",
   "work.onsite": "Vor Ort",
-  "work.remote": "Remote"
+  "work.remote": "Remote",
+  "jobs.expanded": "12 Jobbörsen und 3 weitere Arbeitgeber mit Operations-Stellen in Berlin durchsuchen",
+  "jobs.trialYield": "Zusätzliche unterschiedliche Stellen: {unique}. Für dein Profil plausibel: {plausible}.",
+  "jobs.trialIncomplete": "Einige Jobbörsen waren nicht verfügbar. Für den Vergleich werden alle benötigt.",
+  "jobs.trialProfile": "Bestätige dein Profil und wiederhole die Suche für den Vergleich."
 }

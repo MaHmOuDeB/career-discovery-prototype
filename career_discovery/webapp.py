@@ -108,7 +108,7 @@ def routes(service):
         except ValueError:
             raise ApiError(422, "invalid", "The limit must be a whole number.") from None
         return service.matches(first(r.query, "mode", "task"), limit, flag(r.query, "excluded"),
-                               flag(r.query, "hide_language_conflicts"), first(r.query, "q", ""))
+                               flag(r.query, "hide_language_conflicts"), first(r.query, "q", ""), flag(r.query, "duties"))
 
     def export(r):
         text = json.dumps(service.export_all(), ensure_ascii=False, indent=2)
@@ -129,7 +129,7 @@ def routes(service):
         ("POST", "/api/profile/evidence"): lambda r: service.change_evidence(r.body),
         ("POST", "/api/profile/confirm"): lambda r: service.confirm_profile(),
         ("GET", "/api/families"): lambda r: service.families(),
-        ("POST", "/api/jobs/refresh"): lambda r: service.start_refresh(),
+        ("POST", "/api/jobs/refresh"): lambda r: service.start_refresh(r.body.get("group", "standard")),
         ("GET", "/api/jobs/refresh"): lambda r: service.refresh_status(),
         ("POST", "/api/jobs/import"): import_jobs,
         ("GET", "/api/matches"): matches,

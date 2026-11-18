@@ -217,7 +217,7 @@
   "matches.familiesTitle": "Roles you might not have searched for",
   "matches.filterClear": "Clear the filter",
   "matches.filterCount": "{n} jobs mention “{q}”.",
-  "matches.filterLabel": "Filter by words in the job title, company or place",
+  "matches.filterLabel": "Search title, company, place or duties in English or German",
   "matches.filterNone": "No job mentions “{q}”. Try another word or clear the filter.",
   "matches.filterOne": "1 job mentions “{q}”.",
   "matches.filterPlaceholder": "For example analyst or Berlin",
@@ -259,5 +259,9 @@
   "step.matches": "Your matches",
   "work.hybrid": "Hybrid",
   "work.onsite": "On site",
-  "work.remote": "Remote"
+  "work.remote": "Remote",
+  "jobs.expanded": "Search 12 boards plus 3 Berlin operations employers",
+  "jobs.trialYield": "Additional distinct listings: {unique}. Plausible for your profile: {plausible}.",
+  "jobs.trialIncomplete": "Some boards were unavailable. A complete comparison needs all boards.",
+  "jobs.trialProfile": "Confirm your profile and repeat the search to compare suitability."
 }
