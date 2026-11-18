@@ -2,6 +2,7 @@
 
 This file is the entry point for any coding agent. Claude Code reads CLAUDE.md, which says the same things.
 
+0. Codex: the current task list and briefs are in [docs/handoff/codex-handover.md](docs/handoff/codex-handover.md).
 1. Read [CLAUDE.md](CLAUDE.md) for the project, baseline commands, code map and working rules. They apply in full.
 2. Read [docs/handoff/progress.md](docs/handoff/progress.md) next. It records the current lane, what is done, what is
    in progress and the exact next step. Resume from there; do not restart finished work.

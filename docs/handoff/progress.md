@@ -2,6 +2,12 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-18 — hand-over to Codex
+
+- `docs/handoff/codex-handover.md` holds the open work as briefs: A (repeat supply check on or after 23 November),
+  B (vocabulary lane, held-out v3 labels before tuning), C and D (owner and volunteers only).
+- Starting commit `579d9ef`, 194 tests, `ANALYSER_VERSION` 16, catalogue 4. Next step: task B1.
+
 ## 2026-11-17 — owner feedback from trying the app
 
 - Matches page: a "What you are looking for" bar (places, remote countries, kinds of work, languages) with a Change
