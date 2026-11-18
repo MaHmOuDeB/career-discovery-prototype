@@ -1,0 +1,908 @@
+[
+  {
+    "id": "b1-01",
+    "company": "Marsh Bell Ferries",
+    "title": "Passenger Operations Analyst",
+    "language": "en",
+    "description": "What you will do\nCompare the quay's boarding tally with the bookings ledger and follow up on missing crossings.\nKeep the Sunday loading figures in Google Sheets for the harbour office.\nAgree the next week's relief sailings with the pier supervisors.\nWhat you bring\nYou must be comfortable working an early shift twice a week.\nExperience in a seasonal transport business would help.",
+    "duties": [
+      {
+        "text": "Compare the quay's boarding tally with the bookings ledger and follow up on missing crossings.",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Keep the Sunday loading figures in Google Sheets for the harbour office.",
+        "tasks": [
+          "spreadsheets",
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Agree the next week's relief sailings with the pier supervisors.",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You must be comfortable working an early shift twice a week.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience in a seasonal transport business would help.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-02",
+    "company": "Juniper Reed Audio",
+    "title": "Studio Support Coordinator",
+    "language": "en",
+    "description": "What you will do\nSort incoming studio faults by how soon the room is due back on air.\nTrace intermittent headphone failures and restore the affected listening stations.\nCall the producer who reported the fault to explain when the room can be used again.\nWhat you bring\nPrevious experience in a recording studio is essential.\nA background in live radio would be welcome.",
+    "duties": [
+      {
+        "text": "Sort incoming studio faults by how soon the room is due back on air.",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Trace intermittent headphone failures and restore the affected listening stations.",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Call the producer who reported the fault to explain when the room can be used again.",
+        "tasks": [
+          "customer_communication"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Previous experience in a recording studio is essential.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "A background in live radio would be welcome.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-03",
+    "company": "Hearthstone Orchard Goods",
+    "title": "Wholesale Operations Assistant",
+    "language": "en",
+    "description": "What you will do\nSet reorder quantities for jars and lids ahead of the autumn packing run.\nInspect filled cases against our packing specification before dispatch.\nLift finished cartons onto the outbound pallet.\nWhat you bring\nThe role requires availability on Saturday mornings.\nWe would welcome a current forklift certificate.",
+    "duties": [
+      {
+        "text": "Set reorder quantities for jars and lids ahead of the autumn packing run.",
+        "tasks": [
+          "inventory"
+        ]
+      },
+      {
+        "text": "Inspect filled cases against our packing specification before dispatch.",
+        "tasks": [
+          "quality_compliance"
+        ]
+      },
+      {
+        "text": "Lift finished cartons onto the outbound pallet.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "The role requires availability on Saturday mornings.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "We would welcome a current forklift certificate.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-04",
+    "company": "Lattice Finch Learning",
+    "title": "Learning Operations Specialist",
+    "language": "en",
+    "description": "What you will do\nPublish the induction modules in our learning management system and assign them to each intake.\nBuild short, branching practice exercises in Articulate Storyline.\nLead a fortnightly drop-in class for new facilitators.\nWhat you bring\nYou need experience delivering adult education.\nFamiliarity with accessible course design is an advantage.",
+    "duties": [
+      {
+        "text": "Publish the induction modules in our learning management system and assign them to each intake.",
+        "tasks": [
+          "lms"
+        ]
+      },
+      {
+        "text": "Build short, branching practice exercises in Articulate Storyline.",
+        "tasks": [
+          "develop_learning",
+          "authoring"
+        ]
+      },
+      {
+        "text": "Lead a fortnightly drop-in class for new facilitators.",
+        "tasks": [
+          "teach"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You need experience delivering adult education.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Familiarity with accessible course design is an advantage.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-05",
+    "company": "Pale Timber Mutual",
+    "title": "Claims Data Analyst",
+    "language": "en",
+    "description": "What you will do\nWrite SQL to pull closed storm claims from our policy database.\nStudy the claims history to find which types of repair most often need a second visit.\nBuild a Power BI view that lets area managers see repeat visits by repair type.\nWhat you bring\nWe require experience handling insurance claims data.\nA statistics qualification would be useful.",
+    "duties": [
+      {
+        "text": "Write SQL to pull closed storm claims from our policy database.",
+        "tasks": [
+          "sql"
+        ]
+      },
+      {
+        "text": "Study the claims history to find which types of repair most often need a second visit.",
+        "tasks": [
+          "data_analysis"
+        ]
+      },
+      {
+        "text": "Build a Power BI view that lets area managers see repeat visits by repair type.",
+        "tasks": [
+          "dashboard"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "We require experience handling insurance claims data.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "A statistics qualification would be useful.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-06",
+    "company": "Estuary Ink Works",
+    "title": "Client Setup Analyst",
+    "language": "en",
+    "description": "What you will do\nHelp new print buyers place their first proof order and sign off their first job.\nSet up each buyer's approval permissions and invoice preferences in the ordering portal.\nRecord the setup procedure in the team's desk guide.\nWhat you bring\nProfessional English at C1 level is required.\nKnowledge of print production would be useful.",
+    "duties": [
+      {
+        "text": "Help new print buyers place their first proof order and sign off their first job.",
+        "tasks": [
+          "onboard"
+        ]
+      },
+      {
+        "text": "Set up each buyer's approval permissions and invoice preferences in the ordering portal.",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Record the setup procedure in the team's desk guide.",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Professional English at C1 level is required.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Knowledge of print production would be useful.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "en",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "b1-07",
+    "company": "Little Slate Couriers",
+    "title": "Delivery Performance Analyst",
+    "language": "en",
+    "description": "What you will do\nDefine a fair measure of missed collections that accounts for customer cancellations.\nTrack that measure each Friday for the depot leads.\nTrial two reminder formats with randomly assigned senders and compare the results.\nWhat you bring\nYou need practical experience designing controlled trials.\nPrevious work with delivery networks would help.",
+    "duties": [
+      {
+        "text": "Define a fair measure of missed collections that accounts for customer cancellations.",
+        "tasks": [
+          "metric_design"
+        ]
+      },
+      {
+        "text": "Track that measure each Friday for the depot leads.",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Trial two reminder formats with randomly assigned senders and compare the results.",
+        "tasks": [
+          "experiment"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You need practical experience designing controlled trials.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Previous work with delivery networks would help.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-08",
+    "company": "Cairn Ribbon Instruments",
+    "title": "Service Desk Analyst",
+    "language": "en",
+    "description": "What you will do\nAssess incoming repair requests and assign urgent cases to the duty engineer.\nWork through instrument start-up errors until the technician can resume testing.\nRevise the fault-finding notes when a repair reveals a missing step.\nWhat you bring\nYou must have worked with electronic test equipment.\nReading German at B2 level would be an advantage.",
+    "duties": [
+      {
+        "text": "Assess incoming repair requests and assign urgent cases to the duty engineer.",
+        "tasks": [
+          "triage"
+        ]
+      },
+      {
+        "text": "Work through instrument start-up errors until the technician can resume testing.",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Revise the fault-finding notes when a repair reveals a missing step.",
+        "tasks": [
+          "document_process"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You must have worked with electronic test equipment.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Reading German at B2 level would be an advantage.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "b1-09",
+    "company": "Willow Mile Kitchens",
+    "title": "Production Systems Analyst",
+    "language": "en",
+    "description": "What you will do\nConnect the recipe planner to the batch printer through its order interface.\nSet up an automatic alert when a batch label is overdue.\nBenchmark the revised label system against the current one using a fixed order list.\nWhat you bring\nExperience supporting production software is required.\nFood manufacturing experience is desirable.",
+    "duties": [
+      {
+        "text": "Connect the recipe planner to the batch printer through its order interface.",
+        "tasks": [
+          "systems_integration"
+        ]
+      },
+      {
+        "text": "Set up an automatic alert when a batch label is overdue.",
+        "tasks": [
+          "automate"
+        ]
+      },
+      {
+        "text": "Benchmark the revised label system against the current one using a fixed order list.",
+        "tasks": [
+          "evaluate_systems"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Experience supporting production software is required.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Food manufacturing experience is desirable.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-10",
+    "company": "Pebble Loom Collective",
+    "title": "Hand Weaver",
+    "language": "en",
+    "description": "What you will do\nDress the loom with the warp specified for each commission.\nWeave sample lengths in plain weave and twill.\nFinish the edges of completed scarves by hand.\nWhat you bring\nWe require a portfolio of handwoven pieces.\nExperience weaving with nettle fibre would be welcome.",
+    "duties": [
+      {
+        "text": "Dress the loom with the warp specified for each commission.",
+        "tasks": []
+      },
+      {
+        "text": "Weave sample lengths in plain weave and twill.",
+        "tasks": []
+      },
+      {
+        "text": "Finish the edges of completed scarves by hand.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "We require a portfolio of handwoven pieces.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience weaving with nettle fibre would be welcome.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-11",
+    "company": "Alder Reach Ensemble",
+    "title": "Rehearsal Pianist",
+    "language": "en",
+    "description": "What you will do\nAccompany the chorus during evening rehearsals.\nPlay individual voice parts at the conductor's requested tempo.\nTranspose short passages at sight for visiting soloists.\nWhat you bring\nStrong sight-reading skills are essential.\nExperience with early opera would be an asset.",
+    "duties": [
+      {
+        "text": "Accompany the chorus during evening rehearsals.",
+        "tasks": []
+      },
+      {
+        "text": "Play individual voice parts at the conductor's requested tempo.",
+        "tasks": []
+      },
+      {
+        "text": "Transpose short passages at sight for visiting soloists.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Strong sight-reading skills are essential.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Experience with early opera would be an asset.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-12",
+    "company": "Red Sedge Estates",
+    "title": "Grounds Gardener",
+    "language": "en",
+    "description": "What you will do\nPrune the espaliered pear trees in the walled garden.\nCut the meadow paths and clear clippings before opening time.\nPlant out the spring bulbs in the visitor courtyard.\nWhat you bring\nYou must be able to work outdoors throughout the season.\nA horticulture certificate is desirable.",
+    "duties": [
+      {
+        "text": "Prune the espaliered pear trees in the walled garden.",
+        "tasks": []
+      },
+      {
+        "text": "Cut the meadow paths and clear clippings before opening time.",
+        "tasks": []
+      },
+      {
+        "text": "Plant out the spring bulbs in the visitor courtyard.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "You must be able to work outdoors throughout the season.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "A horticulture certificate is desirable.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-13",
+    "company": "Weserbogen Leihwerk",
+    "title": "Analyst für Verleihprozesse",
+    "language": "de",
+    "description": "Ihre Aufgaben\nGleichen Sie Rückgabebelege mit den gebuchten Mietenden ab und klären Sie Abweichungen.\nUntersuchen Sie anhand der Buchungsverläufe, wann sich Rückgaben besonders häufig verzögern.\nVereinfachen Sie die Rücknahme, indem Sie doppelte Erfassungsschritte streichen.\nIhr Profil\nBerufserfahrung in der gewerblichen Vermietung ist erforderlich.\nKenntnisse in Excel sind von Vorteil.",
+    "duties": [
+      {
+        "text": "Gleichen Sie Rückgabebelege mit den gebuchten Mietenden ab und klären Sie Abweichungen.",
+        "tasks": [
+          "reconcile"
+        ]
+      },
+      {
+        "text": "Untersuchen Sie anhand der Buchungsverläufe, wann sich Rückgaben besonders häufig verzögern.",
+        "tasks": [
+          "data_analysis"
+        ]
+      },
+      {
+        "text": "Vereinfachen Sie die Rücknahme, indem Sie doppelte Erfassungsschritte streichen.",
+        "tasks": [
+          "process_improvement"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Berufserfahrung in der gewerblichen Vermietung ist erforderlich.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kenntnisse in Excel sind von Vorteil.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-14",
+    "company": "Kieselstern Verlag",
+    "title": "Mitarbeiterin im Abonnentenservice",
+    "language": "de",
+    "description": "Ihre Aufgaben\nBeantworten Sie Fragen unserer Leser zu Bezugsdauer und Zustellterminen.\nGehen Sie fehlgeschlagenen Adressänderungen auf den Grund und beheben Sie die Fehler.\nLeiten Sie dringende Reklamationen an die zuständige Gebietsleitung weiter.\nIhr Profil\nFür den telefonischen Kontakt setzen wir Deutsch auf Niveau C1 voraus.\nErfahrung mit Zeitschriftenabonnements ist willkommen.",
+    "duties": [
+      {
+        "text": "Beantworten Sie Fragen unserer Leser zu Bezugsdauer und Zustellterminen.",
+        "tasks": [
+          "customer_communication"
+        ]
+      },
+      {
+        "text": "Gehen Sie fehlgeschlagenen Adressänderungen auf den Grund und beheben Sie die Fehler.",
+        "tasks": [
+          "troubleshoot"
+        ]
+      },
+      {
+        "text": "Leiten Sie dringende Reklamationen an die zuständige Gebietsleitung weiter.",
+        "tasks": [
+          "triage"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Für den telefonischen Kontakt setzen wir Deutsch auf Niveau C1 voraus.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung mit Zeitschriftenabonnements ist willkommen.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "C1",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "b1-15",
+    "company": "Fliederkai Handel",
+    "title": "Sachbearbeiter Lagersteuerung",
+    "language": "de",
+    "description": "Ihre Aufgaben\nPlanen Sie die Nachbestellung von Behältern anhand der verfügbaren Bestände.\nPflegen Sie die Schichtplanung der Warenannahme in Excel.\nStimmen Sie die Anlieferfenster mit Einkauf und Spedition ab.\nIhr Profil\nErfahrung in einem Umschlaglager ist Voraussetzung.\nEin Staplerschein wäre hilfreich.",
+    "duties": [
+      {
+        "text": "Planen Sie die Nachbestellung von Behältern anhand der verfügbaren Bestände.",
+        "tasks": [
+          "inventory"
+        ]
+      },
+      {
+        "text": "Pflegen Sie die Schichtplanung der Warenannahme in Excel.",
+        "tasks": [
+          "spreadsheets"
+        ]
+      },
+      {
+        "text": "Stimmen Sie die Anlieferfenster mit Einkauf und Spedition ab.",
+        "tasks": [
+          "stakeholders"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Erfahrung in einem Umschlaglager ist Voraussetzung.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Ein Staplerschein wäre hilfreich.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-16",
+    "company": "Riedlicht Pflegeverbund",
+    "title": "Fachkraft für Dokumentationssupport",
+    "language": "de",
+    "description": "Ihre Aufgaben\nErgänzen Sie die elektronischen Pflegeakten um die freigegebenen Verlaufsberichte.\nPrüfen Sie stichprobenartig, ob die Pflegeeinträge unseren Dokumentationsvorgaben entsprechen.\nSchulen Sie neue Pflegekräfte im Umgang mit der digitalen Patientenakte.\nIhr Profil\nEine abgeschlossene Ausbildung in der Pflege setzen wir voraus.\nErfahrung in der ambulanten Versorgung ist wünschenswert.",
+    "duties": [
+      {
+        "text": "Ergänzen Sie die elektronischen Pflegeakten um die freigegebenen Verlaufsberichte.",
+        "tasks": [
+          "clinical_documentation"
+        ]
+      },
+      {
+        "text": "Prüfen Sie stichprobenartig, ob die Pflegeeinträge unseren Dokumentationsvorgaben entsprechen.",
+        "tasks": [
+          "clinical_documentation",
+          "quality_compliance"
+        ]
+      },
+      {
+        "text": "Schulen Sie neue Pflegekräfte im Umgang mit der digitalen Patientenakte.",
+        "tasks": [
+          "teach",
+          "clinical_documentation"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Eine abgeschlossene Ausbildung in der Pflege setzen wir voraus.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung in der ambulanten Versorgung ist wünschenswert.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-17",
+    "company": "Nordfaden Kontor",
+    "title": "Datenanalyst Einkauf",
+    "language": "de",
+    "description": "Ihre Aufgaben\nEntwickeln Sie eine tägliche Ladestrecke für die Lieferpositionsdaten aus den Regionalbüros.\nBereinigen Sie doppelte Artikelnummern und fehlerhafte Mengeneinheiten im Datenbestand.\nErmitteln Sie per SQL die Liefermengen je Warengruppe.\nIhr Profil\nSie benötigen praktische Erfahrung mit relationalen Datenbanken.\nKenntnisse des Textilhandels sind ein Plus.",
+    "duties": [
+      {
+        "text": "Entwickeln Sie eine tägliche Ladestrecke für die Lieferpositionsdaten aus den Regionalbüros.",
+        "tasks": [
+          "pipeline"
+        ]
+      },
+      {
+        "text": "Bereinigen Sie doppelte Artikelnummern und fehlerhafte Mengeneinheiten im Datenbestand.",
+        "tasks": [
+          "data_quality"
+        ]
+      },
+      {
+        "text": "Ermitteln Sie per SQL die Liefermengen je Warengruppe.",
+        "tasks": [
+          "sql"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Sie benötigen praktische Erfahrung mit relationalen Datenbanken.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kenntnisse des Textilhandels sind ein Plus.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-18",
+    "company": "Birkental Messdienst",
+    "title": "Koordinatorin Kundenbetrieb",
+    "language": "de",
+    "description": "Ihre Aufgaben\nBegleiten Sie neue Hausverwaltungen bis zur ersten erfolgreichen Verbrauchsablesung.\nRichten Sie die Benutzerrollen für jede Liegenschaft in unserem Portal ein.\nErläutern Sie den Verwaltern am Telefon, wo sie ältere Ablesebelege finden.\nIhr Profil\nDeutsch auf Niveau B2 ist erforderlich.\nErfahrung in der Wohnungswirtschaft ist gern gesehen.",
+    "duties": [
+      {
+        "text": "Begleiten Sie neue Hausverwaltungen bis zur ersten erfolgreichen Verbrauchsablesung.",
+        "tasks": [
+          "onboard"
+        ]
+      },
+      {
+        "text": "Richten Sie die Benutzerrollen für jede Liegenschaft in unserem Portal ein.",
+        "tasks": [
+          "configuration"
+        ]
+      },
+      {
+        "text": "Erläutern Sie den Verwaltern am Telefon, wo sie ältere Ablesebelege finden.",
+        "tasks": [
+          "customer_communication"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Deutsch auf Niveau B2 ist erforderlich.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung in der Wohnungswirtschaft ist gern gesehen.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "de",
+        "level": "B2",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "b1-19",
+    "company": "Kupferbogen Bildung",
+    "title": "Referent Lernbetrieb",
+    "language": "de",
+    "description": "Ihre Aufgaben\nEntwerfen Sie Übungsfälle, mit denen angehende Disponenten Verspätungen durchspielen können.\nHinterlegen Sie Lernpfade und Teilnahmefristen auf unserer Lernplattform.\nHalten Sie Präsenzseminare für die Ausbilder der Regionalstellen.\nIhr Profil\nSie brauchen Erfahrung in der Erwachsenenbildung.\nKenntnisse im Nahverkehr wären hilfreich.",
+    "duties": [
+      {
+        "text": "Entwerfen Sie Übungsfälle, mit denen angehende Disponenten Verspätungen durchspielen können.",
+        "tasks": [
+          "develop_learning"
+        ]
+      },
+      {
+        "text": "Hinterlegen Sie Lernpfade und Teilnahmefristen auf unserer Lernplattform.",
+        "tasks": [
+          "lms"
+        ]
+      },
+      {
+        "text": "Halten Sie Präsenzseminare für die Ausbilder der Regionalstellen.",
+        "tasks": [
+          "teach"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Sie brauchen Erfahrung in der Erwachsenenbildung.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Kenntnisse im Nahverkehr wären hilfreich.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-20",
+    "company": "Salzheide Papier",
+    "title": "Vertriebsanalyst Innendienst",
+    "language": "de",
+    "description": "Ihre Aufgaben\nGewinnen Sie neue Geschäftskunden für unsere Recyclingpapiere.\nBerichten Sie monatlich über Angebotsquote und Auftragseingang.\nPflegen Sie die grafische Vertriebsübersicht in Tableau.\nIhr Profil\nErfahrung im gewerblichen Papiervertrieb ist Voraussetzung.\nFranzösisch auf Niveau B2 ist wünschenswert.",
+    "duties": [
+      {
+        "text": "Gewinnen Sie neue Geschäftskunden für unsere Recyclingpapiere.",
+        "tasks": [
+          "sales"
+        ]
+      },
+      {
+        "text": "Berichten Sie monatlich über Angebotsquote und Auftragseingang.",
+        "tasks": [
+          "report_kpis"
+        ]
+      },
+      {
+        "text": "Pflegen Sie die grafische Vertriebsübersicht in Tableau.",
+        "tasks": [
+          "dashboard"
+        ]
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Erfahrung im gewerblichen Papiervertrieb ist Voraussetzung.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Französisch auf Niveau B2 ist wünschenswert.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": [
+      {
+        "language": "fr",
+        "level": "B2",
+        "mandatory": false
+      }
+    ]
+  },
+  {
+    "id": "b1-21",
+    "company": "Tannufer Bühnenservice",
+    "title": "Koordinatorin Veranstaltungsbetrieb",
+    "language": "de",
+    "description": "Ihre Aufgaben\nVereinbaren Sie die Übergabezeiten mit Haustechnik und Gastensembles.\nKontrollieren Sie vor Einlass die Fluchtwege anhand der Sicherheitsvorgaben.\nHängen Sie die Tagesbesetzung am Bühneneingang aus.\nIhr Profil\nBereitschaft zu Abenddiensten ist erforderlich.\nErfahrung an einem Repertoiretheater ist von Vorteil.",
+    "duties": [
+      {
+        "text": "Vereinbaren Sie die Übergabezeiten mit Haustechnik und Gastensembles.",
+        "tasks": [
+          "stakeholders"
+        ]
+      },
+      {
+        "text": "Kontrollieren Sie vor Einlass die Fluchtwege anhand der Sicherheitsvorgaben.",
+        "tasks": [
+          "quality_compliance"
+        ]
+      },
+      {
+        "text": "Hängen Sie die Tagesbesetzung am Bühneneingang aus.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Bereitschaft zu Abenddiensten ist erforderlich.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung an einem Repertoiretheater ist von Vorteil.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-22",
+    "company": "Wacholderhang Steinatelier",
+    "title": "Steinbildhauer",
+    "language": "de",
+    "description": "Ihre Aufgaben\nÜbertragen Sie die Entwürfe maßstabsgerecht auf den Rohstein.\nArbeiten Sie Ornamente mit Schlageisen und Knüpfel aus.\nPolieren Sie die sichtbaren Flächen der fertigen Stücke.\nIhr Profil\nEine abgeschlossene Ausbildung im Steinmetzhandwerk ist erforderlich.\nErfahrung mit Muschelkalk wäre schön.",
+    "duties": [
+      {
+        "text": "Übertragen Sie die Entwürfe maßstabsgerecht auf den Rohstein.",
+        "tasks": []
+      },
+      {
+        "text": "Arbeiten Sie Ornamente mit Schlageisen und Knüpfel aus.",
+        "tasks": []
+      },
+      {
+        "text": "Polieren Sie die sichtbaren Flächen der fertigen Stücke.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Eine abgeschlossene Ausbildung im Steinmetzhandwerk ist erforderlich.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung mit Muschelkalk wäre schön.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-23",
+    "company": "Lindenwinkel Backstube",
+    "title": "Bäckerin für die Frühschicht",
+    "language": "de",
+    "description": "Ihre Aufgaben\nSetzen Sie die Sauerteige für unsere Roggenbrote an.\nFormen Sie die Laibe von Hand und schneiden Sie die Oberfläche ein.\nBacken Sie die Brote im Etagenofen aus.\nIhr Profil\nEine abgeschlossene Bäckerlehre setzen wir voraus.\nErfahrung mit Holzbacköfen ist willkommen.",
+    "duties": [
+      {
+        "text": "Setzen Sie die Sauerteige für unsere Roggenbrote an.",
+        "tasks": []
+      },
+      {
+        "text": "Formen Sie die Laibe von Hand und schneiden Sie die Oberfläche ein.",
+        "tasks": []
+      },
+      {
+        "text": "Backen Sie die Brote im Etagenofen aus.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Eine abgeschlossene Bäckerlehre setzen wir voraus.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung mit Holzbacköfen ist willkommen.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  },
+  {
+    "id": "b1-24",
+    "company": "Moorgrund Kammerchor",
+    "title": "Altistin",
+    "language": "de",
+    "description": "Ihre Aufgaben\nSingen Sie die Altpartie in unseren a-cappella-Programmen.\nErarbeiten Sie neue Stimmen selbstständig anhand der Partitur.\nNehmen Sie an den Proben vor den Wochenendkonzerten teil.\nIhr Profil\nFür das Vorsingen sind zwei kontrastierende Werke vorzubereiten.\nErfahrung mit zeitgenössischer Chormusik ist erwünscht.",
+    "duties": [
+      {
+        "text": "Singen Sie die Altpartie in unseren a-cappella-Programmen.",
+        "tasks": []
+      },
+      {
+        "text": "Erarbeiten Sie neue Stimmen selbstständig anhand der Partitur.",
+        "tasks": []
+      },
+      {
+        "text": "Nehmen Sie an den Proben vor den Wochenendkonzerten teil.",
+        "tasks": []
+      }
+    ],
+    "qualifications": [
+      {
+        "text": "Für das Vorsingen sind zwei kontrastierende Werke vorzubereiten.",
+        "kind": "mandatory"
+      },
+      {
+        "text": "Erfahrung mit zeitgenössischer Chormusik ist erwünscht.",
+        "kind": "preferred"
+      }
+    ],
+    "language_requirements": []
+  }
+]

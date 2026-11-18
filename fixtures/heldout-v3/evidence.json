@@ -1,0 +1,218 @@
+[
+  {
+    "id": "cv-v3-01",
+    "text": "Agreed a revised delivery date with the warehouse lead and buyer, then called the customer to explain the delay.",
+    "tasks": [
+      "stakeholders",
+      "customer_communication"
+    ]
+  },
+  {
+    "id": "cv-v3-02",
+    "text": "Beseitigte einen doppelten Freigabeschritt, durch den Urlaubsanträge regelmäßig liegen geblieben waren.",
+    "tasks": [
+      "process_improvement"
+    ]
+  },
+  {
+    "id": "cv-v3-03",
+    "text": "Walked new subscribers through their first booking over the phone and answered questions about cancellation fees.",
+    "tasks": [
+      "onboard",
+      "customer_communication"
+    ]
+  },
+  {
+    "id": "cv-v3-04",
+    "text": "Stimmte mit Einkauf und Werkstatt ab, welche Reparaturen vor der Sommerpause Vorrang hatten.",
+    "tasks": [
+      "stakeholders"
+    ]
+  },
+  {
+    "id": "cv-v3-05",
+    "text": "Replaced three separate sign-off queues with one after tracing where purchase requests stalled, and rewrote the approval guide.",
+    "tasks": [
+      "process_improvement",
+      "document_process"
+    ]
+  },
+  {
+    "id": "cv-v3-06",
+    "text": "Beantwortete Fragen von Fahrgästen am Schalter und erklärte ihnen die Erstattung bei Zugausfällen.",
+    "tasks": [
+      "customer_communication"
+    ]
+  },
+  {
+    "id": "cv-v3-07",
+    "text": "Sorted overnight fault reports by urgency and passed the critical ones to the engineer on call.",
+    "tasks": [
+      "triage"
+    ]
+  },
+  {
+    "id": "cv-v3-08",
+    "text": "Ermittelte die Ursache abgebrochener Druckaufträge und stellte den Druckdienst wieder her.",
+    "tasks": [
+      "troubleshoot"
+    ]
+  },
+  {
+    "id": "cv-v3-09",
+    "text": "Compared card receipts with bank deposits and followed up on two unmatched payments.",
+    "tasks": [
+      "reconcile"
+    ]
+  },
+  {
+    "id": "cv-v3-10",
+    "text": "Pflegte Schichtpläne in Excel und nutzte Formeln zur Berechnung der Nachtstunden.",
+    "tasks": [
+      "spreadsheets"
+    ]
+  },
+  {
+    "id": "cv-v3-11",
+    "text": "Defined what counted as an on-time dispatch and reported the weekly percentage to the depot manager.",
+    "tasks": [
+      "metric_design",
+      "report_kpis"
+    ]
+  },
+  {
+    "id": "cv-v3-12",
+    "text": "Baute in Power BI eine Ansicht, in der die Filialleitung die Retourenquote je Warengruppe verfolgen konnte.",
+    "tasks": [
+      "dashboard",
+      "report_kpis"
+    ]
+  },
+  {
+    "id": "cv-v3-13",
+    "text": "Queried the order database in SQL and found that repeat purchases clustered around school holidays.",
+    "tasks": [
+      "sql",
+      "data_analysis"
+    ]
+  },
+  {
+    "id": "cv-v3-14",
+    "text": "Richtete einen nächtlichen ETL-Lauf ein, der Lieferdaten ohne den bisherigen manuellen Export ins Datenlager übertrug.",
+    "tasks": [
+      "pipeline",
+      "automate"
+    ]
+  },
+  {
+    "id": "cv-v3-15",
+    "text": "Removed duplicate addresses and checked postcodes before the mailing list went to print.",
+    "tasks": [
+      "data_quality"
+    ]
+  },
+  {
+    "id": "cv-v3-16",
+    "text": "Testete zwei Betreffzeilen an zufällig zugeteilten Empfängergruppen und verglich die Öffnungsraten.",
+    "tasks": [
+      "experiment",
+      "data_analysis"
+    ]
+  },
+  {
+    "id": "cv-v3-17",
+    "text": "Scored two transcription engines against the same set of recordings and compared their error rates.",
+    "tasks": [
+      "evaluate_systems"
+    ]
+  },
+  {
+    "id": "cv-v3-18",
+    "text": "Erstellte mit Articulate Storyline ein Lernmodul zur Kassenübergabe und stellte es in Moodle bereit.",
+    "tasks": [
+      "develop_learning",
+      "authoring",
+      "lms"
+    ]
+  },
+  {
+    "id": "cv-v3-19",
+    "text": "Taught new bar staff how to close the till and supervised their practice session.",
+    "tasks": [
+      "teach"
+    ]
+  },
+  {
+    "id": "cv-v3-20",
+    "text": "Dokumentierte Wundverläufe und Verbandswechsel in der elektronischen Patientenakte.",
+    "tasks": [
+      "clinical_documentation"
+    ]
+  },
+  {
+    "id": "cv-v3-21",
+    "text": "Checked chilled deliveries against the site's food safety limits and recorded each inspection.",
+    "tasks": [
+      "quality_compliance"
+    ]
+  },
+  {
+    "id": "cv-v3-22",
+    "text": "Verhandelte mit Bestandskunden über zusätzliche Lizenzen und schloss drei Erweiterungsverträge ab.",
+    "tasks": [
+      "sales",
+      "customer_communication"
+    ]
+  },
+  {
+    "id": "cv-v3-23",
+    "text": "Counted spare parts and raised replenishment orders before the workshop ran short.",
+    "tasks": [
+      "inventory"
+    ]
+  },
+  {
+    "id": "cv-v3-24",
+    "text": "Verband das Buchungsportal über eine Schnittstelle mit der Abrechnung und richtete die benötigten Benutzerrechte ein.",
+    "tasks": [
+      "systems_integration",
+      "configuration"
+    ]
+  },
+  {
+    "id": "cv-v3-25",
+    "text": "Attended the customer advisory meeting as an observer and took a seat count for catering.",
+    "tasks": []
+  },
+  {
+    "id": "cv-v3-26",
+    "text": "Nahm an einer internen Schulung über Prozessverbesserung teil.",
+    "tasks": []
+  },
+  {
+    "id": "cv-v3-27",
+    "text": "Printed the dashboard screenshots supplied by the analyst and placed them in the board packs.",
+    "tasks": []
+  },
+  {
+    "id": "cv-v3-28",
+    "text": "Reservierte auf Wunsch der Teamleitung einen Raum für den SQL-Kurs.",
+    "tasks": []
+  },
+  {
+    "id": "cv-v3-29",
+    "text": "Met with dispatch and reception to redesign the parcel handover, cutting out a second trip to the loading bay.",
+    "tasks": [
+      "stakeholders",
+      "process_improvement"
+    ]
+  },
+  {
+    "id": "cv-v3-30",
+    "text": "Hielt Mieter während der Heizungsreparatur telefonisch auf dem Laufenden und vereinbarte mit der Hausverwaltung die nächsten Zutrittstermine.",
+    "tasks": [
+      "customer_communication",
+      "stakeholders"
+    ]
+  }
+]

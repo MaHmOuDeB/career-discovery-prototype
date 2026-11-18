@@ -6,8 +6,8 @@ from pathlib import Path
 import re
 
 from .analysis import analyse_description, normal
-from .matching import run_match
-from .models import CEFR, Job
+from .matching import evidence_tags, run_match
+from .models import CEFR, SCHEMA_VERSION, Job, Profile
 from .sourcing import supply_review_reasons
 
 LANGUAGE_SUBJECT = re.compile(r"^language \(\w+\)$")
@@ -69,6 +69,26 @@ def prf(true_positive, predicted, expected):
     f1 = round(2 * precision * recall / (precision + recall), 3) if precision + recall else 0.0
     return {"precision": precision, "recall": recall, "f1": f1,
             "true_positive": true_positive, "predicted": predicted, "expected": expected}
+
+
+def evidence_report(rows, catalogue):
+    """Score fictional reviewed CV lines with the production evidence tagger."""
+    profile = Profile.load({
+        "schema_version": SCHEMA_VERSION, "id": "heldout-cv", "confirmed": True, "fictional": True,
+        "evidence": [{"id": row["id"], "text": row["text"], "locator": row["id"], "state": "cv_stated"}
+                     for row in rows],
+    })
+    predictions = evidence_tags(profile, catalogue)
+    correct = predicted = expected = 0
+    for row in rows:
+        gold = set(row["tasks"])
+        if gold.difference(catalogue.tasks):
+            raise ValueError(f"Unknown task label on evidence line {row['id']}")
+        got = set(predictions[row["id"]])
+        correct += len(got & gold)
+        predicted += len(got)
+        expected += len(gold)
+    return {"lines": len(rows), "tasks": prf(correct, predicted, expected)}
 
 
 def kind_of(matches):

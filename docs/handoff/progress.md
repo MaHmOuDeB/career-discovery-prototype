@@ -2,6 +2,14 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-18 — B1 complete at the v16 stop point
+
+- Reproduced all four offline gates on `837167f` (194 tests). After B1 all four passed with 195 tests on Python 3.14.7. Web-app tests required local loopback access.
+- Two fresh contexts independently authored 24 fictional ads (12 EN, 12 DE, 18 target roles and six controls) and 30 fictional CV lines using only the task definitions. Labels were fixed before scoring. The scorer uses the matcher's `evidence_tags`.
+- v16 / catalogue 4, v3 vacancy tasks: precision **1.000**, recall **0.143** (8 correct, 8 predicted, 56 expected). Detected 16/72 duties, with 0/48 qualifications leaking into duties. Both expected language conflicts were detected, plus one unexpected conflict.
+- v3 CV tasks: precision **0.818**, recall **0.225** (9 correct, 11 predicted, 40 expected). Reproduce with `python3 -B scripts/score-evidence.py fixtures/heldout-v3/evidence.json` and `python3 -B -m career_discovery heldout fixtures/heldout-v3/vacancies.json --at 2026-11-16T22:52:55+00:00`.
+- Stopped before B2. The last recorded pool yield is 2 plausible out of 1,181. Task A is due on or after 23 November 2026. No repeat observation or v17 comparison has been run.
+
 ## 2026-11-18 — hand-over to Codex
 
 - `docs/handoff/codex-handover.md` holds the open work as briefs: A (repeat supply check on or after 23 November),
