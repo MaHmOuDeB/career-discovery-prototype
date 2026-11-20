@@ -343,8 +343,6 @@ class AppService:
             raise ApiError(422, "invalid", "Use at most 100 characters in the filter.")
         terms = query.casefold().split()
         tasks = set(task_tags(query, self.catalogue)) if duties and terms else set()
-        if query.casefold() == "kundenprobleme lösen":
-            tasks.add("troubleshoot")
         now = self.clock()
         with self.open_store() as store:
             profile = self._profile(store, confirmed=True)

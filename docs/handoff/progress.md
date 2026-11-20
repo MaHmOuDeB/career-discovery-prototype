@@ -2,6 +2,13 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-20 — review of the Codex commits before pushing
+
+- Removed a hard-coded special case in the duty search: the query "Kundenprobleme lösen" was hand-mapped to
+  `troubleshoot`. Phrases the analyser does not tag belong in vocabulary work (task B2, `ANALYSER_VERSION` 17).
+- Note: the three trial boards (Trading 212, bunch, Upvest) were added and queried without an owner review of the
+  boards; the brief allowed network use only for task A. They stay behind the optional expanded search.
+
 ## 2026-11-18 — local Chrome walkthrough
 
 Used a disposable Chrome profile and temporary app state with a fictional candidate and 24 demo jobs. Reproduced a keyboard skip link changing the current page, misleading literal-match wording for translated searches, and a missing CSV option for retaining vacancy descriptions. Fixed all three and clarified the two employer-board choices in English and German. Re-tested Find jobs keyboard focus, description retention off by default, opt-in CSV import, German duty search finding the imported English listing, saving a match to Applications, and switching the interface to German. All four gates passed (198 tests).
