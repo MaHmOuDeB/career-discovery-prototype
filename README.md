@@ -1,12 +1,36 @@
 # Career Discovery Prototype
 
-A local CLI that compares a traditional title and keyword search with matching based on evidence for the work. It is configured for an initial Germany pilot.
+A local web app and command-line tool that match job ads to the work a person has done, and compare that with a traditional title and keyword search. It is configured for an initial Germany pilot.
 
 Status: research prototype. It runs offline on your own machine, uses fictional profiles and vacancies for its tests and demo, and has no hosted service. Results and open questions are in the [project handoff](docs/handoff/README.md).
 
+## What the app does
+
+The app finds jobs by the work you have done, not only by the job titles you already know. It explains every match, and it runs entirely on your own computer. There is no AI model and no account: a rule-based matcher compares the duties in each job ad with the work your CV shows. The interface is in English and German (the EN and DE buttons in the header).
+
+The app walks you through four steps, then two pages help you keep track:
+
+1. **Start with your CV.** Upload a Word (.docx) or PDF CV, or start without one. The app lists the work it found. You keep what is true, fix what is not quite right, remove the rest and add things in your own words. Only items you keep count.
+2. **Tell us a bit more.** Your languages and levels (A1 to C2, with a guide), the cities you would work in, the countries you could work from remotely, the kinds of work you are open to, and optional answers about recent graduation and visa sponsorship. Job titles you already know feed the title-search comparison.
+3. **Find jobs.** One button reads the public job boards of 12 employers. A second button also reads three more employers with operations roles in Berlin (Trading 212, bunch and Upvest) and reports how many extra listings they added. You can also load your own jobs from a CSV file, and choose whether to keep their descriptions for duty matching.
+4. **Your matches.** Jobs sorted into "Looks like a good fit", "Worth a closer look" and, if you ask, "Probably not for you, and why". Each card shows:
+   - why it fits: the ad's duty next to the line from your CV that backs it;
+   - possible conflicts, such as a language level, place or kind of work that does not fit;
+   - the language level the ad asks for next to yours;
+   - pay if stated, the deadline, and how long ago the job was posted;
+   - help with wording your application: which duties your CV supports, and which are not in it yet (add them only if true).
+
+   At the top, a bar shows what you are looking for, with a Change button. You can search the matches by title, company, place or duty, in English or German: a German search such as "Dashboards erstellen" also finds an English ad that says "Build dashboards", and the card quotes the duty that matched. You can hide jobs your languages rule out, and compare the results with a plain title search. "Roles you might not have searched for" suggests job families backed by your experience.
+5. **My applications.** Save a job from your matches and track its status, dates, notes and follow-ups. The page shows what is due this week and new matches since your last visit, and exports the list as CSV.
+6. **Your data.** See where your data lives, download all of it as one file, delete everything, or close the app.
+
+Before you apply, the **Recheck** button on a job from the employer boards visits the employer's page and checks the job is still open.
+
+What the app does not do: it does not apply for you, write application text, or send anything about you anywhere. The internet is used only to read public job boards and, when you press Recheck, one employer page.
+
 ## Use the app (no terminal needed)
 
-The app runs on your own computer and opens in your web browser. It never uploads your CV. The only internet use is when you press the button to read the public job boards.
+The app runs on your own computer and opens in your web browser. It never uploads your CV. The only internet use is when you press the button to read the public job boards, or Recheck on a job.
 
 1. Open the project page on GitHub, click the green **Code** button, then **Download ZIP**.
 2. Unzip the file (double-click it on a Mac; right-click and **Extract All** on Windows).
@@ -99,8 +123,10 @@ Feedback records the candidate’s judgement and can include a correction. Expor
     python3 -B -m career_discovery --state .state/pilot coverage --at 2026-11-16T22:52:55+00:00
     python3 -B -m career_discovery --state .state/pilot coverage --titles "analyst|operations|support"
     python3 -B -m career_discovery heldout fixtures/heldout/vacancies.json
+    python3 -B scripts/score-evidence.py fixtures/heldout-v3/evidence.json
+    python3 -B scripts/profile-yield.py
 
-coverage reports how many duty lines in the stored vacancies map to a catalogue task, how many listings yield no duties, and the fit, lane and review-reason counts for the fictional scenario. It prints aggregate counts only and writes nothing. heldout scores the analyser against 24 labelled fictional vacancies written independently of the matching vocabulary: duty detection, task precision and recall, qualification lines mistaken for duties, and mandatory language conflicts. Use the same pool and clock when you compare two versions of the analyser. Keep the held-out file out of any tuning work, otherwise its scores stop being an independent check.
+coverage reports how many duty lines in the stored vacancies map to a catalogue task, how many listings yield no duties, and the fit, lane and review-reason counts for the fictional scenario. It prints aggregate counts only and writes nothing. heldout scores the analyser against 24 labelled fictional vacancies written independently of the matching vocabulary: duty detection, task precision and recall, qualification lines mistaken for duties, and mandatory language conflicts. There are three independent sets: `fixtures/heldout`, `fixtures/heldout-v2` and `fixtures/heldout-v3` (24 ads each; v3 also has 30 labelled CV lines, scored with `scripts/score-evidence.py`). `scripts/profile-yield.py` compares supply yield for fictional profiles on a temporary copy of the pilot pool. Use the same pool and clock when you compare two versions of the analyser. Keep the held-out file out of any tuning work, otherwise its scores stop being an independent check.
 
 ## Optional semantic comparison
 

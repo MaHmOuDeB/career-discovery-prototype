@@ -12,7 +12,9 @@
 
 - **Code:** the CLI and the local web app (`python3 -m career_discovery app`, the double-click starters) are finished.
   English and German UI, German match reasons, looking-for bar, match filter and a Continue button on every step.
-- **Tests:** 194 offline tests; `scripts/gates.sh` passes. GitHub CI passes on macOS, Windows and Linux for `579d9ef`.
+- **Tests:** 194 offline tests at the start; 200 after B1, the expanded search and the 20 November review.
+- **Progress (20 November):** B1 is done (held-out v3 and the v16 baselines are in progress.md). B2 has not started.
+  The owner kept the expanded 15-board search (`docs/decisions.md`). Task A is still due on or after 23 November.
 - **Versions:** `ANALYSER_VERSION` 16, catalogue version 4. `SUPPLY_POLICY_VERSION` is unchanged.
 - **Yield:** 2 plausible listings in the 1,181-listing fictional pool, against a target of 10 from 3 companies. Read
   "Why yield is still low" and "Richer fictional profiles" in

@@ -397,6 +397,23 @@ class JobsTests(AppTestCase):
         self.assertEqual(done["boards"][0]["status"], "unavailable")
         self.assertIn("503", done["boards"][0]["reason"])
 
+    def test_expanded_search_adds_only_the_three_shipped_trial_boards(self):
+        self.ok("POST", "/api/jobs/refresh", {"group": "expanded"})
+        self.service.join_refresh(5)
+        done = self.ok("GET", "/api/jobs/refresh")
+        self.assertEqual((done["status"], done["total"]), ("done", 4))
+        self.assertEqual(self.client.visited[0], "https://boards-api.greenhouse.io/v1/boards/fictional/jobs?content=true")
+        self.assertEqual(self.client.visited[1:], [f"https://api.ashbyhq.com/posting-api/job-board/{slug}"
+                                                   for slug in ("trading212", "bunch", "Upvest")])
+        # The fake client answers every board in Greenhouse format, so the Ashby boards fail and no yield is claimed.
+        self.assertIs(done["comparison_complete"], False)
+        self.assertNotIn("trial", done)
+
+    def test_unknown_board_group_is_rejected_without_requests(self):
+        status, _, data = self.call("POST", "/api/jobs/refresh", {"group": "everything"})
+        self.assertEqual((status, data["error"]["code"]), (422, "invalid"))
+        self.assertEqual(self.client.visited, [])
+
     def test_shipped_board_list_is_reviewed_and_packaged(self):
         from career_discovery.sources import load_boards
         boards = load_boards(Path(__file__).resolve().parent.parent / "career_discovery" / "boards.json")

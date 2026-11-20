@@ -2,6 +2,14 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-20 — owner keeps the expanded search; README feature list; release 0.2.0
+
+- The owner kept Codex's expanded 15-board search (`docs/decisions.md`). Two tests now cover it: the expanded group
+  reads exactly the three shipped extra boards, and an unknown group is 422 with no request.
+- README: a "What the app does" section covering every page; API docs for `group`, `duties`, `search_excerpt` and
+  `trial`. Version 0.2.0 with CHANGELOG.md. 200 offline tests.
+- Next step unchanged: task A on or after 23 November; B2 when wanted.
+
 ## 2026-11-20 — review of the Codex commits before pushing
 
 - Removed a hard-coded special case in the duty search: the query "Kundenprobleme lösen" was hand-mapped to

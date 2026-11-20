@@ -45,18 +45,25 @@ recent_graduate, needs_sponsorship, experience_months, evidence_usable, ...}, cv
 - `GET /api/families` (confirmed profile): `{families: [{id, label, direct, transferable, aliases, open_tasks}]}`.
 
 ## Jobs
-- `POST /api/jobs/refresh` `{}`: starts a background read of the shipped reviewed boards (`career_discovery/boards.json`, 12 boards,
-  the existing request bounds). Returns 200 with the status below; 409 `refresh_running` if already running.
+- `POST /api/jobs/refresh` `{"group": "standard"|"expanded"}` (default `standard`): starts a background read of the shipped
+  boards with the existing request bounds. `standard` reads `career_discovery/boards.json` (12 boards); `expanded` adds the
+  three Ashby boards in `career_discovery/trial-boards.json`. Any other group is 422 `invalid`. Returns 200 with the status
+  below; 409 `refresh_running` if already running.
 - `GET /api/jobs/refresh`: `{status: idle|running|done|error, total, done, boards: [{ats, board, company, status:
   refreshed|cached|unavailable|budget|superseded, count?, reason?}], started_at, finished_at, public_gets, error}`.
   Poll about every second while `running`; `unavailable` rows carry a plain `reason`. Matching works on cached jobs.
+  After an `expanded` read the status also has `comparison_complete` (every board refreshed or cached) and, when
+  complete with a confirmed profile, `trial: {unique, plausible}`: listings found only on the three extra boards and
+  how many of them pass the supply screen.
 - `POST /api/jobs/import` multipart `file` (CSV) or JSON `{"csv": "company,title,url\n...", "keep_description": false}`:
   `{imported, kept_description_fields}`. Columns as in README (`company,title,url` required).
 
 ## Matches
-`GET /api/matches?mode=task|title|both&limit=50&excluded=0&hide_language_conflicts=0&q=` (profile must be confirmed, else 409).
-`q` (at most 100 characters) keeps jobs whose title, company or places contain every word, ignoring case; it is applied
-before `limit`, so it searches every stored job.
+`GET /api/matches?mode=task|title|both&limit=50&excluded=0&hide_language_conflicts=0&q=&duties=0` (profile must be confirmed,
+else 409). `q` (at most 100 characters) keeps jobs whose title, company or places contain every word, ignoring case; it is
+applied before `limit`, so it searches every stored job. With `duties=1` a job also matches when one of its core duty lines
+contains every word, or carries every catalogue task the analyser finds in `q` (so a German query can find an English duty).
+Such cards carry `search_excerpt`, the matching duty line. The UI always sends `duties=1`.
 `task` is the evidence-based ranking, `title` the title and keyword comparison. `limit` 1 to 200 applies per lane.
 `excluded=1` includes the `excluded` lane (hard conflicts). Response:
 `{mode, corpus_vacancies, generated_at, query, counts: {task: {actionable, "verify first", excluded}}, shown: {task: {lane: n}},

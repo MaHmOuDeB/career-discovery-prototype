@@ -94,3 +94,11 @@ regained listings were German-written ads with no stated language level and "Sen
 stays unchanged, so the 23 November repeat stays comparable. The rules affect only the supply count; the app still
 shows such jobs for review.
 
+## Expanded search with three extra boards stays (owner, 20 November 2026)
+
+Codex added an optional "12 boards plus 3" search on Find jobs: Trading 212, bunch and Upvest on Ashby
+(`career_discovery/trial-boards.json`), picked for Berlin operations roles. Codex marked them reviewed itself and queried
+them once outside its brief; in that trial they added 121 listings and none passed the supply screen for the fictional
+graduate. The owner kept the feature: "if you believe this new feature that Codex added is useful, then keep it". The
+standard button and the supply observation still use only the 12 boards in `career_discovery/boards.json`, so the
+23 November repeat stays comparable. The extra boards use the same request bounds and send nothing about the user.

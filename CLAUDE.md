@@ -12,7 +12,7 @@ python3 -B -m career_discovery demo
 python3 -B -m career_discovery --help
 ```
 
-The reviewed baseline (git tag `baseline-2026-11-17`) passed 63 offline tests; the current code passes 194. Run `scripts/gates.sh` for all offline gates. The demo exercises four fictional profiles against 24 fictional vacancies. PDF import uses a local Poppler installation for `pdftotext`. The demo and core CLI use the standard library.
+The reviewed baseline (git tag `baseline-2026-11-17`) passed 63 offline tests; the current code passes 200. Run `scripts/gates.sh` for all offline gates. The demo exercises four fictional profiles against 24 fictional vacancies. PDF import uses a local Poppler installation for `pdftotext`. The demo and core CLI use the standard library.
 
 ## Code map
 
