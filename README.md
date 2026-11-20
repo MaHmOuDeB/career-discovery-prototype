@@ -4,6 +4,11 @@ A local web app and command-line tool that match job ads to the work a person ha
 
 Status: research prototype. It runs offline on your own machine, uses fictional profiles and vacancies for its tests and demo, and has no hosted service. Results and open questions are in the [project handoff](docs/handoff/README.md).
 
+Known limits:
+- The double-click starters pass offline checks and CI on macOS, Windows and Linux, but have not yet been tried by a first-time user on a real Windows PC or a fresh Mac.
+- On the fictional test pool (1,181 public listings, one made-up graduate), only 2 listings pass the strict plausible screen. The matcher is cautious by design, and a human pilot is still to come.
+- The three extra employer boards in the expanded search were added later and were not reviewed as closely as the standard 12.
+
 ## What the app does
 
 The app finds jobs by the work you have done, not only by the job titles you already know. It explains every match, and it runs entirely on your own computer. There is no AI model and no account: a rule-based matcher compares the duties in each job ad with the work your CV shows. The interface is in English and German (the EN and DE buttons in the header).
