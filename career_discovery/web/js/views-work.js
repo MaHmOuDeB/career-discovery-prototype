@@ -143,12 +143,15 @@ function findingText(f) {
   return [quote, reasonText(textOf(f))].filter(Boolean).join(' — ');
 }
 
-function availability(card, redo) {
-  const box = h('p', { class: 'small' });
+function availabilityBadge(card) {
   const ok = card.checked_at && /^(open|available|active|live|verified)/i.test(card.availability || '');
-  if (!card.checked_at) box.append(h('span', { class: 'badge plain', text: t('card.notChecked') }));
-  else if (ok) box.append(h('span', { class: 'badge', text: t('card.confirmedOpen', { date: fmtDate(card.checked_at) }) }));
-  else box.append(h('span', { class: 'badge warn', text: t('card.checkedOn', { date: fmtDate(card.checked_at), state: statusText(card.availability) }) }));
+  if (!card.checked_at) return h('span', { class: 'badge plain', text: t('card.notChecked') });
+  if (ok) return h('span', { class: 'badge', text: t('card.confirmedOpen', { date: fmtDate(card.checked_at) }) });
+  return h('span', { class: 'badge warn', text: t('card.checkedOn', { date: fmtDate(card.checked_at), state: statusText(card.availability) }) });
+}
+
+function availability(card, redo) {
+  const box = h('p', { class: 'small' }, availabilityBadge(card));
   if (card.verification_reason) box.append(' ', h('span', { class: 'muted', text: reasonText(card.verification_reason) }));
   if (RECHECKABLE.has(card.source)) box.append(' ', button([icon('refresh'), t('card.recheck')], redo, 'quiet'));
   return box;
@@ -259,13 +262,35 @@ export async function applicationsView(root, ctx) {
     return;
   }
   const errors = h('div', {});
-  root.append(h('h2', { text: t('apps.listTitle') }), errors, ...list.items.map((row) => appRow(row, ctx, errors)),
+  const picked = new Set();
+  const boxes = [];
+  const result = h('div', { 'aria-live': 'polite' });
+  const compare = button(t('apps.compareGo'), async (e) => {
+    const keys = list.items.map((r) => r.job_key).filter((k) => picked.has(k));
+    try {
+      const data = await busy(e.currentTarget, () => api('GET', `/api/applications/compare?${keys.map((k) => `key=${encodeURIComponent(k)}`).join('&')}`));
+      result.replaceChildren(compareView(data.items, () => result.replaceChildren()));
+      result.querySelector('h2').focus();
+    } catch (err) { result.replaceChildren(errorBox(err)); }
+  }, 'primary', { disabled: true });
+  const refresh = () => {
+    compare.disabled = picked.size < 2 || picked.size > 3;
+    for (const box of boxes) box.disabled = picked.size >= 3 && !box.checked;
+  };
+  const pick = (row) => {
+    const box = h('input', { type: 'checkbox', checked: picked.has(row.job_key) });
+    box.addEventListener('change', () => { if (box.checked) picked.add(row.job_key); else picked.delete(row.job_key); refresh(); });
+    boxes.push(box);
+    return h('label', { class: 'check' }, box, t('apps.compare'));
+  };
+  root.append(h('div', { class: 'card' }, h('p', { class: 'hint', text: t('apps.compareHint') }), h('div', { class: 'row tight' }, compare)), result);
+  root.append(h('h2', { text: t('apps.listTitle') }), errors, ...list.items.map((row) => appRow(row, ctx, errors, pick)),
     h('div', { class: 'row' }, button(t('apps.export'), async (e) => {
       try { await busy(e.currentTarget, () => download('/api/applications/export.csv', 'applications.csv')); } catch (err) { errors.replaceChildren(errorBox(err)); }
     })));
 }
 
-function appRow(row, ctx, errors) {
+function appRow(row, ctx, errors, pick) {
   const id = row.job_key.replace(/\W/g, '');
   const status = h('select', { id: `s-${id}` }, Object.keys(STATUS).map((k) => h('option', { value: k, selected: k === row.status }, STATUS[k]())));
   const applied = h('input', { type: 'date', id: `a-${id}`, value: row.applied_on || '' });
@@ -288,13 +313,44 @@ function appRow(row, ctx, errors) {
     if (!confirm(t('apps.removeConfirm'))) return;
     try { await api('DELETE', `/api/applications?job_key=${encodeURIComponent(row.job_key)}`); ctx.rerender(); } catch (err) { errors.replaceChildren(errorBox(err)); }
   }, 'danger quiet');
-  return h('article', { class: 'card' }, h('h3', { text: row.title }), h('p', { class: 'muted', text: row.company }),
+  return h('article', { class: 'card' }, h('h3', { text: row.title }), h('p', { class: 'muted', text: row.company }), pick(row),
     row.follow_up_due ? h('p', {}, h('span', { class: 'badge warn', text: t('apps.followDue') })) : null,
     h('div', { class: 'field' }, h('label', { for: status.id, text: t('apps.status') }), status),
     h('div', { class: 'field' }, h('label', { for: applied.id, text: t('apps.appliedOn') }), applied),
     h('div', { class: 'field' }, h('label', { for: follow.id, text: t('apps.followUpOn') }), follow),
     h('div', { class: 'field' }, h('label', { for: notes.id, text: t('apps.notes') }), notes), fields,
     h('div', { class: 'row tight' }, save, url ? h('a', { class: 'btn quiet', href: url, target: '_blank', rel: 'noopener noreferrer' }, t('card.open'), icon('external')) : null, remove));
+}
+
+function compareColumn(item) {
+  if (item.gone) {
+    return h('article', { class: 'card' }, h('h3', { text: item.title || item.company || t('apps.compareGoneTitle') }),
+      h('p', { class: 'small muted', text: t('apps.compareStatus', { status: (STATUS[item.status] || (() => item.status))() }) }),
+      h('p', { class: 'small muted', text: t('apps.compareGone') }));
+  }
+  const list = (lines) => (lines.length ? h('ul', {}, lines.map((x) => h('li', { text: x }))) : h('p', { class: 'small muted', text: t('apps.compareNone') }));
+  const where = place(item);
+  return h('article', { class: 'card' },
+    h('p', {}, h('span', { class: `badge ${FIT_KIND[item.lane] ?? 'warn'}`, text: (FIT[item.lane] || FIT['verify first'])() })),
+    h('h3', { text: item.title }), h('p', { class: 'muted', text: [item.company, where].filter(Boolean).join(' · ') }),
+    h('ul', { class: 'facts' }, h('li', { text: t('apps.compareStatus', { status: (STATUS[item.status] || (() => item.status))() }) }),
+      h('li', { text: item.salary || t('card.payNotStated') }),
+      h('li', { text: item.deadline ? t('card.deadline', { date: fmtDate(item.deadline) }) : t('card.noDeadline') }), h('li', { text: ageText(item.age_days) }),
+      h('li', {}, availabilityBadge(item))),
+    h('h4', { class: 'label', text: t('apps.compareSupported', { n: item.supported.length }) }),
+    item.supported.length ? pairs(item.supported, false) : h('p', { class: 'small muted', text: t('apps.compareNone') }),
+    h('h4', { class: 'label', text: t('apps.compareMissing', { n: item.missing.length }) }),
+    item.missing.length ? pairs(item.missing, true) : h('p', { class: 'small muted', text: t('apps.compareNone') }),
+    h('h4', { class: 'label', text: t('apps.compareOpen') }),
+    list(item.open_requirements.map((r) => [`“${r.text}”`, reasonText(r.reason)].join(' — '))),
+    h('h4', { class: 'label', text: t('apps.compareConflicts') }), list(item.conflicts.map((c) => reasonText(c.reason))),
+    h('h4', { class: 'label', text: t('card.languages') }), languages(item));
+}
+
+function compareView(items, close) {
+  const heading = h('h2', { tabindex: '-1', text: t('apps.compareTitle') });
+  return h('section', {}, heading, h('div', { class: `compare cols-${items.length}` }, items.map(compareColumn)),
+    h('div', { class: 'row' }, button(t('apps.compareClose'), close)));
 }
 
 export async function dataView(root, ctx) {

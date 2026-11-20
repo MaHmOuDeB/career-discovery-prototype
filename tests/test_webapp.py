@@ -5,6 +5,7 @@ from pathlib import Path
 import tempfile
 import threading
 import unittest
+import urllib.parse
 
 from career_discovery.analysis import load_catalogue
 from career_discovery.demo import load_demo
@@ -460,6 +461,92 @@ class TrackerTests(AppTestCase):
         self.assertGreater(first["new_matches"], 0)
         self.ok("POST", "/api/summary/seen", {})
         self.assertEqual(self.ok("GET", "/api/summary")["new_matches"], 0)
+
+
+class CompareTests(AppTestCase):
+    def save_two(self):
+        other = {**SALARY_JOB, "external_id": "pay-2", "company": "Second Co", "title": "Operations Analyst",
+                 "url": "https://vacancies.example/pay-2", "deadline": None, "description": SALARY_JOB["description"]
+                 .replace("Salary: €55,000 - €65,000 per year", "")}
+        jobs = [Job.load(SALARY_JOB), Job.load(other)]
+        self.seed(jobs)
+        self.make_profile()
+        for job, status in zip(jobs, ("saved", "applied")):
+            self.ok("POST", "/api/applications", {"job_key": job.key, "status": status})
+        return [job.key for job in jobs]
+
+    def compare(self, keys):
+        return self.call("GET", "/api/applications/compare?" + "&".join("key=" + urllib.parse.quote(k, safe="") for k in keys))
+
+    def test_two_saved_jobs_come_back_in_request_order_with_match_card_data(self):
+        first, second = self.save_two()
+        for keys in ([first, second], [second, first]):
+            status, _, data = self.compare(keys)
+            self.assertEqual(status, 200, data)
+            self.assertEqual([item["job_key"] for item in data["items"]], keys)
+        status, _, data = self.compare([first, second])
+        item = data["items"][0]
+        self.assertEqual((item["title"], item["company"], item["status"]), ("Reporting Analyst", "Pay Co", "saved"))
+        self.assertEqual(data["items"][1]["status"], "applied")
+        self.assertEqual(item["salary"], "€55,000 - €65,000 per year")
+        self.assertEqual((item["age_days"], item["deadline"]), (10, "2026-12-01"))
+        self.assertEqual(item["language_summary"]["languages"]["de"],
+                         {"asked": "B2", "yours": "B1", "state": "conflict"})
+        for field in ("url", "locations", "lane", "fit", "availability"):
+            self.assertIn(field, item)
+        self.assertTrue(item["supported"])
+        self.assertEqual(set(item["supported"][0]) & {"ad", "cv", "task"}, {"ad", "cv", "task"})
+        self.assertIsInstance(item["missing"], list)
+        requirement = next(r for r in item["open_requirements"] if "German" in r["text"])
+        self.assertEqual(set(requirement), {"text", "state", "reason"})
+        self.assertIn(requirement["state"], {"unknown", "conflict"})
+        self.assertTrue(any(c["subject"] == "language (de)" for c in item["conflicts"]))
+        self.assertEqual(set(item["conflicts"][0]), {"subject", "reason"})
+
+    def test_a_duty_the_cv_backs_is_not_listed_again_as_missing(self):
+        from career_discovery.webapi import comparison
+        record = {field: None for field in ("job_key", "title", "company", "url", "locations", "lane", "fit", "deadline",
+                                            "salary", "age_days", "availability", "checked_at", "language_summary")}
+        record.update(application="saved", requirements=[], findings=[], wording={
+            "supported": [{"ad": "Build reports.", "cv": "Built reports.", "task": "report", "kind": "direct"},
+                          {"ad": "Build reports.", "cv": "Built dashboards.", "task": "dashboard", "kind": "direct"}],
+            "missing": [{"ad": "Build reports.", "task": "sql", "kind": "partial"},
+                        {"ad": "Train users.", "task": "teach", "kind": "unverified"}]})
+        item = comparison(record)
+        self.assertEqual([s["ad"] for s in item["supported"]], ["Build reports."])
+        self.assertEqual([m["ad"] for m in item["missing"]], ["Train users."])
+
+    def test_key_count_duplicates_unsaved_keys_and_unconfirmed_profile_are_refused(self):
+        first, second = self.save_two()
+        unsaved = Job.load({**SALARY_JOB, "external_id": "pay-3"}).key
+        self.seed([Job.load({**SALARY_JOB, "external_id": "pay-3"})])
+        self.assertEqual(self.compare([first])[0], 422)
+        self.assertEqual(self.call("GET", "/api/applications/compare")[0], 422)
+        self.assertEqual(self.compare([first, second, first, second])[0], 422)
+        self.assertEqual(self.compare([first, first])[0], 422)
+        status, _, data = self.compare([first, unsaved])
+        self.assertEqual((status, data["error"]["code"]), (404, "not_found"))
+        self.assertEqual(self.compare([first, second])[0], 200)
+
+    def test_profile_must_be_confirmed(self):
+        jobs = [Job.load(SALARY_JOB), Job.load({**SALARY_JOB, "external_id": "pay-2"})]
+        self.seed(jobs)
+        for job in jobs:
+            self.ok("POST", "/api/applications", {"job_key": job.key, "status": "saved"})
+        status, _, data = self.compare([job.key for job in jobs])
+        self.assertEqual((status, data["error"]["code"]), (409, "profile_not_ready"))
+        self.make_profile(confirm=False)
+        self.assertEqual(self.compare([job.key for job in jobs])[0], 409)
+
+    def test_saved_job_that_is_no_longer_stored_is_marked_gone(self):
+        first, second = self.save_two()
+        with self.service.open_store() as store:
+            store.connection().execute("DELETE FROM job WHERE key=?", (second,))
+            store.connection().commit()
+        status, _, data = self.compare([first, second])
+        self.assertEqual(status, 200, data)
+        self.assertNotIn("gone", data["items"][0])
+        self.assertEqual(data["items"][1], {"job_key": second, "title": "", "company": "", "status": "applied", "gone": True})
 
 
 class DataTests(AppTestCase):

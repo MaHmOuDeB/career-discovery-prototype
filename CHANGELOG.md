@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 (20 November 2026)
+
+- My applications: tick two or three saved jobs and compare them side by side (status, pay, deadline, posting age,
+  supported duties, duties not in your CV yet, open mandatory requirements, conflicts, languages).
+- README screenshots of the main pages, made with fictional data.
+- Fixes: items you add yourself no longer say "From your CV: Added by you"; the first heading in a box no longer leaves a
+  gap; the duty search no longer has a hard-coded special case for one German phrase.
+
 ## 0.2.0 (20 November 2026)
 
 - Local web app for non-technical users: double-click starters for macOS, Windows and Linux, English and German interface.

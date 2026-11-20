@@ -2,6 +2,16 @@
 
 Newest entry first. Each entry: date, what is done, what is open, the exact next step.
 
+## 2026-11-20 — saved-job comparison, README screenshots, release 0.3.0
+
+- My applications compares two or three saved jobs side by side (`GET /api/applications/compare?key=…&key=…`), one entry
+  per ad duty. Built by a subagent from a brief, reviewed: repeated `key` parameters instead of comma-split JSON keys, the
+  card's availability badge reused, a duty the CV backs not repeated as missing. 205 offline tests.
+- README screenshots in `docs/images/`, taken with headless Chrome from a fictional state (rich fictional profile from
+  `fixtures/supply-profiles.json`, the 24 demo vacancies). They show no real person or vacancy.
+- Fixes found in the screenshots: "From your CV: Added by you" on items the user added; a gap above the first heading in a
+  card.
+
 ## 2026-11-20 — owner keeps the expanded search; README feature list; release 0.2.0
 
 - The owner kept Codex's expanded 15-board search (`docs/decisions.md`). Two tests now cover it: the expanded group

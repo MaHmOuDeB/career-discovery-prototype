@@ -90,6 +90,14 @@ Statuses: `saved applied interview offer rejected withdrawn`.
   Applying without `applied_on` uses today (Berlin). `follow_up_on` defaults to 7 working days (Mon to Fri, no holidays) after
   `applied_on` and follows it if you change the date. 422 with `fields` for a bad status or date.
 - `DELETE /api/applications?job_key=<url-encoded key>`: `{deleted: true}`.
+- `GET /api/applications/compare?key=<job_key>&key=<job_key>[&key=<job_key>]` (confirmed profile): compares two or three saved
+  jobs in request order; each key URL-encoded. 422 `invalid` for
+  fewer than two, more than three or duplicate keys, 404 `not_found` if a key is not in your applications, 409
+  `profile_not_ready` before the profile is confirmed. Returns `{items: [{job_key, title, company, url, locations, status,
+  lane, fit, deadline, salary, age_days, availability, checked_at, language_summary, supported, missing (one entry per ad
+  duty; a duty the CV backs is not repeated under missing), open_requirements: [{text,
+  state, reason}], conflicts: [{subject, reason}]}]}`, the same data as the match cards. A job that is no longer stored comes
+  back as `{job_key, title, company, status, gone: true}`.
 - `GET /api/applications/export.csv`: UTF-8 with BOM, opens in Excel; cells that start with, or contain after `; , tab` or a newline, one of `= + - @` (and cells starting with tab or CR) get a `'` prefix.
 - `GET /api/summary`: `{today, week_start, applied_this_week, follow_ups_due: [row], interviews: [row], new_matches,
   last_visit, first_visit, counts}`. `new_matches` counts task matches not seen at the last `POST /api/summary/seen` `{}`

@@ -442,6 +442,26 @@ class AppService:
                 raise ApiError(404, "not_found", "That vacancy is not in your applications.")
         return {"deleted": True}
 
+    def compare_applications(self, keys):
+        if not 2 <= len(keys) <= 3 or len(set(keys)) != len(keys) or not all(keys):
+            raise ApiError(422, "invalid", "Choose two or three different saved jobs to compare.")
+        now = self.clock()
+        with self.open_store() as store:
+            profile = self._profile(store, confirmed=True)
+            saved = {a["job_key"]: a for a in store.applications()}
+            if any(key not in saved for key in keys):
+                raise ApiError(404, "not_found", "One of those vacancies is not in your applications.")
+            rows = {row.job.key: row for row in self._match(store, profile, now)}
+        statuses = {key: a["status"] for key, a in saved.items()}
+        items = []
+        for key in keys:
+            if key in rows:
+                items.append(comparison(self._decorate(rows[key], profile, False, berlin_date(now), statuses)))
+            else:
+                items.append({"job_key": key, "title": saved[key]["title"], "company": saved[key]["company"],
+                              "status": saved[key]["status"], "gone": True})
+        return {"items": items}
+
     def applications_csv(self):
         with self.open_store() as store:
             return applications_csv(store.applications()).encode("utf-8")
@@ -542,6 +562,32 @@ def language_summary(row, profile):
         if code not in languages or STATE_RANK[entry["state"]] > STATE_RANK[languages[code]["state"]]:
             languages[code] = entry
     return {"languages": languages, "conflict": any(e["state"] == "conflict" for e in languages.values())}
+
+
+def comparison(record):
+    """One entry per ad duty: a duty the CV backs is not listed again as missing, even if one of its tasks is."""
+    supported, missing, backed = [], [], set()
+    for item in record["wording"]["supported"]:
+        if item["ad"] not in backed:
+            backed.add(item["ad"])
+            supported.append(item)
+    for item in record["wording"]["missing"]:
+        if item["ad"] not in backed:
+            backed.add(item["ad"])
+            missing.append(item)
+    open_requirements = [
+        {"text": req["text"], "state": f["state"], "reason": f["reason"]}
+        for req in record["requirements"] if req["kind"] == "mandatory"
+        for f in record["findings"] if f["excerpt"] == req["text"] and f["state"] in {"unknown", "conflict"}]
+    return {
+        **{field: record[field] for field in ("job_key", "title", "company", "url", "locations", "lane", "fit",
+                                              "deadline", "salary", "age_days", "availability", "checked_at",
+                                              "language_summary")},
+        "status": record["application"],
+        "supported": supported, "missing": missing,
+        "open_requirements": open_requirements,
+        "conflicts": [{"subject": f["subject"], "reason": f["reason"]} for f in record["findings"] if f["state"] == "conflict"],
+    }
 
 
 def wording(record):

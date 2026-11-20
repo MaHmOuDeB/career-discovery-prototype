@@ -79,7 +79,7 @@ function evidenceRow(item, act) {
     view.replaceChildren(
       h('p', {}, item.text),
       h('p', { class: 'src' }, h('span', { class: `badge ${stateKind}`, text: (EVIDENCE_STATE[item.state] || (() => item.state))() }), ' ',
-        item.locator ? t('cv.source', { line: item.locator }) : ''),
+        item.locator && !item.id.startsWith('me-') ? t('cv.source', { line: item.locator }) : ''),
       h('div', { class: 'row tight' },
         item.state === 'inferred' ? button(t('cv.keep'), () => act('keep', item.id)) : null,
         button(t('cv.edit'), edit),

@@ -110,6 +110,9 @@ def routes(service):
         return service.matches(first(r.query, "mode", "task"), limit, flag(r.query, "excluded"),
                                flag(r.query, "hide_language_conflicts"), first(r.query, "q", ""), flag(r.query, "duties"))
 
+    def compare(r):
+        return service.compare_applications(r.query.get("key", []))
+
     def export(r):
         text = json.dumps(service.export_all(), ensure_ascii=False, indent=2)
         return Download(text.encode("utf-8"), "application/json; charset=utf-8", "career-discovery-data.json")
@@ -140,6 +143,7 @@ def routes(service):
         ("POST", "/api/applications"): lambda r: service.save_application(r.body),
         ("DELETE", "/api/applications"): remove_application,
         ("GET", "/api/applications/export.csv"): applications_csv,
+        ("GET", "/api/applications/compare"): compare,
         ("GET", "/api/summary"): lambda r: service.summary(),
         ("POST", "/api/summary/seen"): lambda r: service.mark_seen(),
         ("GET", "/api/export"): export,

@@ -13,9 +13,19 @@ Known limits:
 
 The app finds jobs by the work you have done, not only by the job titles you already know. It explains every match, and it runs entirely on your own computer. There is no AI model and no account: a rule-based matcher compares the duties in each job ad with the work your CV shows. The interface is in English and German (the EN and DE buttons in the header).
 
+The screenshots below use made-up data: a fictional graduate and fictional employers.
+
+| Your matches, with the reasons | Two saved jobs side by side |
+| --- | --- |
+| ![A match card: the ad's duties next to the CV lines that back them, language levels and a fit badge](docs/images/matches.png) | ![Two saved jobs compared in columns: status, pay, deadline, supported duties, open requirements](docs/images/compare.png) |
+| **Search in English or German** | **The whole app in German** |
+| ![The search box with "Dashboards erstellen" finding an English duty, quoted on the card](docs/images/search.png) | ![A match card in the German interface](docs/images/german.png) |
+
 The app walks you through four steps, then two pages help you keep track:
 
 1. **Start with your CV.** Upload a Word (.docx) or PDF CV, or start without one. The app lists the work it found. You keep what is true, fix what is not quite right, remove the rest and add things in your own words. Only items you keep count.
+
+   <img src="docs/images/cv.png" alt="The list of work found in a CV, each item with Edit and Remove" width="640">
 2. **Tell us a bit more.** Your languages and levels (A1 to C2, with a guide), the cities you would work in, the countries you could work from remotely, the kinds of work you are open to, and optional answers about recent graduation and visa sponsorship. Job titles you already know feed the title-search comparison.
 3. **Find jobs.** One button reads the public job boards of 12 employers. A second button also reads three more employers with operations roles in Berlin (Trading 212, bunch and Upvest) and reports how many extra listings they added. You can also load your own jobs from a CSV file, and choose whether to keep their descriptions for duty matching.
 4. **Your matches.** Jobs sorted into "Looks like a good fit", "Worth a closer look" and, if you ask, "Probably not for you, and why". Each card shows:
@@ -26,10 +36,14 @@ The app walks you through four steps, then two pages help you keep track:
    - help with wording your application: which duties your CV supports, and which are not in it yet (add them only if true).
 
    At the top, a bar shows what you are looking for, with a Change button. You can search the matches by title, company, place or duty, in English or German: a German search such as "Dashboards erstellen" also finds an English ad that says "Build dashboards", and the card quotes the duty that matched. You can hide jobs your languages rule out, and compare the results with a plain title search. "Roles you might not have searched for" suggests job families backed by your experience.
-5. **My applications.** Save a job from your matches and track its status, dates, notes and follow-ups. The page shows what is due this week and new matches since your last visit, and exports the list as CSV.
+5. **My applications.** Save a job from your matches and track its status, dates, notes and follow-ups. The page shows what is due this week and new matches since your last visit, and exports the list as CSV. Tick two or three saved jobs and press **Compare selected** to see them side by side: status, pay, deadline, posting age, the duties your CV supports, the duties not in your CV yet, open mandatory requirements, conflicts and languages.
 6. **Your data.** See where your data lives, download all of it as one file, delete everything, or close the app.
 
 Before you apply, the **Recheck** button on a job from the employer boards visits the employer's page and checks the job is still open.
+
+It also works on a phone-sized window:
+
+<img src="docs/images/mobile.png" alt="A match card on a narrow phone screen" width="300">
 
 What the app does not do: it does not apply for you, write application text, or send anything about you anywhere. The internet is used only to read public job boards and, when you press Recheck, one employer page.
 
